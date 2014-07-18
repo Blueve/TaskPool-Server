@@ -5,15 +5,15 @@
     {{-- 登录表单 --}}
     <form role="form" method="post" id="signin_form" action="{{{ URL::action('UserController@signin') }}}">
       <div class="form-group">
-         <label for="userId">用户名/Email</label><input type="text" class="form-control" id="userId" />
+         <label for="userId">用户名/Email</label><input type="text" class="form-control" id="userId" name="userId" />
       </div>
       <div class="form-group">
-         <label for="password">密码</label><input type="password" class="form-control" id="password" />
+         <label for="password">密码</label><input type="password" class="form-control" id="password" name="password" />
       </div>
       <div class="form-group">
         <div class="row">
           <div class='col-md-6'>
-            <label><input type="checkbox" class="checkbox-normal" id="rememberMe"/> 记住我</label>
+            <label><input type="checkbox" class="checkbox-normal" id="rememberMe" name="rememberMe"/> 记住我</label>
           </div>
           <div class='col-md-6'>
             <strong>

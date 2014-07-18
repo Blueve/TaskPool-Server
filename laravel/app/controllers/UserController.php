@@ -23,9 +23,39 @@ class UserController extends BaseController {
 		}
 
 		if($user)
+		{
+			// 用户存在
+			if(Auth::attempt(array('id' => $user['id'], 'password' => $input['password']), $input['rememberMe']))
+			{
+				// 登陆成功
+				$notice = new Notice(
+					'成功',
+					'登陆已经完成',
+					'登陆成功',
+					'你已经完成了登陆',
+					'/',
+					array(),
+					'success'
+					);
+			}
+			else
+			{
+				$notice = new Notice(
+					'失败',
+					'登陆没有完成',
+					'失败!',
+					'登陆失败',
+					'/',
+					array(),
+					'danger'
+					);
+			}
+		}
 
-		$this->data['title'] = '首页';
-		return View::make('user.signin', $data);
+
+		$this->data['title'] = '登陆';
+		$this->data = array_merge($this->data, $notice->getData());
+		return View::make('common.notice', $this->data);
 	}
 
 	public function signup()

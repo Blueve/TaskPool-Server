@@ -2,6 +2,11 @@
 
 class TaskPoolEloquentUserProvider extends EloquentUserProvider {
 
+	public function __construct($model)
+	{
+		$this->model = $model;
+	}
+
 	/**
 	 * Validate a user against the given credentials.
 	 *

@@ -83,7 +83,7 @@ require app_path().'/filters.php';
 
 Auth::extend('taskpooleloquent', function($app) 
 {
-    $provider =  new \Illuminate\Auth\TaskPoolEloquentUserProvider();
-
-    return new \Illuminate\Auth\Guard($provider, $app['session']);
+    $provider =  new \Illuminate\Auth\TaskPoolEloquentUserProvider('User');
+    return $provider;
+    //return new \Illuminate\Auth\Guard($provider, $app['session']);
 });
