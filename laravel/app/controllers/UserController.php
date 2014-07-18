@@ -4,6 +4,26 @@ class UserController extends BaseController {
 
 	public function signin()
 	{
+		// 对输入进行校验
+		$input = Input::all();
+		$rule = array(
+			'userId' => 'email',
+			);
+		$validator = Validator::make($input, $rule);
+
+		if($validator->fails())
+		{
+			// 判定为使用用户名登陆
+			$user = User::where('name', '=', $input['userId'])->first();
+		}
+		else
+		{
+			// 判定为使用邮箱登陆
+			$user = User::where('email', '=', $input['userId'])->first();
+		}
+
+		if($user)
+
 		$this->data['title'] = '首页';
 		return View::make('user.signin', $data);
 	}
@@ -83,7 +103,7 @@ class UserController extends BaseController {
 										->where('user_id', '=', $userId)
 										->first();
 		
-		if(!$toBeConfirmed /* && (time() - $toBeConfirmed->created_at) < 60 * 60 */ )
+		if($toBeConfirmed /* && (time() - $toBeConfirmed->created_at) < 60 * 60 */ )
 		{
 			// 修正为已验证状态
 			User::where('id', '=', $toBeConfirmed->user_id)->update(array('confirmed' => true));
