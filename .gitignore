@@ -36,6 +36,10 @@ Icon
 .Spotlight-V100
 .Trashes
 
-# Config file
+# Config files
 laravel/app/config/mail.php
 laravel/app/config/database.php
+
+# Project files
+*.sublime-project
+*.sublime-workspace
