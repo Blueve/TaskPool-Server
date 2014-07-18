@@ -20,5 +20,3 @@ Route::post('signup', 'UserController@signup');
 Route::get('user/confirm/{userId}/{checkCode}', 'UserController@confirm');
 
 Route::get('user/reconfirm/{userId}/{checkCode}', 'UserController@reconfirm');
-
-Route::get('user/edit', 'UserController@edit');
