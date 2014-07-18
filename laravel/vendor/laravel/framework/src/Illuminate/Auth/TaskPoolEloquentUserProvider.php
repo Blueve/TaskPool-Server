@@ -18,7 +18,7 @@ class TaskPoolEloquentUserProvider extends EloquentUserProvider {
 	{
 		$plain = $credentials['password'];
 		$authPassword = $user->getAuthPassword();
-		return CheckPassword($authPassword['psw_hash'], $authPassword['psw_salt'], $plain); // === md5($plain.$authPassword['psw_salt']);
+		return $authPassword['psw_hash'] === md5($plain.$authPassword['psw_salt']);
 	}
 
 }
