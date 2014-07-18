@@ -197,6 +197,12 @@ class UserController extends BaseController {
 
 	public function my()
 	{
-		
+		$a = 123;
+		$b = 1546;
+		$o = 789;
+		if($a > $b)
+		{
+			$o = 5;
+		}
 	}
 }
