@@ -192,25 +192,11 @@ class UserController extends BaseController {
 
 	public function edit()
 	{
-		$a=1;
-		$b=2;
-		$c=0;
-		if(a>b){
-			$c= $a;
-		}
-		else {
-			$c = $b;
-		}
+		
 	}
 
 	public function my()
 	{
-		$a = 123;
-		$b = 1546;
-		$o = 789;
-		if($a > $b)
-		{
-			$o = 5;
-		}
+		
 	}
 }
