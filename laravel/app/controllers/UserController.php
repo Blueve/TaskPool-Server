@@ -259,8 +259,13 @@ class UserController extends BaseController {
 		return View::make('common.notice', $this->data);
 	}
 
-
 	public function edit()
+	{
+		$this->data['title'] = '编辑个人信息';
+		return View::make('user.edit', $this->data);
+	}
+
+	public function edit_post()
 	{
 		$input = Input::all();
 		$rule = array(
@@ -272,12 +277,50 @@ class UserController extends BaseController {
 
 		if($validator->fails())
 		{
-			
+			$notice = new Notice(
+				'失败',
+				'个人信息修改没有完成',
+				'修改失败: (',
+				'你的填写存在问题',
+				'user/edit',
+				array(),
+				'danger'
+				);
+		}
+		else
+		{
+			$user = Auth::user();
+			if(Helper::CheckPassword($user->psw_hash, $user->psw_salt, $input['oldPassword']))
+			{
+				list($user->psw_hash, $user->psw_salt) = Helper::HashPassword($input['password']);
+				$user->save();
+				Auth::logout();
+				$notice = new Notice(
+					'成功',
+					'个人信息修改完成',
+					'修改成功: )',
+					'密码修改成功，请重新登录！',
+					'/',
+					array(),
+					'success'
+				);
+			}
+			else
+			{
+				$notice = new Notice(
+					'失败',
+					'个人信息修改没有完成',
+					'修改失败: (',
+					'你的原密码填写错误',
+					'user/edit',
+					array(),
+					'danger'
+				);
+			}
 		}
 
-
-		$this->data['title'] = '编辑个人信息';
-		return View::make('user.edit', $this->data);
+		$this->data = array_merge($this->data, $notice->getData());
+		return View::make('common.notice', $this->data);
 	}
 
 	public function my()
