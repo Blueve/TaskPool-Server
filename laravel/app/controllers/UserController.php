@@ -188,4 +188,9 @@ class UserController extends BaseController {
 		$this->data = array_merge($this->data, $notice->getData());
 		return View::make('common.notice', $this->data);
 	}
+
+	public function edit()
+	{
+		
+	}
 }
