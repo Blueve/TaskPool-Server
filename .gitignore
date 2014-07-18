@@ -41,5 +41,5 @@ laravel/app/config/mail.php
 laravel/app/config/database.php
 
 # Project files
-#*.sublime-project
-#*.sublime-workspace
+*.sublime-project
+*.sublime-workspace
