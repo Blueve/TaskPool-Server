@@ -8,4 +8,9 @@ class Helper
 		$psw_hash = md5($password.$psw_salt);
 		return array($psw_hash, $psw_salt);
 	}
+
+	static public function CheckPassword($psw_hash, $psw_salt, $password)
+	{
+		return $psw_hash === md5($password.$psw_salt);
+	}
 }
