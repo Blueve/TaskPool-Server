@@ -242,6 +242,20 @@ class UserController extends BaseController {
 
 	public function edit()
 	{
+		$input = Input::all();
+		$rule = array(
+			'oldPassword' 		=> 'required',
+			'password' 			=> 'required|min:8',
+			'passwordConfirm' 	=> 'required|same:password'
+			);
+		$validator = Validator::make($input, $rule);
+
+		if($validator->fails())
+		{
+			
+		}
+
+
 		$this->data['title'] = '编辑个人信息';
 		return View::make('user.edit', $this->data);
 	}
