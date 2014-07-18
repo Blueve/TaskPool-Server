@@ -20,8 +20,9 @@ class CreateTpUsersTable extends Migration {
 			$table->string('email')->unique();				// 用户email
 			$table->char('psw_hash', 32);					// 经过Hash后的密码
 			$table->char('psw_salt', 8);					// Hash算法的Salt
-			$table->dateTime('create_at');					// 用户创建时间
-			$table->boolen('confirmed')->default(false);	// 邮箱验证状态
+			$table->dateTime('created_at');					// 用户创建时间
+			$table->boolean('confirmed')->default(false);	// 邮箱验证状态
+			$table->rememberToken();						// Session状态
 		});
 	}
 

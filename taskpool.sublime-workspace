@@ -3,10 +3,79 @@
 	{
 		"selected_items":
 		[
+			[
+				"sign",
+				"signup_form"
+			]
 		]
 	},
 	"buffers":
 	[
+		{
+			"file": "laravel/app/controllers/BaseController.php",
+			"settings":
+			{
+				"buffer_size": 441,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "laravel/app/controllers/HomeController.php",
+			"settings":
+			{
+				"buffer_size": 158,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "laravel/app/routes.php",
+			"settings":
+			{
+				"buffer_size": 436,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "laravel/app/views/layouts/base.blade.php",
+			"settings":
+			{
+				"buffer_size": 1535,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "laravel/app/views/layouts/footer.blade.php",
+			"settings":
+			{
+				"buffer_size": 39,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "laravel/app/views/layouts/navbar.blade.php",
+			"settings":
+			{
+				"buffer_size": 668,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "laravel/app/views/home/startup.blade.php",
+			"settings":
+			{
+				"buffer_size": 2025,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "laravel/public/js/ready.js",
+			"settings":
+			{
+				"buffer_size": 435,
+				"line_ending": "Windows",
+				"name": "$(document).ready(function(){"
+			}
+		}
 	],
 	"build_system": "",
 	"command_palette":
@@ -32,7 +101,13 @@
 	},
 	"file_history":
 	[
+		"/C/Users/Blueve/Desktop/skins/all.css",
+		"/C/Users/Blueve/Desktop/bower.json",
+		"/C/MyDisk/Project/TaskPool/laravel/app/config/app.php",
 		"/C/MyDisk/Project/TaskPool/laravel/app/database/migrations/2014_07_11_060903_create_tp_users_table.php",
+		"/C/MyDisk/Project/TaskPool/laravel/app/database/migrations/2014_07_11_075104_create_tp_tobeconfirmed_table.php",
+		"/C/MyDisk/Project/TaskPool/laravel/app/controllers/BaseController.php",
+		"/C/MyDisk/Project/TaskPool/laravel/app/database/migrations/2014_07_11_065913_create_tp_findpsw_table.php",
 		"/C/MyDisk/Project/TaskPool/laravel/app/config/database.php",
 		"/C/MyDisk/Project/TaskPool/laravel/app/routes.php"
 	],
@@ -52,6 +127,7 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"//$"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -69,8 +145,226 @@
 	"groups":
 	[
 		{
+			"selected": 7,
 			"sheets":
 			[
+				{
+					"buffer": 0,
+					"file": "laravel/app/controllers/BaseController.php",
+					"settings":
+					{
+						"buffer_size": 441,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								441,
+								441
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "laravel/app/controllers/HomeController.php",
+					"settings":
+					{
+						"buffer_size": 158,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								106,
+								106
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "laravel/app/routes.php",
+					"settings":
+					{
+						"buffer_size": 436,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								436,
+								436
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "laravel/app/views/layouts/base.blade.php",
+					"settings":
+					{
+						"buffer_size": 1535,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								997,
+								997
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 216.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "laravel/app/views/layouts/footer.blade.php",
+					"settings":
+					{
+						"buffer_size": 39,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								39,
+								39
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "laravel/app/views/layouts/navbar.blade.php",
+					"settings":
+					{
+						"buffer_size": 668,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								593,
+								617
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "laravel/app/views/home/startup.blade.php",
+					"settings":
+					{
+						"buffer_size": 2025,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1769,
+								1769
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 504.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"file": "laravel/public/js/ready.js",
+					"settings":
+					{
+						"buffer_size": 435,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								213,
+								213
+							]
+						],
+						"settings":
+						{
+							"auto_name": "$(document).ready(function(){",
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
 			]
 		}
 	],
@@ -80,7 +374,7 @@
 	},
 	"input":
 	{
-		"height": 0.0
+		"height": 40.0
 	},
 	"layout":
 	{
@@ -130,6 +424,6 @@
 	"show_open_files": false,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 150.0,
+	"side_bar_width": 209.0,
 	"status_bar_visible": true
 }

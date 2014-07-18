@@ -11,7 +11,12 @@
 |
 */
 
-Route::get('/', function()
-{
-	return View::make('hello');
-});
+Route::get('/', 'HomeController@startup');
+
+Route::post('signin', 'UserController@signin');
+
+Route::post('signup', 'UserController@signup');
+
+Route::get('user/confirm/{userId}/{checkCode}', 'UserController@confirm');
+
+Route::get('user/reconfirm/{userId}/{checkCode}', 'UserController@reconfirm');

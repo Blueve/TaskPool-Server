@@ -79,3 +79,11 @@ App::down(function()
 */
 
 require app_path().'/filters.php';
+
+
+Auth::extend('taskpooleloquent', function($app) 
+{
+    $provider =  new \Illuminate\Auth\TaskPoolEloquentUserProvider();
+
+    return new \Illuminate\Auth\Guard($provider, $app['session']);
+});
