@@ -261,7 +261,8 @@ class UserController extends BaseController {
 
 	public function edit()
 	{
-		
+		$this->data['title'] = '编辑个人信息';
+		return View::make('user.edit', $this->data);
 	}
 
 	public function my()
