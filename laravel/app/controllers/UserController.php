@@ -89,8 +89,9 @@ class UserController extends BaseController {
 			$user = new User;
 			$user->name = $input['name'];
 			$user->email = $input['email'];
-			$user->psw_salt = str_random(8);
-			$user->psw_hash = md5($input['password'].$user->psw_salt);
+			list($user->psw_hash, $user->psw_salt) = Helper::HashPassword($input['password']);
+			//$user->psw_salt = str_random(8);
+			//$user->psw_hash = md5($input['password'].$user->psw_salt);
 			$user->created_at = date('Y-m-d H:i:s', time());
 			$user->confirmed = false;
 			$user->save();
