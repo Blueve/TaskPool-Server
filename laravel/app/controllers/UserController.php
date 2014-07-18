@@ -24,14 +24,15 @@ class UserController extends BaseController {
 
 		if($user)
 		{
+			$rememberMe = isset($input['rememberMe']) ? true : false;
 			// 用户存在
-			if(Auth::attempt(array('id' => $user['id'], 'password' => $input['password']), $input['rememberMe']))
+			if(Auth::attempt(array('id' => $user['id'], 'password' => $input['password']), $rememberMe))
 			{
 				// 登陆成功
 				$notice = new Notice(
 					'成功',
 					'登陆已经完成',
-					'登陆成功',
+					'登陆成功!',
 					'你已经完成了登陆',
 					'/',
 					array(),
@@ -43,7 +44,7 @@ class UserController extends BaseController {
 				$notice = new Notice(
 					'失败',
 					'登陆没有完成',
-					'失败!',
+					'失败: (',
 					'登陆失败',
 					'/',
 					array(),
@@ -88,8 +89,9 @@ class UserController extends BaseController {
 			$user = new User;
 			$user->name = $input['name'];
 			$user->email = $input['email'];
-			$user->psw_salt = str_random(8);
-			$user->psw_hash = md5($input['password'].$user->psw_salt);
+			list($user->psw_hash, $user->psw_salt) = Helper::HashPassword($input['password']);
+			//$user->psw_salt = str_random(8);
+			//$user->psw_hash = md5($input['password'].$user->psw_salt);
 			$user->created_at = date('Y-m-d H:i:s', time());
 			$user->confirmed = false;
 			$user->save();
@@ -122,7 +124,25 @@ class UserController extends BaseController {
 				);
 		}
 		
-		$this->data['title'] = '首页';
+		$this->data['title'] = '登录';
+		$this->data = array_merge($this->data, $notice->getData());
+		return View::make('common.notice', $this->data);
+	}
+
+	public function signout()
+	{
+		Auth::logout();
+		$notice = new Notice(
+					'成功',
+					'退出已经完成',
+					'退出成功!',
+					'你已经退出了Task Pool',
+					'/',
+					array(),
+					'success'
+					);
+
+		$this->data['title'] = '退出';
 		$this->data = array_merge($this->data, $notice->getData());
 		return View::make('common.notice', $this->data);
 	}
