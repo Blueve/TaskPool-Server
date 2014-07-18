@@ -189,7 +189,13 @@ class UserController extends BaseController {
 		return View::make('common.notice', $this->data);
 	}
 
+
 	public function edit()
+	{
+		
+	}
+
+	public function my()
 	{
 		
 	}
