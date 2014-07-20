@@ -44,3 +44,16 @@ laravel/app/config/database.php
 *.sublime-project
 *.sublime-workspace
 laravel/app/config/mail.php
+laravel/app/config/database.php
+
+laravel/app/config/database.php
+
+laravel/vendor/autoload.php
+
+laravel/vendor/composer/autoload_classmap.php
+
+laravel/vendor/composer/autoload_files.php
+
+laravel/vendor/composer/autoload_real.php
+
+laravel/vendor/composer/installed.json
