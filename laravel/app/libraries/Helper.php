@@ -13,4 +13,9 @@ class Helper
 	{
 		return $psw_hash === md5($password.$psw_salt);
 	}
+
+	static public function isExpired($date, $limit)
+	{
+		return $limit < (time() - strtotime($date)) ? false : true;
+	}
 }
