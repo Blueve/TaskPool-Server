@@ -201,9 +201,9 @@ class UserController extends BaseController {
 		return View::make('common.notice', $this->data);
 	}
 
-	public function reconfirm($userId, $checkCode)
+	public function reconfirm($userId = null, $checkCode = null)
 	{
-		if($userId == '0' && $checkCode == '0')
+		if($userId === null && $checkCode === null)
 		{
 			// 对于登录后需要重发的用户需要进行额外的操作
 			if(Auth::check())
@@ -266,7 +266,7 @@ class UserController extends BaseController {
 		return View::make('common.notice', $this->data);
 	}
 
-	public function reconfirm($userId, $checkCode)
+	public function unconfirmed($userId, $checkCode)
 	{
 		$notice = new Notice(
 				'警告',
@@ -281,6 +281,26 @@ class UserController extends BaseController {
 		$this->data['title'] = '重新发送确认';
 		$this->data = array_merge($this->data, $notice->getData());
 		return View::make('common.notice', $this->data);
+	}
+
+	public function findpassword($userId = null, $checkCode = null)
+	{
+
+	}
+
+	public function findpassword_post()
+	{
+		
+	}
+
+	public function setnewpassword()
+	{
+		
+	}
+
+	public function my()
+	{
+		
 	}
 
 	public function edit()
@@ -345,10 +365,5 @@ class UserController extends BaseController {
 
 		$this->data = array_merge($this->data, $notice->getData());
 		return View::make('common.notice', $this->data);
-	}
-
-	public function my()
-	{
-		
 	}
 }

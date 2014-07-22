@@ -14,14 +14,15 @@
 Route::get('/', 'HomeController@startup');
 
 Route::post('signin', 'UserController@signin');
-
 Route::post('signup', 'UserController@signup');
-
 Route::get('signout', 'UserController@signout');
 
-Route::get('user/confirm/{userId}/{checkCode}', 'UserController@confirm');
+Route::get('findpassword/{userId?}/{checkcode?}', 'UserController@findpassword');
+Route::post('findpassword', 'UserController@findpassword_post');
+Route::post('setnewpassword', 'UserController@setnewpassword');
 
-Route::get('user/reconfirm/{userId}/{checkCode}', 'UserController@reconfirm');
+Route::get('user/confirm/{userId}/{checkCode}', 'UserController@confirm');
+Route::get('user/reconfirm/{userId?}/{checkCode?}', 'UserController@reconfirm');
 
 Route::group(array('before' => 'auth'), function()
 {
@@ -31,6 +32,5 @@ Route::group(array('before' => 'auth'), function()
 Route::group(array('before' => 'auth|confirmed'), function()
 {
 	Route::get('user/edit', 'UserController@edit');
-
 	Route::post('user/edit', 'UserController@edit_post');
 });
