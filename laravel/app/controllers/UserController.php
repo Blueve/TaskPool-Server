@@ -22,6 +22,16 @@ class UserController extends BaseController {
 			$user = User::where('email', '=', $input['userId'])->first();
 		}
 
+		$notice = new Notice(
+				'失败',
+				'登陆没有完成',
+				'失败: (',
+				'登陆失败',
+				'/',
+				array(),
+				'danger'
+			);
+
 		if($user)
 		{
 			$rememberMe = isset($input['rememberMe']) ? true : false;
@@ -39,20 +49,8 @@ class UserController extends BaseController {
 					'success'
 					);
 			}
-			else
-			{
-				$notice = new Notice(
-					'失败',
-					'登陆没有完成',
-					'失败: (',
-					'登陆失败',
-					'/',
-					array(),
-					'danger'
-					);
-			}
+			
 		}
-
 
 		$this->data['title'] = '登陆';
 		$this->data = array_merge($this->data, $notice->getData());
