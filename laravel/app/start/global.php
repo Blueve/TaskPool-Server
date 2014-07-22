@@ -17,6 +17,7 @@ ClassLoader::addDirectories(array(
 	app_path().'/controllers',
 	app_path().'/models',
 	app_path().'/database/seeds',
+	app_path().'/libaries',
 
 ));
 
@@ -83,7 +84,6 @@ require app_path().'/filters.php';
 
 Auth::extend('taskpooleloquent', function($app) 
 {
-    $provider =  new \Illuminate\Auth\TaskPoolEloquentUserProvider('User');
+    $provider =  new \TaskPool\Auth\TaskPoolEloquentUserProvider('User');
     return $provider;
-    //return new \Illuminate\Auth\Guard($provider, $app['session']);
 });
