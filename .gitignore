@@ -36,7 +36,8 @@ Icon
 .Trashes
 
 # Config files
-laravel/app/config/local
+laravel/app/config/local/mail.php
+laravel/app/config/local/database.php
 
 # Project files
 *.sublime-project
