@@ -48,6 +48,15 @@ Route::filter('auth', function()
 	}
 });
 
+// 必须配合auth filter使用
+Route::filter('confirmed', function()
+{
+	if(Auth::user()->confirmed === false)
+	{
+		return Redirect::to('user/unconfirmed');
+	}
+});
+
 
 Route::filter('auth.basic', function()
 {

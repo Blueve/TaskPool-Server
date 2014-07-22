@@ -26,7 +26,7 @@ Route::get('user/reconfirm/{userId}/{checkCode}', 'UserController@reconfirm');
 Route::group(array('before' => 'auth'), function()
 {
 	Route::get('user/unconfirmed', 'UserCOntroller@unconfirm');
-})
+});
 
 Route::group(array('before' => 'auth|confirmed'), function()
 {
