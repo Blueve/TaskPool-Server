@@ -23,6 +23,14 @@ Route::get('user/confirm/{userId}/{checkCode}', 'UserController@confirm');
 
 Route::get('user/reconfirm/{userId}/{checkCode}', 'UserController@reconfirm');
 
-Route::get('user/edit', 'UserController@edit');
+Route::group(array('before' => 'auth'), function()
+{
+	Route::get('user/unconfirmed', 'UserCOntroller@unconfirm');
+})
 
-Route::post('user/edit', 'UserController@edit_post');
+Route::group(array('before' => 'auth|confirmed'), function()
+{
+	Route::get('user/edit', 'UserController@edit');
+
+	Route::post('user/edit', 'UserController@edit_post');
+});
