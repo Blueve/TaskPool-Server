@@ -153,7 +153,7 @@ class UserController extends BaseController {
 										->where('user_id', '=', $userId)
 										->first();
 		
-		if($toBeConfirmed /* && (time() - $toBeConfirmed->created_at) < 60 * 60 */ )
+		if($toBeConfirmed  && (time() - $toBeConfirmed->created_at) < Config::get('app.confirm_limit'))
 		{
 			// 修正为已验证状态
 			User::where('id', '=', $toBeConfirmed->user_id)->update(array('confirmed' => true));
@@ -206,13 +206,20 @@ class UserController extends BaseController {
 		if($userId == '0' && $checkCode == '0')
 		{
 			// 对于登录后需要重发的用户需要进行额外的操作
-			
-		}
-
-
-		$toBeConfirmed = ToBeConfirmed::where('check_code', '=', $checkCode)
+			if(Auth::check())
+			{
+				$toBeConfirmed = ToBeConfirmed::where('type', '=', 'signin')
 										->where('user_id', '=', $userId)
 										->first();
+			}
+		}
+		else
+		{
+			$toBeConfirmed = ToBeConfirmed::where('check_code', '=', $checkCode)
+										->where('user_id', '=', $userId)
+										->first();
+		}
+
 		if($toBeConfirmed)
 		{
 			// 重新发送邮件
@@ -253,6 +260,23 @@ class UserController extends BaseController {
 				'danger'
 				);
 		}
+
+		$this->data['title'] = '重新发送确认';
+		$this->data = array_merge($this->data, $notice->getData());
+		return View::make('common.notice', $this->data);
+	}
+
+	public function reconfirm($userId, $checkCode)
+	{
+		$notice = new Notice(
+				'警告',
+				'没有通过验证',
+				'验证未完成: |',
+				'你的账户还没有通过邮箱验证，请检查你的邮箱，或点击下方的按钮重新发送一封邮件',
+				'user/reconfirm',
+				array(),
+				'warning'
+				);
 
 		$this->data['title'] = '重新发送确认';
 		$this->data = array_merge($this->data, $notice->getData());
