@@ -151,7 +151,7 @@ class UserController extends BaseController {
 										->where('user_id', '=', $userId)
 										->first();
 		
-		if($toBeConfirmed  && (time() - $toBeConfirmed->created_at) < Config::get('app.confirm_limit'))
+		if($toBeConfirmed  && !Helper::isExpired($toBeConfirmed->created_at, Config::get('app.confirm_limit')))
 		{
 			// 修正为已验证状态
 			User::where('id', '=', $toBeConfirmed->user_id)->update(array('confirmed' => true));
@@ -283,17 +283,184 @@ class UserController extends BaseController {
 
 	public function findpassword($userId = null, $checkCode = null)
 	{
+		$this->data['title'] = '找回密码';
+		$this->data['headerTitle'] = '找回密码';
+		$this->data['headerSubtext'] = 'Find password';
 
+		if($userId === null && $checkCode === null)
+		{
+			return View::make('user.findpassword', $this->data);
+		}
+		else
+		{
+			$toBeConfirmed = ToBeConfirmed::where('check_code', '=', $checkCode)
+										->where('user_id', '=', $userId)
+										->first();
+			if($toBeConfirmed  && Helper::isExpired($toBeConfirmed->created_at, Config::get('app.confirm_limit')))
+			{
+				return View::make('user.setnewpassword', $this->data);
+			}
+			elseif($toBeConfirmed  && !Helper::isExpired($toBeConfirmed->created_at, Config::get('app.confirm_limit')))
+			{
+				// 删除待验证条目
+				ToBeConfirmed::destroy($toBeConfirmed->id);
+				$notice = new Notice(
+					'失败',
+					'链接已失效！',
+					'未能找回密码: (',
+					'你的账户密码找回失败，请你重新申请找回密码',
+					'findpassword',
+					array(),
+					'danger'
+					);
+			}
+			else
+			{
+				$notice = new Notice(
+					'失败',
+					'链接有误！',
+					'未能找回密码: (',
+					'你的账户密码找回失败，请你重新申请找回密码',
+					'findpassword',
+					array(),
+					'danger'
+					);
+			}
+			$this->data['title'] = '用户确认';
+			$this->data = array_merge($this->data, $notice->getData());
+			return View::make('common.notice', $this->data);
+			
+		}
 	}
 
 	public function findpassword_post()
 	{
-		
+		$input = Input::all();
+		$rule = array(
+			'email' => 'required|email',
+			);
+
+		$validator = Validator::make($input, $rule);
+
+		if($validator->fails())
+		{
+			$notice = new Notice(
+				'失败',
+				'找回密码没有完成',
+				'修改失败: (',
+				'邮箱填写存在问题',
+				'user/findpassword',
+				array(),
+				'danger'
+				);
+		}
+		else
+		{
+			//获取用户信息
+			$user = User::where('email', '=', $input['email'])->first();
+			if($user)
+			{
+				// 发送确认邮件
+				$toBeConfirmed = new ToBeConfirmed;
+				$toBeConfirmed->user_id = $user->id;
+				$toBeConfirmed->check_code = str_random(64);
+				$toBeConfirmed->created_at = time();
+				$toBeConfirmed->type = 'findpsw';
+				$toBeConfirmed->save();
+
+				$mailData = array(
+				'userId' => $user->id,
+				'checkCode' => $toBeConfirmed['check_code']
+				);
+				Mail::send('emails.findpsw', $mailData, function($message) use($user)
+				{
+					$message->to($user->email)->subject("[修改密码]修改Task Pool登录密码");
+				});
+
+				$notice = new Notice(
+					'成功',
+					'邮件已经发送成功',
+					'好极了!',
+					'一封邮件已经发送到你的邮箱：<br /><strong>'.($user->email).'</strong><br /> 请尽快查收并进行验证',
+					'/',
+					array(),
+					'success'
+					);
+			}
+			else
+			{
+				$notice = new Notice(
+					'失败',
+					'该邮箱未注册Task Pool',
+					'未注册: (',
+					'请你注册Task Pool吧！',
+					'/',
+					array(),
+					'danger'
+					);
+			}
+
+			
+			$this->data['title'] = '找回密码';
+			$this->data['headerTitle'] = '找回密码';
+			$this->data['headerSubtext'] = 'Find password';
+			$this->data = array_merge($this->data, $notice->getData());
+			return View::make('common.notice', $this->data);
+		}
 	}
 
 	public function setnewpassword()
 	{
-		
+		$input = Input::all();
+		$rule = array(
+			'password' 			=> 'required|min:8',
+			'passwordConfirm' 	=> 'required|same:password'
+			);
+		$validator = Validator::make($input, $rule);
+		if($validator->fails())
+		{
+			$notice = new Notice(
+				'失败',
+				'找回密码没有完成',
+				'找回密码失败: (',
+				'你的填写存在问题',
+				'setnewpassword',
+				array(),
+				'danger'
+				);
+		}
+		else
+		{
+			//这里啦！！！！！
+			//$user = User::where('id', '=', $input['userId'])->first();
+			if($user)
+			{
+				list($user->psw_hash, $user->psw_salt) = Helper::HashPassword($input['password']);
+				$user->save();
+				$notice = new Notice(
+					'成功',
+					'找回密码已完成',
+					'密码已找回: )',
+					'你可以使用新密码登录啦！',
+					'/',
+					array(),
+					'success'
+					);
+			}
+			else
+			{
+				$notice = new Notice(
+					'失败',
+					'找回密码没有完成',
+					'找回密码失败: (',
+					'你的填写存在问题',
+					'setnewpassword',
+					array(),
+					'danger'
+					);
+			}
+		}
+		return View::make('common.notice', $this->data);
 	}
 
 	public function my()
