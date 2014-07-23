@@ -1,3 +1,3 @@
 <footer>
-	<p>@Blueve @Echo 2014</p>
+	<p>@Blueve @Echo - 2014</p>
 </footer>

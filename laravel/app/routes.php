@@ -31,6 +31,8 @@ Route::group(array('before' => 'auth'), function()
 
 Route::group(array('before' => 'auth|confirmed'), function()
 {
+	Route::get('user/my', 'UserController@my');
+
 	Route::get('user/edit', 'UserController@edit');
 	Route::post('user/edit', 'UserController@edit_post');
 });

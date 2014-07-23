@@ -18,4 +18,13 @@ $(document).ready(function()
 		$('#signup_form').slideUp();
 		$('#signin_form').slideDown();
 	});
+
+	// 添加新的列表
+	$('#create_list_pop').popover(
+		{
+			html: true,
+			//trigger: 'focus',
+			title: '创建',
+			content: $('#create_list').html()
+		});
 });

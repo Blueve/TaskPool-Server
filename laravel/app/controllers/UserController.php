@@ -298,11 +298,16 @@ class UserController extends BaseController {
 
 	public function my()
 	{
-		
+		$this->data['headerTitle'] = '主页';
+		$this->data['headerSubtext'] = 'My world';
+		$this->data['title'] = '主页';
+		return View::make('user.my', $this->data);
 	}
 
 	public function edit()
 	{
+		$this->data['headerTitle'] = '修改密码';
+		$this->data['headerSubtext'] = 'Change password';
 		$this->data['title'] = '编辑个人信息';
 		return View::make('user.edit', $this->data);
 	}
