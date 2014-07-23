@@ -11,8 +11,10 @@ class BaseController extends Controller {
 	public function __construct()
 	{
 		$this->data = array(
-			'title' 	=> self::UNDEFINED_ITEM,
-			'pageTag' 	=> self::UNDEFINED_ITEM
+			'title' 		=> self::UNDEFINED_ITEM,
+			'pageTag' 		=> self::UNDEFINED_ITEM,
+			'headerTitle' 	=> self::UNDEFINED_ITEM,
+			'headerSubtext' => self::UNDEFINED_ITEM
 		 );
 	}
 

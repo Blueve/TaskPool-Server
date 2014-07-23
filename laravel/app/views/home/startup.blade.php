@@ -1,7 +1,9 @@
 @extends('layouts.base')
 
 @section('content')
+
   <div class="col-md-4 col-md-offset-4 column">
+    @include('layouts.pageheader')
     {{-- 登录表单 --}}
     <form role="form" method="post" id="signin_form" action="{{{ URL::action('UserController@signin') }}}">
       <div class="form-group">

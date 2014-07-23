@@ -1,6 +1,7 @@
 @extends('layouts.base')
 
 @section('content')
+  @include('layouts.pageheader')
   <div class="col-md-4 col-md-offset-4 column">
     {{-- 编辑个人信息 --}}
     <form role="form" method="post" id="my_edit_form" action="{{{ URL::action('UserController@edit') }}}">

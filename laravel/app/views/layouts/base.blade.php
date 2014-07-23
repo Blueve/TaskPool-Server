@@ -9,6 +9,7 @@
     <!-- Bootstrap -->
     <link href="{{{ asset('css/bootstrap.min.css') }}}" rel="stylesheet">
     <link href="{{{ asset('css/icheck/all.css') }}}" rel="stylesheet">
+    <link href="{{{ asset('css/common.css') }}}" rel="stylesheet">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -17,23 +18,16 @@
     <![endif]-->
   </head>
   <body>
-    <div class="container">
-      <div class="row clearfix">
-        <div class="col-md-12 column">
-          @include('layouts.navbar')
-        </div>
-      </div>
 
-      <div class="row clearfix">
+    @include('layouts.navbar')
+
+    <div class="container">
+      <div class="row">
         @yield('content')
       </div>
 
-      <div class="row clearfix">
-        <div class="col-md-12 column">
-          <hr />
-          @include('layouts.footer')
-        </div>
-      </div>
+      <hr />
+      @include('layouts.footer')
     </div>
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
