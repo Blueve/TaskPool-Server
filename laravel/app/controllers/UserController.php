@@ -296,11 +296,13 @@ class UserController extends BaseController {
 			$toBeConfirmed = ToBeConfirmed::where('check_code', '=', $checkCode)
 										->where('user_id', '=', $userId)
 										->first();
-			if($toBeConfirmed  && Helper::isExpired($toBeConfirmed->created_at, Config::get('app.confirm_limit')))
+			if($toBeConfirmed && !Helper::isExpired($toBeConfirmed->created_at, Config::get('app.findpsw_limit')))
 			{
+				$this->data['userId'] = $userId;
+				$this->data['checkCode'] = $checkCode;
 				return View::make('user.setnewpassword', $this->data);
 			}
-			elseif($toBeConfirmed  && !Helper::isExpired($toBeConfirmed->created_at, Config::get('app.confirm_limit')))
+			elseif($toBeConfirmed && Helper::isExpired($toBeConfirmed->created_at, Config::get('app.findpsw_limit')))
 			{
 				// 删除待验证条目
 				ToBeConfirmed::destroy($toBeConfirmed->id);
@@ -413,6 +415,8 @@ class UserController extends BaseController {
 	{
 		$input = Input::all();
 		$rule = array(
+			'userId'			=> 'required',
+			'checkCode'			=> 'required',
 			'password' 			=> 'required|min:8',
 			'passwordConfirm' 	=> 'required|same:password'
 			);
@@ -424,16 +428,19 @@ class UserController extends BaseController {
 				'找回密码没有完成',
 				'找回密码失败: (',
 				'你的填写存在问题',
-				'setnewpassword',
+				'/',
 				array(),
 				'danger'
 				);
 		}
 		else
 		{
-			//这里啦！！！！！
-			//$user = User::where('id', '=', $input['userId'])->first();
-			if($user)
+			$user = User::where('id', '=', $input['userId'])->first();
+			
+			$toBeConfirmed = ToBeConfirmed::where('check_code', '=', $input['checkCode'])
+										->where('user_id', '=', $input['userId'])
+										->first();
+			if($user && $toBeConfirmed)
 			{
 				list($user->psw_hash, $user->psw_salt) = Helper::HashPassword($input['password']);
 				$user->save();
@@ -446,6 +453,7 @@ class UserController extends BaseController {
 					array(),
 					'success'
 					);
+				ToBeConfirmed::destroy($toBeConfirmed->id);
 			}
 			else
 			{
@@ -454,12 +462,16 @@ class UserController extends BaseController {
 					'找回密码没有完成',
 					'找回密码失败: (',
 					'你的填写存在问题',
-					'setnewpassword',
+					'/',
 					array(),
 					'danger'
 					);
 			}
 		}
+		$this->data['title'] = '找回密码';
+		$this->data['headerTitle'] = '找回密码';
+		$this->data['headerSubtext'] = 'Find password';
+		$this->data = array_merge($this->data, $notice->getData());
 		return View::make('common.notice', $this->data);
 	}
 

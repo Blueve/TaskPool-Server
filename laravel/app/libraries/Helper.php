@@ -16,6 +16,6 @@ class Helper
 
 	static public function isExpired($date, $limit)
 	{
-		return $limit < (time() - strtotime($date)) ? false : true;
+		return (time() - strtotime($date)) < $limit ? false : true ;
 	}
 }
