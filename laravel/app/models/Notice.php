@@ -4,17 +4,21 @@ class Notice{
 
 	private $data;
 
-	public function __construct($noticeStatus, $noticeInfo, $title, $content, $route = '', $routeValue, $type = 'info')
+	const success = "success";
+	const info = "info";
+	const warning = "warning";
+	const danger = "danger";
+
+	public function __construct($type, $arr, $route = '/', $routeValue = array())
 	{
 		$this->data = array(
-			'noticeStatus' => $noticeStatus,
-			'noticeInfo' => $noticeInfo,
-			'noticeTitle' => $title,
-			'noticeContent' => $content,
-			'noticeRoute' => $route,
-			'noticeRouteValue' => $routeValue,
-			'noticeType' => $type
+				'noticeType' => $type,
+				'noticeTitle' => $arr['title'],
+				'noticeContent' => $arr['content'],
+				'noticeRoute' => $route,
+				'noticeRouteValue' => $routeValue,
 			);
+
 	}
 
 	public function getData()

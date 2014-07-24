@@ -2,6 +2,13 @@
 
 class Helper
 {
+	static public function VarDump($var)
+	{
+		echo '<pre>';
+		print_r($var);
+		echo '</pre>';
+	}
+
 	static public function HashPassword($password)
 	{
 		$psw_salt = str_random(8);

@@ -5,125 +5,59 @@ class UserController extends BaseController {
 	public function signin()
 	{
 		// 对输入进行校验
-		$input = Input::all();
-		$rule = array(
-			'userId' => 'email',
-			);
-		$validator = Validator::make($input, $rule);
+		$signinForm = new SigninForm(Input::all());
+		$user = User::retrieveByNameOrEmail($signinForm->userId);
 
-		if($validator->fails())
-		{
-			// 判定为使用用户名登陆
-			$user = User::where('name', '=', $input['userId'])->first();
-		}
-		else
-		{
-			// 判定为使用邮箱登陆
-			$user = User::where('email', '=', $input['userId'])->first();
-		}
-
-		$notice = new Notice(
-				'失败',
-				'登陆没有完成',
-				'失败: (',
-				'登陆失败',
-				'/',
-				array(),
-				'danger'
-			);
+		$notice = new Notice(Notice::danger, Lang::get('notice.signin_error'));
 
 		if($user)
 		{
-			$rememberMe = isset($input['rememberMe']) ? true : false;
+			$credentials = array(
+				'id' => $user['id'], 
+				'password' => $signinForm->password);
+
 			// 用户存在
-			if(Auth::attempt(array('id' => $user['id'], 'password' => $input['password']), $rememberMe))
+			if(Auth::attempt($credentials, $signinForm->rememberMe))
 			{
 				// 登陆成功
-				$notice = new Notice(
-					'成功',
-					'登陆已经完成',
-					'登陆成功!',
-					'你已经完成了登陆',
-					'/',
-					array(),
-					'success'
-					);
+				$notice = new Notice(Notice::success, Lang::get('notice.signin_success'));
 			}
 			
 		}
 
-		$this->data['title'] = '登陆';
-		$this->data = array_merge($this->data, $notice->getData());
+		$this->MergeData(Lang::get('base.signin'));
+		$this->MergeData($notice->getData());
 		return View::make('common.notice', $this->data);
 	}
 
 	public function signup()
 	{
 		// 对输入进行校验
-		$input = Input::all();
-		$rule = array(
-			'email' 			=> 'required|email|unique:tp_users',
-			'name' 				=> 'required|min:6|unique:tp_users',
-			'password' 			=> 'required|min:8',
-			'passwordConfirm' 	=> 'required|same:password'
-			);
-		$validator = Validator::make($input, $rule);
+		$signupForm = new SignupForm(Input::all());
 
-		if($validator->fails())
-		{
-			$notice = new Notice(
-				'失败',
-				'注册没有完成',
-				'存在问题: (',
-				'你的填写存在问题',
-				'/',
-				array(),
-				'danger'
-				);
-		}
-		else
+		$notice = new Notice(Notice::danger, Lang::get('notice.signup_error'));
+
+		if($signupForm->isVaild())
 		{
 			// 创建用户账户
-			$user = new User;
-			$user->name = $input['name'];
-			$user->email = $input['email'];
-			list($user->psw_hash, $user->psw_salt) = Helper::HashPassword($input['password']);
-			//$user->psw_salt = str_random(8);
-			//$user->psw_hash = md5($input['password'].$user->psw_salt);
-			$user->created_at = date('Y-m-d H:i:s', time());
-			$user->confirmed = false;
-			$user->save();
-
+			$user = User::newUser($signupForm);
 			// 发送确认邮件
-			$toBeConfirmed = new ToBeConfirmed;
-			$toBeConfirmed->user_id = $user->id;
-			$toBeConfirmed->check_code = str_random(64);
-			$toBeConfirmed->created_at = time();
-			$toBeConfirmed->type = 'signin';
-			$toBeConfirmed->save();
+			$toBeConfirmed = ToBeConfirmed::newSignupConfirm($user->id);
 
 			$mailData = array(
 				'userId' => $user->id,
-				'checkCode' => $toBeConfirmed['check_code']
+				'checkCode' => $toBeConfirmed->checkCode,
 				);
 			Mail::send('emails.welcome', $mailData, function($message) use($user)
 			{
-				$message->to($user->email)->subject("[验证邮箱]欢迎加入Task Pool");
+				$message->to($user->email)->subject(Lang::get('site.signup_email_subject'));
 			});
-
-			$notice = new Notice(
-				'成功',
-				'注册已经完成',
-				'好极了!',
-				'你已经完成了注册<br />一封邮件已经发送到你的邮箱：<br /><strong>'.($user->email).'</strong><br /> 请尽快查收并进行验证',
-				'/',
-				array(),
-				'success'
-				);
+			$notice = new Notice(Notice::success, 
+				Lang::get('notice.signup_success', array('email' => $user->email)));
 		}
 		
-		$this->data['title'] = '登录';
-		$this->data = array_merge($this->data, $notice->getData());
+		$this->MergeData(Lang::get('base.signup'));
+		$this->MergeData($notice->getData());
 		return View::make('common.notice', $this->data);
 	}
 

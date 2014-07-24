@@ -7,45 +7,45 @@
     {{-- 登录表单 --}}
     <form role="form" method="post" id="signin_form" action="{{{ URL::action('UserController@signin') }}}">
       <div class="form-group">
-         <label for="userId">用户名/Email</label><input type="text" class="form-control" id="userId" name="userId" />
+         <label for="userId">{{{ Lang::get('site.user_id') }}}</label><input type="text" class="form-control" id="userId" name="userId" />
       </div>
       <div class="form-group">
-         <label for="password">密码</label><input type="password" class="form-control" id="password" name="password" />
+         <label for="password">{{{ Lang::get('site.password') }}}</label><input type="password" class="form-control" id="password" name="password" />
       </div>
       <div class="form-group">
         <div class="row">
           <div class='col-md-6'>
-            <label><input type="checkbox" class="checkbox-normal" id="rememberMe" name="rememberMe"/> 记住我</label>
+            <label><input type="checkbox" class="checkbox-normal" id="rememberMe" name="rememberMe" value="0"/> {{{ Lang::get('site.remember_me') }}}</label>
           </div>
           <div class='col-md-6'>
             <strong>
-              <a href="{{{ URL::action('HomeController@startup') }}}"> 忘记密码？</a>
+              <a href="{{{ URL::action('HomeController@startup') }}}"> {{{ Lang::get('site.forgot_psw') }}}</a>
             </strong>
           </div>
         </div>
       </div>
       <div class="form-group">
-        <button type="submit" class="btn btn-lg btn-primary btn-block">登录</button>
-        <button type="button" class="btn btn-default btn-lg btn-block" id="signup_button">注册</button>
+        <button type="submit" class="btn btn-lg btn-primary btn-block">{{{ Lang::get('site.signin') }}}</button>
+        <button type="button" class="btn btn-default btn-lg btn-block" id="signup_button">{{{ Lang::get('site.signup') }}}</button>
       </div>
     </form>
     {{-- 注册表单 --}}
     <form role="form" method="post" id="signup_form" action="{{{ URL::action('UserController@signup') }}}">
       <div class="form-group">
-         <label for="email">Email</label><input type="email" class="form-control" id="email" name="email"/>
+         <label for="email">{{{ Lang::get('site.email') }}}</label><input type="email" class="form-control" id="email" name="email"/>
       </div>
       <div class="form-group">
-         <label for="name">用户名</label><input type="text" class="form-control" id="name" name="name"/>
+         <label for="name">{{{ Lang::get('site.username') }}}</label><input type="text" class="form-control" id="name" name="name"/>
       </div>
       <div class="form-group">
-         <label for="password">密码</label><input type="password" class="form-control" id="password" name="password"/>
+         <label for="password">{{{ Lang::get('site.password') }}}</label><input type="password" class="form-control" id="password" name="password"/>
       </div>
       <div class="form-group">
-         <label for="passwordConfirm">密码确认</label><input type="password" class="form-control" id="passwordConfirm" name="passwordConfirm"/>
+         <label for="passwordConfirm">{{{ Lang::get('site.password_confirm') }}}</label><input type="password" class="form-control" id="passwordConfirm" name="passwordConfirm"/>
       </div>
       <div class="form-group">
-        <button type="submit" class="btn btn-lg btn-primary btn-block">注册</button>
-        <button type="button" class="btn btn-default btn-lg btn-block" id="signin_button">登录</button>
+        <button type="submit" class="btn btn-lg btn-primary btn-block">{{{ Lang::get('site.signup') }}}</button>
+        <button type="button" class="btn btn-default btn-lg btn-block" id="signin_button">{{{ Lang::get('site.signin') }}}</button>
       </div>
     </form>
   </div>

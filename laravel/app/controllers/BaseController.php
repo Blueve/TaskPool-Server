@@ -18,6 +18,16 @@ class BaseController extends Controller {
 		 );
 	}
 
+	protected function MergeData($arr)
+	{
+		$this->data = array_merge($this->data, $arr);
+	}
+
+	protected function SetPageTag($tagName)
+	{
+		$this->data['pageTag'] = $tagName;
+	}
+
 	/**
 	 * Setup the layout used by the controller.
 	 *

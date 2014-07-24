@@ -20,7 +20,7 @@ class CreateTpTobeconfirmedTable extends Migration {
 			$table->char('check_code', 64);			// 校验码(页面标识串)
 			$table->timestamp('created_at');		// 创建时间戳
 			$table->enum('type', 
-				array('findpsw', 'signin'));		// 确认类型
+				array('findpsw', 'signup'));		// 确认类型
 		});
 	}
 

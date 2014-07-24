@@ -4,11 +4,21 @@
   
   <div class="col-md-6 col-md-offset-4 column">
     <div class="alert alert-{{{ $noticeType }}}" role="alert">
-      <strong>{{{ $noticeStatus }}}</strong>{{{ $noticeInfo }}}
+      <strong>
+      @if($noticeType == 'success')
+        {{{ Lang::get('notice.success') }}}
+      @elseif($noticeType == 'info')
+        {{{ Lang::get('notice.info') }}}
+      @elseif($noticeType == 'warning')
+        {{{ Lang::get('notice.warning') }}}
+      @else
+        {{{ Lang::get('notice.danger') }}}
+      @endif
+      </strong>
     </div>
     <div class="jumbotron">
       <h1>{{{ $noticeTitle }}}</h1>
-      <p>{{ htmlspecialchars_decode($noticeContent) }}</p>
+      <p>{{ $noticeContent }}</p>
       <p><a class="btn btn-primary btn-lg" role="button" href="{{{ URL::to($noticeRoute, $noticeRouteValue) }}}">继续</a></p>
     </div>
   </div>
