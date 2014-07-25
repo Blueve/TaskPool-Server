@@ -49,4 +49,5 @@ return array(
 					"headerTitle" => "修改密码",
 					"headerSubtext" => "Change password",
 				),
+
 );
