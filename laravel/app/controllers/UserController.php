@@ -37,7 +37,7 @@ class UserController extends BaseController {
 
 		$notice = new Notice(Notice::danger, Lang::get('notice.signup_error'));
 
-		if($signupForm->isVaild())
+		if($signupForm->isValid())
 		{
 			// 创建用户账户
 			$user = User::newUser($signupForm);
@@ -45,9 +45,9 @@ class UserController extends BaseController {
 			$toBeConfirmed = ToBeConfirmed::newSignupConfirm($user->id);
 
 			$mailData = array(
-				'userId' => $user->id,
-				'checkCode' => $toBeConfirmed->checkCode,
-				);
+							'userId' => $user->id,
+							'checkCode' => $toBeConfirmed->check_code,
+						);
 			Mail::send('emails.welcome', $mailData, function($message) use($user)
 			{
 				$message->to($user->email)->subject(Lang::get('site.signup_email_subject'));
@@ -64,72 +64,37 @@ class UserController extends BaseController {
 	public function signout()
 	{
 		Auth::logout();
-		$notice = new Notice(
-					'成功',
-					'退出已经完成',
-					'退出成功!',
-					'你已经退出了Task Pool',
-					'/',
-					array(),
-					'success'
-					);
+		$notice = new Notice(Notice::success, Lang::get('notice.signout_success'));
 
-		$this->data['title'] = '退出';
-		$this->data = array_merge($this->data, $notice->getData());
+		$this->MergeData(Lang::get('base.signout'));
+		$this->MergeData($notice->getData());
 		return View::make('common.notice', $this->data);
 	}
 
 	public function confirm($userId, $checkCode)
 	{
-		$toBeConfirmed = ToBeConfirmed::where('check_code', '=', $checkCode)
-										->where('user_id', '=', $userId)
-										->first();
+		$toBeConfirmed = ToBeConfirmed::retrieveSignupConfirm($userId, $checkCode);
 		
-		if($toBeConfirmed  && !Helper::isExpired($toBeConfirmed->created_at, Config::get('app.confirm_limit')))
+		if($toBeConfirmed && !$toBeConfirmed->isSignupConfirmExpired())
 		{
 			// 修正为已验证状态
-			User::where('id', '=', $toBeConfirmed->user_id)->update(array('confirmed' => true));
+			User::confirmUser($toBeConfirmed->user_id);
 			// 删除待验证条目
 			ToBeConfirmed::destroy($toBeConfirmed->id);
-
-			$notice = new Notice(
-				'成功',
-				'邮箱确认已经完成',
-				'开始使用吧!',
-				'你已经完成了注册流程，快来体验Task Pool吧!',
-				'/',
-				array(),
-				'success'
-				);
+			$notice = new Notice(Notice::success, Lang::get('notice.confirm_success'));
 		}
 		elseif($toBeConfirmed)
 		{
-			$notice = new Notice(
-				'失败',
-				'邮箱确认没有完成',
-				'过期了: (',
-				'你的验证邮件可能已经过期, 请点击继续，系统将重新发送一封邮件',
-				'user/reconfirm',
-				array($userId, $checkCode),
-				'danger'
-				);
+			$notice = new Notice(Notice::danger, Lang::get('notice.confirm_expired'),
+								'user/reconfirm', array($userId, $checkCode));
 		}
 		else
 		{
-			$notice = new Notice(
-				'失败',
-				'验证环节发生了错误',
-				'验证失败: (',
-				'你的验证连接不合法',
-				'/',
-				array(),
-				'danger'
-				);
+			$notice = new Notice(Notice::danger, Lang::get('notice.confirm_error'));
 		}
 		
-
-		$this->data['title'] = '用户确认';
-		$this->data = array_merge($this->data, $notice->getData());
+		$this->MergeData(Lang::get('base.confirm'));
+		$this->MergeData($notice->getData());
 		return View::make('common.notice', $this->data);
 	}
 
@@ -140,86 +105,55 @@ class UserController extends BaseController {
 			// 对于登录后需要重发的用户需要进行额外的操作
 			if(Auth::check())
 			{
-				$toBeConfirmed = ToBeConfirmed::where('type', '=', 'signin')
-										->where('user_id', '=', $userId)
-										->first();
+				$toBeConfirmed = ToBeConfirmed::retrieveConfirm($userId, ToBeConfirmed::signup);
 			}
 		}
 		else
 		{
-			$toBeConfirmed = ToBeConfirmed::where('check_code', '=', $checkCode)
-										->where('user_id', '=', $userId)
-										->first();
+			$toBeConfirmed = ToBeConfirmed::retrieveSignupConfirm($userId, $checkCode);
 		}
 
 		if($toBeConfirmed)
 		{
 			// 重新发送邮件
 			$user = User::find($toBeConfirmed->user_id);
-
-			$toBeConfirmed->check_code = str_random(64);
-			$toBeConfirmed->created_at = time();
-			$toBeConfirmed->save();
+			// 更新已有条目
+			$toBeConfirmed->updateSignupConfirm();
+			
 			$mailData = array(
-				'userId' => $user->id,
-				'checkCode' => $toBeConfirmed['check_code']
-				);
+							'userId' => $user->id,
+							'checkCode' => $toBeConfirmed->check_code,
+						);
 
 			Mail::send('emails.welcome', $mailData, function($message) use($user)
 			{
-				$message->to($user->email)->subject("[验证邮箱]欢迎加入Task Pool");
+				$message->to($user->email)->subject(Lang::get('signup_email_subject'));
 			});
 
-			$notice = new Notice(
-				'成功',
-				'重新发送完成',
-				'正在努力!',
-				'一封新的确认邮件已经发送到：<br /><strong>'.($user->email).'</strong><br /> 请尽快查收并进行验证',
-				'/',
-				array(),
-				'success'
-				);
+			$notice = new Notice(Notice::success, Lang::get('notice.reconfirm_success'));
 		}
 		else
 		{
-			$notice = new Notice(
-				'失败',
-				'验证环节发生了错误',
-				'验证失败: (',
-				'你的验证连接不合法',
-				'/',
-				array(),
-				'danger'
-				);
+			$notice = new Notice(Notice::danger, Lang::get('notice.confirm_error'));
 		}
 
-		$this->data['title'] = '重新发送确认';
-		$this->data = array_merge($this->data, $notice->getData());
+		$this->MergeData(Lang::get('base.reconfirm'));
+		$this->MergeData($notice->getData());
 		return View::make('common.notice', $this->data);
 	}
 
 	public function unconfirmed($userId, $checkCode)
 	{
-		$notice = new Notice(
-				'警告',
-				'没有通过验证',
-				'验证未完成: |',
-				'你的账户还没有通过邮箱验证，请检查你的邮箱，或点击下方的按钮重新发送一封邮件',
-				'user/reconfirm',
-				array(),
-				'warning'
-				);
+		$notice = new Notice(Notice::warning, Lang::get('notice.unconfirmed'), 'user/reconfirm');
 
-		$this->data['title'] = '重新发送确认';
-		$this->data = array_merge($this->data, $notice->getData());
+		$this->MergeData(Lang::get('base.unconfirmed'));
+		$this->MergeData($notice->getData());
 		return View::make('common.notice', $this->data);
 	}
 
 	public function findpassword($userId = null, $checkCode = null)
 	{
-		$this->data['title'] = '找回密码';
-		$this->data['headerTitle'] = '找回密码';
-		$this->data['headerSubtext'] = 'Find password';
+		$this->MergeData(Lang::get('base.findpassword'));
 
 		if($userId === null && $checkCode === null)
 		{
@@ -227,259 +161,140 @@ class UserController extends BaseController {
 		}
 		else
 		{
-			$toBeConfirmed = ToBeConfirmed::where('check_code', '=', $checkCode)
-										->where('user_id', '=', $userId)
-										->first();
-			if($toBeConfirmed && !Helper::isExpired($toBeConfirmed->created_at, Config::get('app.findpsw_limit')))
+			$toBeConfirmed = ToBeConfirmed::retrieveFindPswConfirm($userId, $checkCode);
+			if($toBeConfirmed && !$toBeConfirmed->isFindPswConfirmExpired())
 			{
-				$this->data['userId'] = $userId;
-				$this->data['checkCode'] = $checkCode;
-				return View::make('user.setnewpassword', $this->data);
-			}
-			elseif($toBeConfirmed && Helper::isExpired($toBeConfirmed->created_at, Config::get('app.findpsw_limit')))
-			{
-				// 删除待验证条目
-				ToBeConfirmed::destroy($toBeConfirmed->id);
-				$notice = new Notice(
-					'失败',
-					'链接已失效！',
-					'未能找回密码: (',
-					'你的账户密码找回失败，请你重新申请找回密码',
-					'findpassword',
-					array(),
-					'danger'
-					);
+				if($toBeConfirmed->isFindPswConfirmExpired())
+				{
+					// 删除待验证条目
+					ToBeConfirmed::destroy($toBeConfirmed->id);
+					$notice = new Notice(Notice::danger, Lang::get('notice.findpsw_expired'));
+				}
+				else
+				{
+					$this->data['userId'] = $userId;
+					$this->data['checkCode'] = $checkCode;
+					return View::make('user.setnewpassword', $this->data);
+				}
+				
 			}
 			else
 			{
-				$notice = new Notice(
-					'失败',
-					'链接有误！',
-					'未能找回密码: (',
-					'你的账户密码找回失败，请你重新申请找回密码',
-					'findpassword',
-					array(),
-					'danger'
-					);
+				$notice = new Notice(Notice::danger, Lang::get('notice.findpsw_error'));
 			}
-			$this->data['title'] = '用户确认';
-			$this->data = array_merge($this->data, $notice->getData());
-			return View::make('common.notice', $this->data);
-			
 		}
+
+		$this->MergeData(Lang::get('base.findpassword'));
+		$this->MergeData($notice->getData());
+		return View::make('common.notice', $this->data);
 	}
 
 	public function findpassword_post()
 	{
-		$input = Input::all();
-		$rule = array(
-			'email' => 'required|email',
-			);
+		$findpasswordForm = new FindPasswordForm(Input::all());
 
-		$validator = Validator::make($input, $rule);
-
-		if($validator->fails())
+		if($findpasswordForm->isValid())
 		{
-			$notice = new Notice(
-				'失败',
-				'找回密码没有完成',
-				'修改失败: (',
-				'邮箱填写存在问题',
-				'user/findpassword',
-				array(),
-				'danger'
-				);
-		}
-		else
-		{
-			//获取用户信息
-			$user = User::where('email', '=', $input['email'])->first();
+			$user = User::retrieveByEamil($findpasswordForm->email);
 			if($user)
 			{
-				// 发送确认邮件
-				$toBeConfirmed = new ToBeConfirmed;
-				$toBeConfirmed->user_id = $user->id;
-				$toBeConfirmed->check_code = str_random(64);
-				$toBeConfirmed->created_at = time();
-				$toBeConfirmed->type = 'findpsw';
-				$toBeConfirmed->save();
-
+				// 发送修改密码的邮件
+				$toBeConfirmed = ToBeConfirmed::newFindPasswordConfirm($user->id);
 				$mailData = array(
-				'userId' => $user->id,
-				'checkCode' => $toBeConfirmed['check_code']
-				);
+								'userId' => $user->id,
+								'checkCode' => $toBeConfirmed->check_code,
+							);
 				Mail::send('emails.findpsw', $mailData, function($message) use($user)
 				{
-					$message->to($user->email)->subject("[修改密码]修改Task Pool登录密码");
+					$message->to($user->email)->subject(Lang::get('site.findpsw_email_subject'));
 				});
-
-				$notice = new Notice(
-					'成功',
-					'邮件已经发送成功',
-					'好极了!',
-					'一封邮件已经发送到你的邮箱：<br /><strong>'.($user->email).'</strong><br /> 请尽快查收并进行验证',
-					'/',
-					array(),
-					'success'
-					);
+				$notice = new Notice(Notice::success, Lang::get('notice.findpsw_success', array('eamil' => $user->email)));
 			}
 			else
 			{
-				$notice = new Notice(
-					'失败',
-					'该邮箱未注册Task Pool',
-					'未注册: (',
-					'请你注册Task Pool吧！',
-					'/',
-					array(),
-					'danger'
-					);
+				$notice = new Notice(Notice::danger, Lang::get('notice.findpsw_miss'));
 			}
 
-			
-			$this->data['title'] = '找回密码';
-			$this->data['headerTitle'] = '找回密码';
-			$this->data['headerSubtext'] = 'Find password';
-			$this->data = array_merge($this->data, $notice->getData());
-			return View::make('common.notice', $this->data);
 		}
+		else
+		{
+			$notice = new Notice(Notice::danger, Lang::get('notice.findpsw_invalid'), 'user/findpassword');
+
+		}
+
+		$this->MergeData(Lang::get('base.findpassword'));
+		$this->MergeData($notice->getData());
+		return View::make('common.notice', $this->data);
 	}
 
 	public function setnewpassword()
 	{
-		$input = Input::all();
-		$rule = array(
-			'userId'			=> 'required',
-			'checkCode'			=> 'required',
-			'password' 			=> 'required|min:8',
-			'passwordConfirm' 	=> 'required|same:password'
-			);
-		$validator = Validator::make($input, $rule);
-		if($validator->fails())
+		$setPasswordForm = new SetPasswordForm(Input::all());
+		if($setPasswordForm->isValid())
 		{
-			$notice = new Notice(
-				'失败',
-				'找回密码没有完成',
-				'找回密码失败: (',
-				'你的填写存在问题',
-				'/',
-				array(),
-				'danger'
-				);
-		}
-		else
-		{
-			$user = User::where('id', '=', $input['userId'])->first();
-			
-			$toBeConfirmed = ToBeConfirmed::where('check_code', '=', $input['checkCode'])
-										->where('user_id', '=', $input['userId'])
-										->first();
+			$user = User::find($setPasswordForm->userId);
+			$toBeConfirmed = ToBeConfirmed::retrieveFindPswConfirm(
+				$setPasswordForm->userId, 
+				$setPasswordForm->checkCode);
 			if($user && $toBeConfirmed)
 			{
-				list($user->psw_hash, $user->psw_salt) = Helper::HashPassword($input['password']);
-				$user->save();
-				$notice = new Notice(
-					'成功',
-					'找回密码已完成',
-					'密码已找回: )',
-					'你可以使用新密码登录啦！',
-					'/',
-					array(),
-					'success'
-					);
+				$user->updatePassword($setPasswordForm->password);
 				ToBeConfirmed::destroy($toBeConfirmed->id);
+				$notice = new Notice(Notice::success, Lang::get('notice.setpsw_success'));
 			}
 			else
 			{
-				$notice = new Notice(
-					'失败',
-					'找回密码没有完成',
-					'找回密码失败: (',
-					'你的填写存在问题',
-					'/',
-					array(),
-					'danger'
-					);
+				$notice = new Notice(Notice::danger, Lang::get('notice.setpsw_error'));
 			}
 		}
-		$this->data['title'] = '找回密码';
-		$this->data['headerTitle'] = '找回密码';
-		$this->data['headerSubtext'] = 'Find password';
-		$this->data = array_merge($this->data, $notice->getData());
+		else
+		{
+			$notice = new Notice(Notice::danger, Lang::get('notice.setpsw_invalid'));
+		}
+
+		$this->MergeData(Lang::get('base.findpassword'));
+		$this->MergeData($notice->getData());
 		return View::make('common.notice', $this->data);
 	}
 
 	public function my()
 	{
-		$this->data['headerTitle'] = '主页';
-		$this->data['headerSubtext'] = 'My world';
-		$this->data['title'] = '主页';
+		$this->MergeData(Lang::get('base.home'));
 		return View::make('user.my', $this->data);
 	}
 
 	public function edit()
 	{
-		$this->data['headerTitle'] = '修改密码';
-		$this->data['headerSubtext'] = 'Change password';
-		$this->data['title'] = '编辑个人信息';
+		$this->MergeData(Lang::get('base.setting_edit'));
 		return View::make('user.edit', $this->data);
 	}
 
 	public function edit_post()
 	{
-		$input = Input::all();
-		$rule = array(
-			'oldPassword' 		=> 'required',
-			'password' 			=> 'required|min:8',
-			'passwordConfirm' 	=> 'required|same:password'
-			);
-		$validator = Validator::make($input, $rule);
-
-		if($validator->fails())
-		{
-			$notice = new Notice(
-				'失败',
-				'个人信息修改没有完成',
-				'修改失败: (',
-				'你的填写存在问题',
-				'user/edit',
-				array(),
-				'danger'
-				);
-		}
-		else
+		$settingEditForm = new SettingEditForm(Input::all);
+		if($settingEditForm->isValid())
 		{
 			$user = Auth::user();
-			if(Helper::CheckPassword($user->psw_hash, $user->psw_salt, $input['oldPassword']))
+			if(Helper::CheckPassword($user->psw_hash, 
+									 $user->psw_salt, 
+									 $settingEditForm->oldPassword))
 			{
-				list($user->psw_hash, $user->psw_salt) = Helper::HashPassword($input['password']);
-				$user->save();
+				$user->updatePassword($SettingEditForm->password);
 				Auth::logout();
-				$notice = new Notice(
-					'成功',
-					'个人信息修改完成',
-					'修改成功: )',
-					'密码修改成功，请重新登录！',
-					'/',
-					array(),
-					'success'
-				);
+				$notice = new Notice(Notice::success, Lang::get('changepsw_success'));
 			}
 			else
 			{
-				$notice = new Notice(
-					'失败',
-					'个人信息修改没有完成',
-					'修改失败: (',
-					'你的原密码填写错误',
-					'user/edit',
-					array(),
-					'danger'
-				);
+				$notice = new Notice(Notice::danger, Lang::get('changepsw_oldpsw_invalid'));
 			}
 		}
+		else
+		{
+			$notice = new Notice(Notice::danger, Lang::get('changepsw_invalid'), 'user/edit');
+		}
 
-		$this->data = array_merge($this->data, $notice->getData());
+		$this->MergeData(Lang::get('base.setting_edit'));
+		$this->MergeData($notice->getData());
 		return View::make('common.notice', $this->data);
 	}
 }

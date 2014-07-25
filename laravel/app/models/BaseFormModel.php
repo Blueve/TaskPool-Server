@@ -27,7 +27,7 @@ class BaseFormModel
 
 	public function isValid()
 	{
-		return $_validator->fails();
+		return !$_validator->fails();
 	}
 
 }

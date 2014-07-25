@@ -14,7 +14,7 @@ class SigninForm extends BaseFormModel
 			'password' 			=> 'required|min:8',
 			'passwordConfirm' 	=> 'required|same:password'
 			);
-		
+
 		$this->init($input, $rule);
 
 		// 设定rememberMe的值

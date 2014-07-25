@@ -20,4 +20,5 @@ return array(
 	"signup" => "注册",
 
 	"signup_email_subject" => "[验证邮箱]欢迎加入Task Pool",
+	"findpsw_email_subject" => "[修改密码]修改Task Pool登录密码",
 );

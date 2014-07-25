@@ -52,6 +52,17 @@ class User extends Eloquent implements UserInterface {
 		return $user;
 	}
 
+	public static function confirmUser($userId)
+	{
+		User::where('id', '=', $userId)->update(array('confirmed' => true));
+	}
+
+	public function updatePassword($password)
+	{
+		list($user->psw_hash, $user->psw_salt) = Helper::HashPassword($password);
+		$user->save();
+	}
+
 
 	/**
 	 * Get the unique identifier for the user.
