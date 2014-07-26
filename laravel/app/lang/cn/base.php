@@ -3,8 +3,8 @@
 return array(
 
 	'startup' => array(
-					"title" => "首页",
-					"headerTitle" => "欢迎",
+					"title"         => "首页",
+					"headerTitle"   => "欢迎",
 					"headerSubtext" => "Signin or Signup",
 				),
 
@@ -33,20 +33,20 @@ return array(
 				),
 
 	'findpassword' => array(
-					"title" => "找回密码",
-					"headerTitle" => "找回密码",
+					"title"         => "找回密码",
+					"headerTitle"   => "找回密码",
 					"headerSubtext" => "Find password",
 				),
 
 	'home' => array(
-					"title" => "主页",
-					"headerTitle" => "主页",
+					"title"         => "主页",
+					"headerTitle"   => "主页",
 					"headerSubtext" => "My world",
 				),
 
 	'setting_edit' => array(
-					"title" => "编辑个人信息",
-					"headerTitle" => "修改密码",
+					"title"         => "编辑个人信息",
+					"headerTitle"   => "修改密码",
 					"headerSubtext" => "Change password",
 				),
 
