@@ -28,7 +28,8 @@ $env = $app->detectEnvironment(array(
 
 	'local' => array(
 		'Blueve-PC',
-		'ECHO'),
+		'ECHO',
+		'localhost'),
 
 ));
 
