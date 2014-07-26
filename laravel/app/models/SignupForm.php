@@ -9,6 +9,13 @@ class SignupForm extends BaseFormModel
 
 	public function __construct($input)
 	{
-		$this->init($input);
+		$rule = array(
+			'email' 			=> 'required|email|unique:tp_users',
+			'name' 				=> 'required|min:6|unique:tp_users',
+			'password' 			=> 'required|min:8',
+			'passwordConfirm' 	=> 'required|same:password'
+			);
+
+		$this->init($input, $rule);
 	}
 }
