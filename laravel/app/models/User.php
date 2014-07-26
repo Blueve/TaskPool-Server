@@ -44,7 +44,7 @@ class User extends Eloquent implements UserInterface {
 		$user->name = $signupForm->name;
 		$user->email = $signupForm->email;
 
-		list($user->psw_hash, $user->psw_salt) = Helper::HashPassword($signupForm->email);
+		list($user->psw_hash, $user->psw_salt) = Helper::HashPassword($signupForm->password);
 
 		$user->created_at = date('Y-m-d H:i:s', time());
 		$user->confirmed = false;
