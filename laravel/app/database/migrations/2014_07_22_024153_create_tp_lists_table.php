@@ -18,14 +18,15 @@ class CreateTpListsTable extends Migration {
 			$table->increments('id');					// 列表id
 			$table->integer('user_id')->unsigned();		// 用户id
 			$table->string('name');						// 列表名
-			$table->integer('version')->unsigned();		// 版本号
-			$table->enum('sort_by', 					// 排序方式
+			$table->integer('priority')->unsigned();	// 列表顺位
+			$table->enum('sort_by', 					// 内部排序方式
 				array(
 					'important', 
 					'urgent', 
 					'date'))->default('important');
 			$table->timestamps();						// created_at update_at 时间戳
-			$table->softDeletes();						// deleted_at
+			$table->softDeletes();						// deleted_at	
+			$table->integer('version')->unsigned();		// 版本号
 		});
 
 		// tp_sharedlist
