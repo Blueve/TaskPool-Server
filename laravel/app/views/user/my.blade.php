@@ -6,10 +6,10 @@
     <div id="create_list" class="hidden">
         <form role="form" method="post">
           <div class="form-group" width="276px">
-            <label class="sr-only" for="exampleInputPassword2">列表名</label>
-            <input type="text" class="form-control" id="exampleInputPassword2" placeholder="列表名">
+            <label class="sr-only" for="exampleInputPassword2">{{{ Lang::get('task.list_name') }}}</label>
+            <input type="text" class="form-control" id="exampleInputPassword2" placeholder="{{{ Lang::get('task.list_name') }}}">
           </div>
-          <button type="submit" class="btn btn-default btn-block">创建</button>
+          <button type="submit" class="btn btn-default btn-block">{{{ Lang::get('site.create') }}}</button>
         </form>
     </div>
 
@@ -35,25 +35,25 @@
           <li class="active">
             <a href="#">
               <span class="badge pull-right">42</span>
-              今日
+              {{{ Lang::get('task.today') }}}
             </a>
           </li>
           <li>
             <a href="#">
               <span class="badge pull-right">0</span>
-              本周
+              {{{ Lang::get('task.this_week') }}}
             </a>
           </li>
           <li>
             <a href="#">
               <span class="badge pull-right">0</span>
-              本月
+              {{{ Lang::get('task.this_month') }}}
             </a>
           </li>
           <li>
             <a href="#">
               <span class="badge pull-right">0</span>
-              待定
+              {{{ Lang::get('task.pending') }}}
             </a>
           </li>
 

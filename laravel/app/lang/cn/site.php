@@ -21,4 +21,9 @@ return array(
 
 	"signup_email_subject" => "[验证邮箱]欢迎加入Task Pool",
 	"findpsw_email_subject" => "[修改密码]修改Task Pool登录密码",
+
+	"old_password" => "原密码",
+	"new_password" => "新密码",
+	"find_password" => "找回密码",
+	"submit_change" => "提交更改",
 );

@@ -19,7 +19,7 @@
     <div class="jumbotron">
       <h1>{{{ $noticeTitle }}}</h1>
       <p>{{ $noticeContent }}</p>
-      <p><a class="btn btn-primary btn-lg" role="button" href="{{{ URL::to($noticeRoute, $noticeRouteValue) }}}">继续</a></p>
+      <p><a class="btn btn-primary btn-lg" role="button" href="{{{ URL::to($noticeRoute, $noticeRouteValue) }}}">{{{ Lang::get('site.go') }}}</a></p>
     </div>
   </div>
 @stop

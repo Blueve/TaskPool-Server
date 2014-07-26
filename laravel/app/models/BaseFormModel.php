@@ -1,6 +1,6 @@
 <?php
 
-class BaseFormModel
+abstract class BaseFormModel
 {
 
 	private $_validator;
