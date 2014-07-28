@@ -22,12 +22,12 @@ abstract class BaseFormModel
 
 	public function validator()
 	{
-		return $_validator;
+		return $this->_validator;
 	}
 
 	public function isValid()
 	{
-		return !$_validator->fails();
+		return !$this->_validator->fails();
 	}
 
 }
