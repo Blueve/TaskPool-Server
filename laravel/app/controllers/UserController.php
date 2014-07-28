@@ -16,7 +16,7 @@ class UserController extends BaseController {
 
 	public function setting_post()
 	{
-		$settingEditForm = new SettingEditForm(Input::all);
+		$settingEditForm = new SettingEditForm(Input::all());
 		if($settingEditForm->isValid())
 		{
 			$user = Auth::user();
