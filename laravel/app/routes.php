@@ -43,4 +43,6 @@ Route::group(array('before' => 'auth|confirmed'), function()
 
 	Route::get('user/setting', 'UserController@setting');
 	Route::post('user/setting', 'UserController@setting_post');
+
+	Route::post('list/create', 'ListController@create');
 });

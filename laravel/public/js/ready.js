@@ -20,11 +20,59 @@ $(document).ready(function()
 	});
 
 	// 添加新的列表
+	var template = '\
+		<form role="form" id="newlist_form">\
+          <div class="form-group" width="276px">\
+            <label class="sr-only" for="name">列表名</label>\
+            <input type="text" class="form-control" id="name" name="name" placeholder="列表名">\
+          </div>\
+          <button type="submit" id="newlist_submit" class="btn btn-default btn-block">创建</button>\
+        </form>\
+	';
 	$('#create_list_pop').popover(
 		{
 			html: true,
-			//trigger: 'focus',
 			title: '创建',
-			content: $('#create_list').html()
+			content: template
 		});
+
+	$('#create_list_pop').on('shown.bs.popover', function()
+	{
+		// 提交新的列表
+		$('#newlist_form').submit(function(){
+			var btn = $('#newlist_submit');
+			btn.button('loding');
+			var message = $("#newlist_form").serialize();
+			$.post('list/create', message,
+			function(data)
+			{
+				btn.button('reset');
+				if(data.state)
+				{
+					$('#tasklist li').each(function()
+						{
+							$(this).removeAttr("class");
+						});
+					var item = '\
+								<li class="active">\
+						            <a data-toggle="popover" href="#" >\
+						             	' + data.name + '\
+						            </a>\
+						         </li>';
+					$(item).insertBefore('#create_list_pop');
+					$('#create_list_pop').popover('hide');
+				}
+				else
+				{
+					alert('error');
+				}
+				
+			},
+			'json');
+			return false;
+		});
+	})
+
+	
+
 });

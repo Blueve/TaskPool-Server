@@ -3,20 +3,11 @@
 @section('content')
 
   <div class="container">
-    <div id="create_list" class="hidden">
-        <form role="form" method="post">
-          <div class="form-group" width="276px">
-            <label class="sr-only" for="exampleInputPassword2">{{{ Lang::get('task.list_name') }}}</label>
-            <input type="text" class="form-control" id="exampleInputPassword2" placeholder="{{{ Lang::get('task.list_name') }}}">
-          </div>
-          <button type="submit" class="btn btn-default btn-block">{{{ Lang::get('site.create') }}}</button>
-        </form>
-    </div>
 
     <div class="row">
       <div class="col-md-11 col-md-offset-1 column">
         @include('layouts.pageheader')
-        <ul class="nav nav-tabs" role="tablist">
+        <ul class="nav nav-tabs" id="tasklist" role="tablist">
 
           <li class="active" id='create_list_pop'>
             <a data-toggle="popover" href="#" >
