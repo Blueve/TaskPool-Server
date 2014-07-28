@@ -6,7 +6,7 @@ return array(
 	"home"                  => "首页",
 	
 	"my"                    => "个人主页",
-	"changeinfo"            => "修改信息",
+	"setting"               => "个人设置",
 	"signout"               => "退出登录",
 	
 	"user_id"               => "用户名/Email",
@@ -29,4 +29,4 @@ return array(
 	
 	"go"                    => "继续",
 	"create"                => "创建",
-);
+	);

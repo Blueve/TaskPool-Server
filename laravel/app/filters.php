@@ -53,7 +53,7 @@ Route::filter('confirmed', function()
 {
 	if(Auth::user()->confirmed === false)
 	{
-		return Redirect::to('user/unconfirmed');
+		return Redirect::to('unconfirmed');
 	}
 });
 
@@ -76,7 +76,7 @@ Route::filter('auth.basic', function()
 
 Route::filter('guest', function()
 {
-	if (Auth::check()) return Redirect::to('user/my');
+	if (Auth::check()) return Redirect::to('user');
 });
 
 /*

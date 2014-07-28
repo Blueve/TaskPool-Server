@@ -4,7 +4,7 @@
   <div class="col-md-4 col-md-offset-4 column">
     {{-- 找回密码 --}}
     @include('layouts.pageheader')
-    <form role="form" method="post" id="setpsw_form" action="{{{ URL::action('UserController@setnewpassword') }}}">
+    <form role="form" method="post" id="setpsw_form" action="{{{ URL::action('AccountController@setnewpassword') }}}">
       <div class="form-group">
          <label for="password">{{{ Lang::get('site.new_password') }}}</label><input type="password" class="form-control" id="password" name="password" />
       </div>
