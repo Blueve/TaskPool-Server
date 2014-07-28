@@ -10,6 +10,18 @@ class User extends Eloquent implements UserInterface {
 
 	public $timestamps = false;
 
+	/*
+	 * 关系
+	 */
+	public function tasklists()
+	{
+		return $this->hasMany('TaskList');
+	}
+
+
+	/*
+	 * 静态方法
+	 */
 	public static function retrieveByName($name)
 	{
 		return User::where('name', '=', $name)->first();
@@ -57,6 +69,10 @@ class User extends Eloquent implements UserInterface {
 		User::where('id', '=', $userId)->update(array('confirmed' => true));
 	}
 
+
+	/*
+	 * 对象内部方法
+	 */
 	public function updatePassword($password)
 	{
 		list($user->psw_hash, $user->psw_salt) = Helper::HashPassword($password);
@@ -64,21 +80,15 @@ class User extends Eloquent implements UserInterface {
 	}
 
 
-	/**
-	 * Get the unique identifier for the user.
-	 *
-	 * @return mixed
+	/*
+	 * UserInterface 实现
 	 */
 	public function getAuthIdentifier()
 	{
 		return $this->id;
 	}
 
-	/**
-	 * Get the password for the user.
-	 *
-	 * @return string
-	 */
+
 	public function getAuthPassword()
 	{
 		return array(
@@ -87,33 +97,17 @@ class User extends Eloquent implements UserInterface {
 			);
 	}
 
-	/**
-	 * Get the token value for the "remember me" session.
-	 *
-	 * @return string
-	 */
 	public function getRememberToken()
 	{
 		return $this->remember_token;
 	}
 
-	/**
-	 * Set the token value for the "remember me" session.
-	 *
-	 * @param  string  $value
-	 * @return void
-	 */
 	public function setRememberToken($value)
 	{
 		$this->remember_token = $value;
 		$this->save();
 	}
 
-	/**
-	 * Get the column name for the "remember me" token.
-	 *
-	 * @return string
-	 */
 	public function getRememberTokenName()
 	{
 		return 'remember_token';
