@@ -11,6 +11,8 @@
 			"app/commands",
 			"app/controllers",
 			"app/models",
+			"app/models/form",
+			"app/models/entity",
 			"app/database/migrations",
 			"app/database/seeds",
 			"app/tests/TestCase.php",
