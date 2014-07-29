@@ -1,3 +1,6 @@
+
+
+
 $(document).ready(function()
 {
 	// 初始化iCheck插件
@@ -29,6 +32,7 @@ $(document).ready(function()
           <button type="submit" id="newlist_submit" class="btn btn-default btn-block">创建</button>\
         </form>\
 	';
+	var curDataSet = 'today';
 	$('#create_list_pop').popover(
 		{
 			html: true,
@@ -36,43 +40,35 @@ $(document).ready(function()
 			content: template
 		});
 
-	$('#create_list_pop').on('shown.bs.popover', function()
-	{
-		// 提交新的列表
-		$('#newlist_form').submit(function(){
-			var btn = $('#newlist_submit');
-			btn.button('loding');
-			var message = $("#newlist_form").serialize();
-			$.post('list/create', message,
-			function(data)
+	// 提交新的列表
+	$('#tasklist').on('submit', '#newlist_form', function(){
+		var btn = $('#newlist_submit');
+		btn.button('loding');
+		var message = $("#newlist_form").serialize();
+		$.post('list/create', message, function(data)
+		{
+			btn.button('reset');
+			if(data.state)
 			{
-				btn.button('reset');
-				if(data.state)
-				{
-					$('#tasklist li').each(function()
-						{
-							$(this).removeAttr("class");
-						});
-					var item = '\
-								<li class="active">\
-						            <a href="#' + data.id + '" data-toggle="tab">\
-						             	' + data.name + '\
-						            </a>\
-						         </li>';
-					$(item).insertBefore('#create_list_pop');
-					item = '<div class="tab-pane fade" id="list_' + data.id + '"></div>';
-					$('#tasklist_content').append(item);
-					$('#create_list_pop').popover('hide');
-				}
-				else
-				{
-					alert('error');
-				}
-				
-			},
-			'json');
-			return false;
-		});
+				var item = '<li>\
+					            <a href="#list_' + data.id + '" role="tab" data-toggle="tab" data-id="' + data.id + '">\
+					             	' + data.name + '\
+					            </a>\
+					         </li>';
+				$(item).insertBefore('#create_list_pop');
+				item = '<div class="tab-pane fade" id="list_' + data.id + '"></div>';
+				$('#tasklist_content').append(item);
+				$('#create_list_pop').popover('hide');
+
+				$('a[href="#list_' + data.id + '"]').tab('show');
+				refreshListContent(data.id);
+			}
+			else
+			{
+				alert('error');
+			}
+		}, 'json');
+		return false;
 	});
 
 	$('#create_list_pop').on('shown.bs.popover', function()
@@ -82,26 +78,31 @@ $(document).ready(function()
 	});
 
 	// 切换列表
-	$('a[data-toggle="tab"]').on('show.bs.tab', function(e)
+	$('#tasklist').on('show.bs.tab', 'a[data-toggle="tab"]', function(e)
 	{
 		var targetId = $(e.target).data('id');
-		$.post('list/content', {id:targetId}, function(data) 
-		{
-			$($(e.target).attr('href')).html(data.tasks);
-			$('a[data-toggle="pill"]').each(function()
-			{
-				$(this).data('id', targetId);
-			});
-		});
+		refreshListContent(targetId, curDataSet);
 	});
 
-	$('a[data-toggle="pill"]').on('show.bs.tab', function(e)
+	$('#tasklist_set').on('show.bs.tab', 'a[data-toggle="pill"]', function(e)
 	{
 		var targetId = $(e.target).data('id');
-		var targetDataSet = $(e.target).data('set');
-		$.post('list/content', {id:targetId, dataset:targetDataSet}, function(data) 
+		curDataSet = $(e.target).data('set');
+		$.post('list/content', {id:targetId, dataset:curDataSet}, function(data) 
 		{
 			$('#list_' + targetId).html(data.tasks);
 		});
 	});
 });
+
+function refreshListContent(listId, dataSet)
+{
+	$.post('list/content', {id:listId, dataset:dataSet}, function(data) 
+	{
+		$('#list_' + listId).html(data.tasks);
+		$('a[data-toggle="pill"]').each(function()
+		{
+			$(this).data('id', listId);
+		});
+	});
+}

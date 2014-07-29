@@ -32,7 +32,7 @@
     <div class="row">
       {{-- 选择子集 --}}
       <div class="col-md-2 col-md-offset-1 column">
-        <ul class="nav nav-pills nav-stacked">
+        <ul class="nav nav-pills nav-stacked" id="tasklist_set">
 
           <li class="active">
             <a href="#" data-toggle="pill" data-id="" data-set="today">
