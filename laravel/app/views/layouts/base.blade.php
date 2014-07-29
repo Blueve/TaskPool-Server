@@ -33,6 +33,7 @@
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="{{{ asset('js/bootstrap.min.js') }}}"></script>
     <script src="{{{ asset('js/icheck.min.js') }}}"></script>
+    <script src="{{{ asset('js/jquery-ui.min.js') }}}"></script>
     <script src="{{{ asset('js/ready.js') }}}"></script>
   </body>
 </html>
