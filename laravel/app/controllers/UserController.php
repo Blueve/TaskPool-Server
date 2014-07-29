@@ -4,6 +4,7 @@ class UserController extends BaseController {
 
 	public function home()
 	{
+		$this->data['taskLists'] = Auth::user()->allLists();
 		$this->MergeData(Lang::get('base.home'));
 		return View::make('user.home', $this->data);
 	}
