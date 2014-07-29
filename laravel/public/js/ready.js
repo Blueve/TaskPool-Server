@@ -55,11 +55,13 @@ $(document).ready(function()
 						});
 					var item = '\
 								<li class="active">\
-						            <a data-toggle="popover" href="#" >\
+						            <a href="#' + data.id + '" data-toggle="tab">\
 						             	' + data.name + '\
 						            </a>\
 						         </li>';
 					$(item).insertBefore('#create_list_pop');
+					item = '<div class="tab-pane fade" id="list_' + data.id + '"></div>';
+					$('#tasklist_content').append(item);
 					$('#create_list_pop').popover('hide');
 				}
 				else
@@ -71,8 +73,35 @@ $(document).ready(function()
 			'json');
 			return false;
 		});
-	})
+	});
 
-	
+	$('#create_list_pop').on('shown.bs.popover', function()
+	{
+		// 切换焦点
+		$('#name').focus().select();
+	});
 
+	// 切换列表
+	$('a[data-toggle="tab"]').on('show.bs.tab', function(e)
+	{
+		var targetId = $(e.target).data('id');
+		$.post('list/content', {id:targetId}, function(data) 
+		{
+			$($(e.target).attr('href')).html(data.tasks);
+			$('a[data-toggle="pill"]').each(function()
+			{
+				$(this).data('id', targetId);
+			});
+		});
+	});
+
+	$('a[data-toggle="pill"]').on('show.bs.tab', function(e)
+	{
+		var targetId = $(e.target).data('id');
+		var targetDataSet = $(e.target).data('set');
+		$.post('list/content', {id:targetId, dataset:targetDataSet}, function(data) 
+		{
+			$('#list_' + targetId).html(data.tasks);
+		});
+	});
 });

@@ -18,4 +18,12 @@ class ListController extends BaseController {
 		return Response::json($response);
 	}
 
+	public function content()
+	{
+
+		$response = array('state' => true, 
+			'tasks' => 'list_'.Input::get('id').' --- '.(Input::has('dataset') ? Input::get('dataset') : 'today')
+			);
+		return Response::json($response);
+	}
 }
