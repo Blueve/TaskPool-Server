@@ -18,7 +18,6 @@ class User extends Eloquent implements UserInterface {
 		return $this->hasMany('TaskList');
 	}
 
-
 	/*
 	 * 静态方法
 	 */
@@ -77,6 +76,11 @@ class User extends Eloquent implements UserInterface {
 	{
 		list($user->psw_hash, $user->psw_salt) = Helper::HashPassword($password);
 		$user->save();
+	}
+
+	public function allLists()
+	{
+		return $this->tasklists()->orderBy('priority', 'asc')->get();
 	}
 
 
