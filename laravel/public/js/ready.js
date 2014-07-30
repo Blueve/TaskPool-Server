@@ -97,7 +97,8 @@ $(document).ready(function()
 	// 列表拖动
 	$('#tasklist').sortable({
       items: 'li:not(#create_list_pop)',
-      cancel: '#create_list_pop'
+      cancel: '#create_list_pop',
+      axis: 'y' 
     });
 
 });
