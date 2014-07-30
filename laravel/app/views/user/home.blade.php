@@ -8,13 +8,23 @@
         @include('layouts.pageheader')
       </div>
     </div>
-    {{-- 选择子集 --}}
+    {{-- 列表操作 --}}
     <div class="row">
-      <div class="col-md-9 col-md-offset-3 column">
+      <div class="col-md-2 col-md-offset-1 column text-right">
+        <div class="btn-group btn-group-lg">
+          <button type="button" class="btn btn-default" id="sort" data-toggle="tooltip" data-placement="top" title="调整列表顺序"><span class="glyphicon glyphicon-sort"></span></button>
+        </div>
+        <div class="btn-group btn-group-lg" id="save">
+          <button type="button" class="btn btn-default" id="ok" data-toggle="tooltip" data-placement="top" title="保存"><span class="glyphicon glyphicon-ok"></span></button>
+          <button type="button" class="btn btn-default" id="cancel" data-toggle="tooltip" data-placement="top" title="取消"><span class="glyphicon glyphicon-remove"></span></button>
+        </div>
+      </div>
+      {{-- 选择子集 --}}
+      <div class="col-md-9 column">
         <ul class="nav nav-pills nav-justified" id="tasklist_set">
           <li class="active">
             <a href="#" data-toggle="pill" data-id="" data-set="today">
-              <span class="badge pull-right"></span>
+              <span class="badge pull-right">0</span>
               {{{ Lang::get('task.today') }}}
             </a>
           </li>
@@ -45,9 +55,10 @@
         <ul class="nav nav-tabs nav-stacked" id="tasklist" role="tablist">
 
           @foreach($taskLists as $item)
-          <li {{ $item->priority == 0 ? 'class="active"' : '' }}>
-            <a  href="#list_{{{ $item->id }}}" role="tab" data-toggle="tab" data-id="{{{ $item->id }}}">
+          <li>
+            <a href="#list_{{{ $item->id }}}" role="tab" data-toggle="tab" data-id="{{{ $item->id }}}">
               {{{ $item->name }}}
+              {{-- <span class="glyphicon glyphicon-wrench"></span> --}}
             </a>
           </li>
           @endforeach

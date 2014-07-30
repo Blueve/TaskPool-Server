@@ -70,7 +70,6 @@ $(document).ready(function()
 		}, 'json');
 		return false;
 	});
-
 	$('#create_list_pop').on('shown.bs.popover', function()
 	{
 		// 切换焦点
@@ -83,7 +82,6 @@ $(document).ready(function()
 		var targetId = $(e.target).data('id');
 		refreshListContent(targetId, curDataSet);
 	});
-
 	$('#tasklist_set').on('show.bs.tab', 'a[data-toggle="pill"]', function(e)
 	{
 		var targetId = $(e.target).data('id');
@@ -96,9 +94,30 @@ $(document).ready(function()
 
 	// 列表拖动
 	$('#tasklist').sortable({
-      items: 'li:not(#create_list_pop)',
-      cancel: '#create_list_pop',
-      axis: 'y' 
+    	items: 'li:not(#create_list_pop)',
+    	cancel: '#create_list_pop',
+    	axis: 'y' 
+    });
+
+    // 列表操作开关
+    $('[data-toggle=tooltip]').tooltip();
+    $('#save').hide();
+    $('#sort').click(function()
+    {
+    	$(this).attr({
+    		disabled: 'disabled'
+    	});
+    	$('#save').show(400);
+    });
+    $('#ok').click(function() 
+    {
+    	$('#save').hide(400);
+    	$('#sort').removeAttr('disabled');
+    });
+    $('#cancel').click(function() 
+    {
+    	$('#save').hide(400);
+    	$('#sort').removeAttr('disabled');
     });
 
 });
