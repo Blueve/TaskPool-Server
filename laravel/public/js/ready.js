@@ -85,7 +85,7 @@ $(document).ready(function()
 	$('#tasklist_set').on('show.bs.tab', 'a[data-toggle="pill"]', function(e)
 	{
 		var targetId = $(e.target).data('id');
-		curDataSet = $(e.target).data('set');
+		curDataSet   = $(e.target).data('set');
 		$.post('list/content', {id:targetId, dataset:curDataSet}, function(data) 
 		{
 			$('#list_' + targetId).html(data.tasks);

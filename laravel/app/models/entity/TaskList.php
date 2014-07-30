@@ -3,10 +3,10 @@
 class TaskList extends Eloquent {
 
 	protected $table = 'tp_lists';
-
-	const important = 'important';
-	const urgent    = 'urgent';
-	const date      = 'date';
+	
+	const important  = 'important';
+	const urgent     = 'urgent';
+	const date       = 'date';
 
 	public static function newTaskList(NewListForm $newListForm, User $user)
 	{
