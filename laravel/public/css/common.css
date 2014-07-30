@@ -1,3 +1,47 @@
 body { padding-top: 60px; }
 
-.nav-tabs { margin-bottom: 20px; }
+.popover {
+	min-width: 222px;
+}
+
+.nav-pills { 
+	margin-bottom: 20px;
+}
+.nav-pills > li > a {
+	background-color: #eee;
+	border: 1px solid #ddd;
+}
+.nav-pills > li > a:hover,
+.nav-pills > li > a:focus {
+	background-color: #ddd;
+}
+
+
+.nav-tabs.nav-stacked {
+	border-bottom: 0 none;
+	border-right: 1px solid #ddd;
+	min-height: 500px;
+}
+.nav-tabs.nav-stacked > li {
+	margin-right: -1px;
+}
+.nav-tabs.nav-stacked > li > a {
+	text-align: center;
+	border: 1px solid #ddd transparent;
+	border-radius: 4px 0 0 4px;
+	margin-right: 0px;
+	margin-bottom: 2px;
+	border: 1px solid transparent;
+}
+.nav-tabs.nav-stacked > li > a:hover {
+	border-color: : #eee #eee #ddd;
+}
+.nav-tabs.nav-stacked > li.active > a,
+.nav-tabs.nav-stacked > li.active > a:hover,
+.nav-tabs.nav-stacked > li.active > a:focus {
+	color: #555;
+	cursor: default;
+	background-color: #fff;
+	border: 1px solid #ddd;
+	border-right-color: transparent;
+}
