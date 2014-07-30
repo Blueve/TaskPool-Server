@@ -22,4 +22,9 @@ class TaskList extends Eloquent {
 			return $list;
 		}
 	}
+
+	public static function updatePriorityById($id, $priority)
+	{
+		Tasklist::where('id', '=', $id)->update(array('priority' => $priority));
+	}
 }

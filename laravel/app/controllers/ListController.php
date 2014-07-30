@@ -26,4 +26,22 @@ class ListController extends BaseController {
 			);
 		return Response::json($response);
 	}
+
+	public function reorder()
+	{
+		$user = Auth::user();
+
+		$taskLists = explode(',', Input::get('taskLists'));
+
+		$response = array('state' => false);
+		if($user->checkTasklists($taskLists))
+		{
+			foreach ($taskLists as $key => $value) 
+			{
+				Tasklist::updatePriorityById($value, $key);
+			}
+			$response['state'] = true;
+		}
+		return Response::json($response);
+	}
 }

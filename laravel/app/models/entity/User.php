@@ -83,6 +83,39 @@ class User extends Eloquent implements UserInterface {
 		return $this->tasklists()->orderBy('priority', 'asc')->get();
 	}
 
+	public function allListsById()
+	{
+		return $this->tasklists()->orderBy('id', 'asc')->get();
+	}
+
+	public function getTasklistCount()
+	{
+		return $this->tasklists()->count();
+	}
+
+	public function checkTasklists($taskLists)
+	{
+		$count = count($taskLists);
+		if($count == $this->getTasklistCount())
+		{
+			asort($taskLists);
+			$i = 0;
+			$dbTaskLists = $this->allListsById();
+			foreach($taskLists as $key => $val) 
+			{
+				if($val == $dbTaskLists[$i]->id)
+				{
+					$i++;
+				}
+				else
+				{
+					return false;
+				}
+			}
+			return true;
+		}
+		return false;
+	}
 
 	/*
 	 * UserInterface 实现

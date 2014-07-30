@@ -92,12 +92,14 @@ $(document).ready(function()
 		});
 	});
 
+	
 	// 列表拖动
-	$('#tasklist').sortable({
-    	items: 'li:not(#create_list_pop)',
-    	cancel: '#create_list_pop',
-    	axis: 'y' 
-    });
+    $('#tasklist').sortable({
+	    items: 'li:not(#create_list_pop)',
+	    cancel: '#create_list_pop',
+	    axis: 'y',
+	});
+    $('#tasklist').sortable('disable');
 
     // 列表操作开关
     $('[data-toggle=tooltip]').tooltip();
@@ -108,16 +110,47 @@ $(document).ready(function()
     		disabled: 'disabled'
     	});
     	$('#save').show(400);
+    	//允许列表拖动
+		$('#tasklist').sortable('enable');
+    	
     });
     $('#ok').click(function() 
     {
     	$('#save').hide(400);
     	$('#sort').removeAttr('disabled');
+    	//禁止列表拖动
+    	$('#tasklist').sortable('disable');
+
+    	var taskLists = new Array();
+    	var i = 0;
+    	$('#tasklist a').each(function()
+    	{
+    		if($(this).data('id'))
+    		{
+				taskLists[i] = $(this).data('id');
+	    		i++;
+    		}
+    	});
+
+    	taskLists = taskLists.join(',');
+
+    	$.post('list/reorder', {taskLists:taskLists}, function(data)
+    	{
+    		if(!data.state)
+    		{
+    			$('#tasklist').sortable('cancel');
+    			alert('error');
+    		}
+    	}, 'json');
+
     });
     $('#cancel').click(function() 
     {
     	$('#save').hide(400);
     	$('#sort').removeAttr('disabled');
+    	//禁止列表拖动
+    	$('#tasklist').sortable('disable');
+    	$('#tasklist').sortable('cancel');
     });
 
 });
