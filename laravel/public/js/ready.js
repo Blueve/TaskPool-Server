@@ -54,6 +54,7 @@ $(document).ready(function()
 				var item = '<li>\
 					            <a href="#list_' + data.id + '" role="tab" data-toggle="tab" data-id="' + data.id + '">\
 					             	' + data.name + '\
+					             	<span class="glyphicon glyphicon-wrench pull-right" data-toggle="modal" data-target="#TaskListSettingModal"></span>\
 					            </a>\
 					         </li>';
 				$(item).insertBefore('#create_list_pop');
@@ -163,6 +164,11 @@ $(document).ready(function()
     });
     // 设置图标初始化
     $('.glyphicon.glyphicon-wrench').hide();
+
+    $('#list_' + curTaskList).find('span:first-child').click(function()
+    {
+    	// Ajax 填充表单
+    });
 });
 
 function refreshListContent(listId, dataSet)
