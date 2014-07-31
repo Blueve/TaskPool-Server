@@ -58,7 +58,6 @@
           <li>
             <a href="#list_{{{ $item->id }}}" role="tab" data-toggle="tab" data-id="{{{ $item->id }}}">
               {{{ $item->name }}}
-              {{-- <span class="glyphicon glyphicon-wrench"></span> --}}
             </a>
           </li>
           @endforeach

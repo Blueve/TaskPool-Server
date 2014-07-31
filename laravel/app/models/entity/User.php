@@ -13,7 +13,7 @@ class User extends Eloquent implements UserInterface {
 	/*
 	 * 关系
 	 */
-	public function tasklists()
+	public function taskLists()
 	{
 		return $this->hasMany('TaskList');
 	}
@@ -80,23 +80,23 @@ class User extends Eloquent implements UserInterface {
 
 	public function allLists()
 	{
-		return $this->tasklists()->orderBy('priority', 'asc')->get();
+		return $this->taskLists()->orderBy('priority', 'asc')->get();
 	}
 
 	public function allListsById()
 	{
-		return $this->tasklists()->orderBy('id', 'asc')->get();
+		return $this->taskLists()->orderBy('id', 'asc')->get();
 	}
 
-	public function getTasklistCount()
+	public function getTaskListCount()
 	{
-		return $this->tasklists()->count();
+		return $this->taskLists()->count();
 	}
 
-	public function checkTasklists($taskLists)
+	public function checkTaskLists($taskLists)
 	{
 		$count = count($taskLists);
-		if($count == $this->getTasklistCount())
+		if($count == $this->getTaskListCount())
 		{
 			asort($taskLists);
 			$i = 0;

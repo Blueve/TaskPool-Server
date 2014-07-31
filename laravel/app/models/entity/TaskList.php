@@ -15,7 +15,7 @@ class TaskList extends Eloquent {
 			$list           = new TaskList();
 			$list->user_id  = $user->id;
 			$list->name     = $newListForm->name;
-			$list->priority = $user->tasklists()->count();
+			$list->priority = $user->taskLists()->count();
 			$list->sort_by  = 'important';
 			$list->version  = 0;
 			$list->save();
@@ -25,6 +25,6 @@ class TaskList extends Eloquent {
 
 	public static function updatePriorityById($id, $priority)
 	{
-		Tasklist::where('id', '=', $id)->update(array('priority' => $priority));
+		Tasklist::where('id', '=', $id)->increment('version', 1, array('priority' => $priority));
 	}
 }

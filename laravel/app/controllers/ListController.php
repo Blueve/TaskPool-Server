@@ -34,7 +34,7 @@ class ListController extends BaseController {
 		$taskLists = explode(',', Input::get('taskLists'));
 
 		$response = array('state' => false);
-		if($user->checkTasklists($taskLists))
+		if($user->checkTaskLists($taskLists))
 		{
 			foreach ($taskLists as $key => $value) 
 			{
