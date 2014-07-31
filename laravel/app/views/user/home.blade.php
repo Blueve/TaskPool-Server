@@ -85,7 +85,7 @@
         </div>
       </div>
     </div>
-
+    {{-- 列表设置弹框 --}}
     <div class="modal fade" id="TaskListSettingModal" tabindex="-1" role="dialog" aria-labelledby="TaskListSettingModalLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
@@ -94,7 +94,16 @@
             <h4 class="modal-title" id="TaskListSettingModalLabel">Modal title</h4>
           </div>
           <div class="modal-body">
-            ...
+
+            <form role="form" method="post" id="tasklitsetting_form" action="{{{ URL::action('AccountController@signin') }}}">
+              <div class="form-group">
+                 <label for="userId">{{{ Lang::get('site.user_id') }}}</label><input type="text" class="form-control" id="userId" name="userId" />
+              </div>
+              <div class="form-group">
+
+              </div>
+            </form>
+            
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

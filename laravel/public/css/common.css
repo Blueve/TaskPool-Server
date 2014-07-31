@@ -1,5 +1,13 @@
 body { padding-top: 60px; }
 
+.more-margin-bottom {
+	margin-bottom: 20px;
+}
+
+.less-padding-left {
+	padding-left: 0px;
+}
+
 .popover {
 	min-width: 222px;
 }
