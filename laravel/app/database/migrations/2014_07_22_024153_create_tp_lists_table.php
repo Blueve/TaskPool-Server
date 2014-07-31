@@ -23,7 +23,8 @@ class CreateTpListsTable extends Migration {
 				array(
 					'important', 
 					'urgent', 
-					'date'))->default('important');
+					'date',
+					'custom'))->default('important');
 			$table->timestamps();						// created_at update_at 时间戳
 			$table->softDeletes();						// deleted_at	
 			$table->integer('version')->unsigned();		// 版本号
