@@ -58,27 +58,48 @@
           <li>
             <a href="#list_{{{ $item->id }}}" role="tab" data-toggle="tab" data-id="{{{ $item->id }}}">
               {{{ $item->name }}}
+              <span class="glyphicon glyphicon-wrench pull-right" data-toggle="modal" data-target="#TaskListSettingModal"></span>
             </a>
           </li>
           @endforeach
 
           <li {{ count($taskLists) == 0 ? 'class="active"' : '' }} id='create_list_pop'>
             <a data-toggle="popover">
-              创建列表 <span class="glyphicon glyphicon-plus"></span>
+              创建列表 <span class="glyphicon glyphicon-plus pull-right"></span>
             </a>
           </li>
         </ul>
       </div>
       {{-- 列表内容 --}}
       <div class="col-md-9 column">
-        <div class="tab-content" id="tasklist_content">
+        <div>
 
+        </div>
+        <div class="tab-content" id="tasklist_content">
           @foreach($taskLists as $item)
           <div class="tab-pane fade" id="list_{{{ $item->id }}}">
 
           </div>
           @endforeach
 
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="TaskListSettingModal" tabindex="-1" role="dialog" aria-labelledby="TaskListSettingModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            <h4 class="modal-title" id="TaskListSettingModalLabel">Modal title</h4>
+          </div>
+          <div class="modal-body">
+            ...
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary">Save changes</button>
+          </div>
         </div>
       </div>
     </div>

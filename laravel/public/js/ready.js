@@ -32,13 +32,14 @@ $(document).ready(function()
           <button type="submit" id="newlist_submit" class="btn btn-default btn-block">创建</button>\
         </form>\
 	';
+	var curTaskList = 0;		// 0为总概列表
 	var curDataSet = 'today';
 	$('#create_list_pop').popover(
-		{
-			html: true,
-			title: '创建',
-			content: template
-		});
+	{
+		html: true,
+		title: '创建',
+		content: template
+	});
 
 	// 提交新的列表
 	$('#tasklist').on('submit', '#newlist_form', function(){
@@ -79,8 +80,16 @@ $(document).ready(function()
 	// 切换列表
 	$('#tasklist').on('show.bs.tab', 'a[data-toggle="tab"]', function(e)
 	{
+		// 更改设置按钮的显示
+		$(e.relatedTarget).find('span:first-child').hide(200);
+		$(e.target).find('span:first-child').show(200);
+
+		// 刷新页面
 		var targetId = $(e.target).data('id');
 		refreshListContent(targetId, curDataSet);
+
+		// 更新状态
+		curTaskList = targetId;
 	});
 	$('#tasklist_set').on('show.bs.tab', 'a[data-toggle="pill"]', function(e)
 	{
@@ -152,7 +161,8 @@ $(document).ready(function()
     	$('#tasklist').sortable('disable');
     	$('#tasklist').sortable('cancel');
     });
-
+    // 设置图标初始化
+    $('.glyphicon.glyphicon-wrench').hide();
 });
 
 function refreshListContent(listId, dataSet)

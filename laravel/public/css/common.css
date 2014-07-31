@@ -45,3 +45,9 @@ body { padding-top: 60px; }
 	border: 1px solid #ddd;
 	border-right-color: transparent;
 }
+
+
+.nav-tabs.nav-stacked > li.active > a > span:hover,
+.nav-tabs.nav-stacked > li.active > a > span:focus {
+	color: #428bca;
+}
