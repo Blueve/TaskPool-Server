@@ -82,7 +82,10 @@ $(document).ready(function()
 	$('#tasklist').on('show.bs.tab', 'a[data-toggle="tab"]', function(e)
 	{
 		// 更改设置按钮的显示
-		$(e.relatedTarget).find('span:first-child').hide(200);
+		if(curTaskList !== 0)
+		{
+			$(e.relatedTarget).find('span:first-child').hide(200);
+		}
 		$(e.target).find('span:first-child').show(200);
 
 		// 刷新页面
