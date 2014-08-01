@@ -18,6 +18,18 @@ class CreateTpListsTable extends Migration {
 			$table->increments('id');					// 列表id
 			$table->integer('user_id')->unsigned();		// 用户id
 			$table->string('name');						// 列表名
+			$table->enum('color', 					// 内部排序方式
+				array(
+					'red', 
+					'orange', 
+					'yellow',
+					'green',
+					'blue',
+					'indigo',
+					'purple',
+					'black',
+					'darkgray',
+					'gray'))->default('darkgray');
 			$table->integer('priority')->unsigned();	// 列表顺位
 			$table->enum('sort_by', 					// 内部排序方式
 				array(

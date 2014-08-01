@@ -59,8 +59,57 @@ body { padding-top: 60px; }
 	border-left-width: 4px;
 }
 
-
 .nav-tabs.nav-stacked > li.active > a > span:hover,
 .nav-tabs.nav-stacked > li.active > a > span:focus {
 	color: #428bca;
+}
+
+.task-list-red {
+	border-left-color: #c30;
+	border-left-width: 4px;
+}
+
+.task-list-orange {
+	border-left-color: #f60;
+	border-left-width: 4px;
+}
+
+.task-list-yellow {
+	border-left-color: #ff6;
+	border-left-width: 4px;
+}
+
+.task-list-green {
+	border-left-color: #3c3;
+	border-left-width: 4px;
+}
+
+.task-list-blue {
+	border-left-color: #09f;
+	border-left-width: 4px;
+}
+
+.task-list-indigo {
+	border-left-color: #639;
+	border-left-width: 4px;
+}
+
+.task-list-purple {
+	border-left-color: #c0f;
+	border-left-width: 4px;
+}
+
+.task-list-black {
+	border-left-color: #000;
+	border-left-width: 4px;
+}
+
+.task-list-darkgray {
+	border-left-color: #555;
+	border-left-width: 4px;
+}
+
+.task-list-gray {
+	border-left-color: #999;
+	border-left-width: 4px;
 }
