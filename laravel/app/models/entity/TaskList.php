@@ -28,4 +28,9 @@ class TaskList extends Eloquent {
 	{
 		Tasklist::where('id', '=', $id)->increment('version', 1, array('priority' => $priority));
 	}
+
+	public static function getTaskListById($id)
+	{
+		return Tasklist::where('id', '=', $id)->get();
+	}
 }

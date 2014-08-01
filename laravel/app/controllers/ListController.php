@@ -44,4 +44,25 @@ class ListController extends BaseController {
 		}
 		return Response::json($response);
 	}
+
+	public function getListSetting()
+	{
+		$curTaskListId = input::get('curTaskList');
+
+		$response = array(
+			'state'   => false, 
+			'name'    =>'',
+			'sort_by' =>'');
+
+		$curTaskList = Tasklist::getTaskListById('$curTaskListId');
+
+		if($curTaskList)
+		{
+			$response['state'] = true;
+			$response['name'] = $curTaskList->name;
+			$response['sort_by'] = $curTaskList->sort_by;
+		}
+
+		return Response::json($response);
+	}
 }

@@ -168,6 +168,16 @@ $(document).ready(function()
     $('#list_' + curTaskList).find('span:first-child').click(function()
     {
     	// Ajax 填充表单
+    	$post('list/getListSetting',curTaskList,function(data)
+    	{
+    		if(!data.state)
+    		{
+    			aler('error');
+    		}else
+    		{
+    			
+    		}
+    	}, json);
     });
 });
 
