@@ -29,6 +29,7 @@ body { padding-top: 60px; }
 	border-bottom: 0 none;
 	border-right: 1px solid #ddd;
 	min-height: 500px;
+	background-image: linear-gradient(to left, #f6f6f6 0%, #fff 8px);
 }
 .nav-tabs.nav-stacked > li {
 	margin-right: -1px;
@@ -42,7 +43,8 @@ body { padding-top: 60px; }
 	border: 1px solid transparent;
 }
 .nav-tabs.nav-stacked > li > a:hover {
-	border-color: : #eee #eee #ddd;
+	border-right: 4px solid #aaa;
+	background-color: transparent;
 }
 .nav-tabs.nav-stacked > li.active > a,
 .nav-tabs.nav-stacked > li.active > a:hover,
@@ -52,6 +54,9 @@ body { padding-top: 60px; }
 	background-color: #fff;
 	border: 1px solid #ddd;
 	border-right-color: transparent;
+	box-shadow: -2px 2px 5px #eee;
+	border-left-color: #09f;
+	border-left-width: 4px;
 }
 
 
