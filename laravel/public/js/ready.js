@@ -51,8 +51,8 @@ $(document).ready(function()
 			btn.button('reset');
 			if(data.state)
 			{
-				var item = '<li>\
-					            <a href="#list_' + data.id + '" class="task-list-darkgray" role="tab" data-toggle="tab" data-id="' + data.id + '">\
+				var item = '<li class="task-list-darkgray">\
+					            <a href="#list_' + data.id + '" role="tab" data-toggle="tab" data-id="' + data.id + '">\
 					             	' + data.name + '\
 					             	<span class="glyphicon glyphicon-wrench pull-right" data-toggle="modal" data-target="#TaskListSettingModal"></span>\
 					            </a>\

@@ -53,9 +53,9 @@
     <div class="row">
       <div class="col-md-2 col-md-offset-1 column">
         <ul class="nav nav-tabs nav-stacked" id="tasklist" role="tablist">
-
+          {{-- 列表标题 --}}
           @foreach($taskLists as $item)
-          <li>
+          <li class="task-list-{{{ $item->color }}}">
             <a href="#list_{{{ $item->id }}}" role="tab" data-toggle="tab" data-id="{{{ $item->id }}}">
               {{{ $item->name }}}
               <span class="glyphicon glyphicon-wrench pull-right" data-toggle="modal" data-target="#TaskListSettingModal"></span>
@@ -63,13 +63,14 @@
           </li>
           @endforeach
 
-          <li {{ count($taskLists) == 0 ? 'class="active"' : '' }} id='create_list_pop'>
+          <li {{ count($taskLists) == 0 ? 'class="active task-list-darkgray"' : '' }} id='create_list_pop'>
             <a data-toggle="popover">
               创建列表 <span class="glyphicon glyphicon-plus pull-right"></span>
             </a>
           </li>
         </ul>
       </div>
+
       {{-- 列表内容 --}}
       <div class="col-md-9 column">
         <div>

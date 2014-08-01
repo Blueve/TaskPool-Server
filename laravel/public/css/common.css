@@ -36,7 +36,6 @@ body { padding-top: 60px; }
 }
 .nav-tabs.nav-stacked > li > a {
 	text-align: center;
-	border: 1px solid #ddd transparent;
 	border-radius: 4px 0 0 4px;
 	margin-right: 0px;
 	margin-bottom: 2px;
@@ -46,17 +45,13 @@ body { padding-top: 60px; }
 	border-right: 4px solid #aaa;
 	background-color: transparent;
 }
-.nav-tabs.nav-stacked > li.active > a,
-.nav-tabs.nav-stacked > li.active > a:hover,
-.nav-tabs.nav-stacked > li.active > a:focus {
+.nav-tabs.nav-stacked > li.active > a {
 	color: #555;
 	cursor: default;
 	background-color: #fff;
 	border: 1px solid #ddd;
 	border-right-color: transparent;
 	box-shadow: -2px 2px 5px #eee;
-	border-left-color: #09f;
-	border-left-width: 4px;
 }
 
 .nav-tabs.nav-stacked > li.active > a > span:hover,
@@ -64,52 +59,52 @@ body { padding-top: 60px; }
 	color: #428bca;
 }
 
-.task-list-red {
+.nav-tabs.nav-stacked > li.active.task-list-red > a {
 	border-left-color: #c30;
 	border-left-width: 4px;
 }
 
-.task-list-orange {
+.nav-tabs.nav-stacked > li.active.task-list-orange > a {
 	border-left-color: #f60;
 	border-left-width: 4px;
 }
 
-.task-list-yellow {
+.nav-tabs.nav-stacked > li.active.task-list-yellow > a {
 	border-left-color: #ff6;
 	border-left-width: 4px;
 }
 
-.task-list-green {
+.nav-tabs.nav-stacked > li.active.task-list-green > a {
 	border-left-color: #3c3;
 	border-left-width: 4px;
 }
 
-.task-list-blue {
+.nav-tabs.nav-stacked > li.active.task-list-blue > a {
 	border-left-color: #09f;
 	border-left-width: 4px;
 }
 
-.task-list-indigo {
+.nav-tabs.nav-stacked > li.active.task-list-indigo > a {
 	border-left-color: #639;
 	border-left-width: 4px;
 }
 
-.task-list-purple {
+.nav-tabs.nav-stacked > li.active.task-list-purple > a {
 	border-left-color: #c0f;
 	border-left-width: 4px;
 }
 
-.task-list-black {
+.nav-tabs.nav-stacked > li.active.task-list-black > a {
 	border-left-color: #000;
 	border-left-width: 4px;
 }
 
-.task-list-darkgray {
+.nav-tabs.nav-stacked > li.active.task-list-darkgray > a {
 	border-left-color: #555;
 	border-left-width: 4px;
 }
 
-.task-list-gray {
+.nav-tabs.nav-stacked > li.active.task-list-gray > a {
 	border-left-color: #999;
 	border-left-width: 4px;
 }
