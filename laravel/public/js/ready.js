@@ -82,10 +82,6 @@ $(document).ready(function()
 	$('#tasklist').on('show.bs.tab', 'a[data-toggle="tab"]', function(e)
 	{
 		// 更改设置按钮的显示
-		if(curTaskList !== 0)
-		{
-			$(e.relatedTarget).find('span:first-child').hide(200);
-		}
 		$(e.target).find('span:first-child').show(200);
 
 		// 刷新页面
@@ -167,6 +163,15 @@ $(document).ready(function()
     });
     // 设置图标初始化
     $('.glyphicon.glyphicon-wrench').hide();
+    $('.glyphicon.glyphicon-wrench').parent('a').hover(function() 
+    {
+    	if($(this).parent('li').hasClass('active'))
+    	{
+    		$(this).find('span:first-child').show(200);
+    	}
+    }, function() {
+    	$(this).find('span:first-child').hide(200);
+    });
 
     $('#list_' + curTaskList).find('span:first-child').click(function()
     {
@@ -175,7 +180,7 @@ $(document).ready(function()
     	{
     		if(!data.state)
     		{
-    			aler('error');
+    			alert('error');
     		}else
     		{
     			
