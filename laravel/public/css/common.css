@@ -61,7 +61,8 @@ body { padding-top: 60px; }
 
 .nav-tabs.nav-stacked > li.active.task-list-red > a {
 	border-left-color: #c30;
-	border-left-width: 4px;
+	border-left-width: 5px;
+
 }
 
 .nav-tabs.nav-stacked > li.active.task-list-orange > a {
@@ -81,7 +82,7 @@ body { padding-top: 60px; }
 
 .nav-tabs.nav-stacked > li.active.task-list-blue > a {
 	border-left-color: #09f;
-	border-left-width: 4px;
+	border-left-width: 5px;
 }
 
 .nav-tabs.nav-stacked > li.active.task-list-indigo > a {
@@ -101,10 +102,62 @@ body { padding-top: 60px; }
 
 .nav-tabs.nav-stacked > li.active.task-list-darkgray > a {
 	border-left-color: #555;
-	border-left-width: 4px;
+	border-left-width: 5px;
 }
 
 .nav-tabs.nav-stacked > li.active.task-list-gray > a {
 	border-left-color: #999;
 	border-left-width: 4px;
 }
+
+/*
+.nav-tabs.nav-stacked > li.task-list-red > a {
+	border-left-color: #c30;
+	border-left-width: 1px;
+}
+
+.nav-tabs.nav-stacked > li.task-list-orange > a {
+	border-left-color: #f60;
+	border-left-width: 4px;
+}
+
+.nav-tabs.nav-stacked > li.task-list-yellow > a {
+	border-left-color: #ff6;
+	border-left-width: 4px;
+}
+
+.nav-tabs.nav-stacked > li.task-list-green > a {
+	border-left-color: #3c3;
+	border-left-width: 4px;
+}
+
+.nav-tabs.nav-stacked > li.task-list-blue > a {
+	border-left-color: #09f;
+	border-left-width: 1px;
+}
+
+.nav-tabs.nav-stacked > li.task-list-indigo > a {
+	border-left-color: #639;
+	border-left-width: 4px;
+}
+
+.nav-tabs.nav-stacked > li.task-list-purple > a {
+	border-left-color: #c0f;
+	border-left-width: 4px;
+}
+
+.nav-tabs.nav-stacked > li.task-list-black > a {
+	border-left-color: #000;
+	border-left-width: 4px;
+}
+
+.nav-tabs.nav-stacked > li.task-list-darkgray > a {
+	border-left-color: #555;
+	border-left-width: 1px;
+}
+
+.nav-tabs.nav-stacked > li.active.task-list-gray > a {
+	border-left-color: #999;
+	border-left-width: 4px;
+}
+*/

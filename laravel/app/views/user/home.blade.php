@@ -63,7 +63,7 @@
           </li>
           @endforeach
 
-          <li {{ count($taskLists) == 0 ? 'class="active task-list-darkgray"' : '' }} id='create_list_pop'>
+          <li {{ count($taskLists) == 0 ? 'class="active task-list-darkgray"' : 'class="task-list-darkgray"' }} id='create_list_pop'>
             <a data-toggle="popover">
               创建列表 <span class="glyphicon glyphicon-plus pull-right"></span>
             </a>
