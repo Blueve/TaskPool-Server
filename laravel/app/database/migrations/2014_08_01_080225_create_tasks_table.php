@@ -51,6 +51,7 @@ class CreateTasksTable extends Migration {
 		// tp_attachments
 		Schema::create('tp_attachments', function($table)
 		{
+			$table->increments('id');					// 附件id
 			//!TODO: 待定
 		});
 	}
