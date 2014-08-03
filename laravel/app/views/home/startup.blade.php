@@ -1,7 +1,6 @@
 @extends('layouts.base')
 
 @section('content')
-
   <div class="col-md-4 col-md-offset-4 column">
     @include('layouts.pageheader')
     {{-- 登录表单 --}}
@@ -49,4 +48,8 @@
       </div>
     </form>
   </div>
+@stop
+
+@section('javascript')
+  <script src="{{{ asset('js/taskpool/home.startup.js') }}}"></script>
 @stop

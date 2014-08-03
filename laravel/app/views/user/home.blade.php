@@ -12,11 +12,11 @@
     <div class="row">
       <div class="col-md-2 col-md-offset-1 column text-right">
         <div class="btn-group btn-group-lg">
-          <button type="button" class="btn btn-default" id="sort" data-toggle="tooltip" data-placement="top" title="调整列表顺序"><span class="glyphicon glyphicon-sort"></span></button>
+          <button type="button" class="btn btn-default" id="sort" data-toggle="tooltip" data-placement="top" title="{{{ Lang::get('task.change_list_order') }}}"><span class="glyphicon glyphicon-sort"></span></button>
         </div>
         <div class="btn-group btn-group-lg" id="save">
-          <button type="button" class="btn btn-default" id="ok" data-toggle="tooltip" data-placement="top" title="保存"><span class="glyphicon glyphicon-ok"></span></button>
-          <button type="button" class="btn btn-default" id="cancel" data-toggle="tooltip" data-placement="top" title="取消"><span class="glyphicon glyphicon-remove"></span></button>
+          <button type="button" class="btn btn-default" id="ok" data-toggle="tooltip" data-placement="top" title="{{{ Lang::get('site.save') }}}"><span class="glyphicon glyphicon-ok"></span></button>
+          <button type="button" class="btn btn-default" id="cancel" data-toggle="tooltip" data-placement="top" title="{{{ Lang::get('site.cancel') }}}"><span class="glyphicon glyphicon-remove"></span></button>
         </div>
       </div>
       {{-- 选择子集 --}}
@@ -115,4 +115,8 @@
     </div>
 
   </div>
+@stop
+
+@section('javascript')
+  <script src="{{{ asset('js/taskpool/user.home.js') }}}"></script>
 @stop
