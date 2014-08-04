@@ -26,11 +26,23 @@ class TaskList extends Eloquent {
 
 	public static function updatePriorityById($id, $priority)
 	{
-		Tasklist::where('id', '=', $id)->increment('version', 1, array('priority' => $priority));
+		TaskList::where('id', '=', $id)->increment('version', 1, array('priority' => $priority));
 	}
 
 	public static function getTaskListById($id)
 	{
-		return Tasklist::where('id', '=', $id)->get();
+		return TaskList::where('id', '=', $id)->first();
+	}
+
+	public static function updateTaskList(ListSettingForm $listSettingForm)
+	{
+		if($listSettingForm->isValid())
+		{
+			$taskList = TaskList::where('id', '=', $listSettingForm->updateTaskListId)->first();
+			$taskList->name = $listSettingForm->name;
+			$taskList->sort_by = $listSettingForm->sortBy;
+			$taskList->color = $listSettingForm->color;
+			$taskList->save();
+		}
 	}
 }

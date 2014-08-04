@@ -36,7 +36,7 @@ $(document).ready(function()
 		var message = $("#newlist_form").serialize();
 		var $btn = $('#newlist_submit');
 
-		$btn.button('loding');
+		$btn.button('loading');
 
 		// 提交信息
 		submitNewList(message);
@@ -155,10 +155,32 @@ $(document).ready(function()
     	$(this).find('span:first-child').hide(200);
     });
     // 列表设置图标点击Ajax事件
-    $('#list_' + curTaskList).find('span:first-child').click(function()
+    $('.glyphicon.glyphicon-wrench').click(function()
     {
     	fillListSettingForm(curTaskList);		// Ajax 填充表单
     });
+
+
+    $('.radio-normal').iCheck({
+		checkboxClass: 'icheckbox_square-blue',
+		radioClass: 'iradio_square-blue',
+	});
+
+	// 从这里开始写！
+	// $('#tasklist').on('submit', '#newlist_form', function()
+	// {
+	// 	var message = $("#newlist_form").serialize();
+	// 	var $btn = $('#newlist_submit');
+
+	// 	$btn.button('loading');
+
+	// 	// 提交信息
+	// 	submitNewList(message);
+
+	// 	btn.button('reset');
+	// 	// 禁止响应表单的跳转
+	// 	return false;
+	// });
 });
 
 function submitNewList(message)
@@ -214,7 +236,7 @@ function submitListOrder(taskLists)
 
 function fillListSettingForm(curTaskList)
 {
-	$post('list/getListSetting', curTaskList, function(data)
+	$.get('list/getListSetting', {curTaskList:curTaskList}, function(data)
     {
     	if(!data.state)
     	{
@@ -222,7 +244,10 @@ function fillListSettingForm(curTaskList)
     	}
     	else
     	{
-    		
+    		$('#listName').val(data.name);
+    		$('#' + data.sort_by).iCheck('check');
+    		$('#color').val(data.color);
+    		$('updateTaskListId').val(curTaskList);
     	}
     }, 'json');
 }

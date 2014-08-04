@@ -8,8 +8,10 @@ class ListSettingForm extends BaseFormModel
 	public function __construct($input)
 	{
 		$rule = array(
-			'name'    => 'required',
-			'sort_by' => 'required|in: important, urgent, date, custom'
+			'updateTaskListId' => 'required',
+			'name'             => 'required',
+			'sortBy'           => 'required|in: important, urgent, date, custom',
+			'color'            => 'required|in: red, orange, yellow, green, blue, indigo, purple, black, darkgray, gray'
 			);
 
 		$this->init($input, $rule);

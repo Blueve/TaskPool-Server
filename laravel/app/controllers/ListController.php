@@ -38,7 +38,7 @@ class ListController extends BaseController {
 		{
 			foreach ($taskLists as $key => $value) 
 			{
-				Tasklist::updatePriorityById($value, $key);
+				TaskList::updatePriorityById($value, $key);
 			}
 			$response['state'] = true;
 		}
@@ -47,22 +47,34 @@ class ListController extends BaseController {
 
 	public function getListSetting()
 	{
-		$curTaskListId = input::get('curTaskList');
+		$curTaskListId = Input::get('curTaskList');
 
 		$response = array(
 			'state'   => false, 
 			'name'    =>'',
-			'sort_by' =>'');
+			'sort_by' =>'',
+			'color'   =>'',
+			);
 
-		$curTaskList = Tasklist::getTaskListById('$curTaskListId');
+		$curTaskList = TaskList::getTaskListById($curTaskListId);
 
 		if($curTaskList)
 		{
-			$response['state'] = true;
-			$response['name'] = $curTaskList->name;
+			$response['state']   = true;
+			$response['name']    = $curTaskList->name;
 			$response['sort_by'] = $curTaskList->sort_by;
+			$response['color']   = $curTaskList->color;
 		}
 
 		return Response::json($response);
+	}
+
+	public function updateListSetting()
+	{
+		$listSettingForm = new ListSettingForm(Input::all());
+		if($listSettingForm->isValid())
+		{
+			TaskList::updateTaskList($listSettingForm);
+		}
 	}
 }
