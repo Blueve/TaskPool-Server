@@ -31,34 +31,18 @@ $(document).ready(function()
 		$('#name').focus().select(); // 切换焦点
 	});
 	// 注册提交新列表的Ajax事件
-	$('#tasklist').on('submit', '#newlist_form', function(){
-		var btn = $('#newlist_submit');
-		btn.button('loding');
+	$('#tasklist').on('submit', '#newlist_form', function()
+	{
 		var message = $("#newlist_form").serialize();
-		$.post('list/create', message, function(data)
-		{
-			btn.button('reset');
-			if(data.state)
-			{
-				var item = '<li class="task-list-darkgray">\
-					            <a href="#list_' + data.id + '" role="tab" data-toggle="tab" data-id="' + data.id + '">\
-					             	' + data.name + '\
-					             	<span class="glyphicon glyphicon-wrench pull-right" data-toggle="modal" data-target="#TaskListSettingModal"></span>\
-					            </a>\
-					         </li>';
-				$(item).insertBefore('#create_list_pop');
-				item = '<div class="tab-pane fade" id="list_' + data.id + '"></div>';
-				$('#tasklist_content').append(item);
-				$('#create_list_pop').popover('hide');
+		var $btn = $('#newlist_submit');
 
-				$('a[href="#list_' + data.id + '"]').tab('show');
-				refreshListContent(data.id);
-			}
-			else
-			{
-				alert('error');
-			}
-		}, 'json');
+		$btn.button('loding');
+
+		// 提交信息
+		submitNewList(message);
+
+		btn.button('reset');
+		// 禁止响应表单的跳转
 		return false;
 	});
 	
@@ -71,21 +55,29 @@ $(document).ready(function()
 	// 注册列表切换的Ajax事件
 	$('#tasklist').on('show.bs.tab', 'a[data-toggle="tab"]', function(e)
 	{
+		var $target = $(e.target);
+		var targetId = $target.data('id');
+
 		// 更改设置按钮的显示
-		$(e.target).find('span:first-child').show(200);
+		$target.find('span:first-child').show(200);
+
 		// 刷新页面
-		var targetId = $(e.target).data('id');
 		refreshListContent(targetId, curDataSet);
+
 		// 更新状态
 		curTaskList = targetId;
 	});
 	// 注册数据集切换的Ajax事件
 	$('#tasklist_set').on('show.bs.tab', 'a[data-toggle="pill"]', function(e)
 	{
-		var targetId = $(e.target).data('id');
-		refreshListContent(targetId, curDataSet);
+		var $target = $(e.target);
+		var targetSet = $target.data('set');
+
+		// 刷新页面
+		refreshListContent(curTaskList, targetSet);
+
 		// 更新状态
-		curDataSet   = $(e.target).data('set');
+		curDataSet   = $target.data('set');
 	});
 
 	/* 调整列表顺序
@@ -168,6 +160,33 @@ $(document).ready(function()
     	fillListSettingForm(curTaskList);		// Ajax 填充表单
     });
 });
+
+function submitNewList(message)
+{
+	$.post('list/create', message, function(data)
+	{
+		if(data.state)
+		{
+			var item = '<li class="task-list-darkgray">\
+				            <a href="#list_' + data.id + '" role="tab" data-toggle="tab" data-id="' + data.id + '">\
+				             	' + data.name + '\
+				             	<span class="glyphicon glyphicon-wrench pull-right" data-toggle="modal" data-target="#TaskListSettingModal"></span>\
+				            </a>\
+				         </li>';
+			$(item).insertBefore('#create_list_pop');
+			item = '<div class="tab-pane fade" id="list_' + data.id + '"></div>';
+			$('#tasklist_content').append(item);
+			$('#create_list_pop').popover('hide');
+
+			$('a[href="#list_' + data.id + '"]').tab('show');
+			refreshListContent(data.id);
+		}
+		else
+		{
+			alert('error');
+		}
+	}, 'json');
+}
 
 function refreshListContent(listId, dataSet)
 {
