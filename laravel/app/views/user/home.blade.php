@@ -95,7 +95,7 @@
             <h4 class="modal-title" id="TaskListSettingModalLabel">{{{ Lang::get('task.list_option') }}}</h4>
           </div>
           <div class="modal-body">
-            <form role="form" method="post" id="tasklitsetting_form" action="{{{ URL::action('ListController@updateListSetting') }}}">
+            <form role="form" method="post" id="tasklitsetting_form">
               <input type="hidden" id="updateTaskListId" name="updateTaskListId"/>
               <div class="form-group">
                  <label for="listName">{{{ Lang::get('task.list_name') }}}</label>
@@ -137,7 +137,7 @@
 
               <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">{{{ Lang::get('site.cancel') }}}</button>
-                <button type="submit" class="btn btn-primary">{{{ Lang::get('site.save') }}}</button>
+                <button type="submit" class="btn btn-primary" id="TaskListSettingModal_submit" >{{{ Lang::get('site.save') }}}</button>
               </div>
             </form>
           </div>

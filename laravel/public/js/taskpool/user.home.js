@@ -41,7 +41,7 @@ $(document).ready(function()
 		// 提交信息
 		submitNewList(message);
 
-		btn.button('reset');
+		$btn.button('reset');
 		// 禁止响应表单的跳转
 		return false;
 	});
@@ -166,21 +166,20 @@ $(document).ready(function()
 		radioClass: 'iradio_square-blue',
 	});
 
-	// 从这里开始写！
-	// $('#tasklist').on('submit', '#newlist_form', function()
-	// {
-	// 	var message = $("#newlist_form").serialize();
-	// 	var $btn = $('#newlist_submit');
+	$('#TaskListSettingModal').on('submit', '#tasklitsetting_form', function()
+	{
+		var message = $("#tasklitsetting_form").serialize();
+		var $btn = $('#TaskListSettingModal_submit');
 
-	// 	$btn.button('loading');
+		$btn.button('loading');
 
-	// 	// 提交信息
-	// 	submitNewList(message);
+		// 提交信息
+		submitTaskListSetting(message);
 
-	// 	btn.button('reset');
-	// 	// 禁止响应表单的跳转
-	// 	return false;
-	// });
+		btn.button('reset');
+		// 禁止响应表单的跳转
+		return false;
+	});
 });
 
 function submitNewList(message)
@@ -250,4 +249,23 @@ function fillListSettingForm(curTaskList)
     		$('updateTaskListId').val(curTaskList);
     	}
     }, 'json');
+}
+
+function submitTaskListSetting(message)
+{
+	$.post('list/updateListSetting', message, function(data)
+	{
+		if(data.state)
+		{
+			refreshListContent(data.id, curDataSet);
+			$('a[href="#list_' + data.id + '"]').val(
+				data.name + '<span class="glyphicon glyphicon-wrench pull-right" data-toggle="modal" data-target="#TaskListSettingModal"></span>'
+			);
+			$('a[href="#list_' + data.id + '"]').parent('li').removeClass().addClass("task-list-" + data.color); 
+		}
+		else
+		{
+			alert('error');
+		}
+	}, 'json');
 }

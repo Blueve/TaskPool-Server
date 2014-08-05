@@ -72,9 +72,24 @@ class ListController extends BaseController {
 	public function updateListSetting()
 	{
 		$listSettingForm = new ListSettingForm(Input::all());
+
+		$response = array(
+			'state'   => false,
+			'id'      =>'', 
+			'name'    =>'',
+			'sort_by' =>'',
+			'color'   =>'',
+			);
+
 		if($listSettingForm->isValid())
 		{
 			TaskList::updateTaskList($listSettingForm);
+			$response['state'] = true;
+			$response['id']    = $listSettingForm->updateTaskListId;
+			$response['name']    = $listSettingForm->name;
+			$response['sort_by'] = $listSettingForm->sortBy;
+			$response['color']   = $listSettingForm->color;
 		}
+		return Response::json($response);
 	}
 }
