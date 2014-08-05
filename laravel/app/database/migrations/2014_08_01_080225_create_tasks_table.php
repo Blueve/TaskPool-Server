@@ -20,6 +20,7 @@ class CreateTasksTable extends Migration {
 			$table->integer('list_id')->unsigned();		// 所属列表id
 			$table->integer('child_id')->unsigned();	// 子任务id
 			$table->tinyInteger('level')->unsigned();	// 任务层级 - 最高为0 每一层子任务+1
+			$table->string('title');					// 任务标题
 			$table->text('description');				// 任务详情
 			$table->integer('priority')->unsigned();	// 任务顺位 - 自定义排序模式下有效
 			$table->timestamp('start');					// 任务开始时间
