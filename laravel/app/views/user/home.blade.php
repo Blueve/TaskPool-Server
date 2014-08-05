@@ -96,10 +96,10 @@
           </div>
           <div class="modal-body">
             <form role="form" method="post" id="tasklitsetting_form">
-              <input type="hidden" id="updateTaskListId" name="updateTaskListId"/>
+              <input type="hidden" id="id" name="id" value=""/>
               <div class="form-group">
                  <label for="listName">{{{ Lang::get('task.list_name') }}}</label>
-                 <input type="text" class="form-control" id="listName" name="listName" />
+                 <input type="text" class="form-control" id="name" name="name" value=""/>
               </div>
 
               <div class="form-group">

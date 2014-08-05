@@ -174,9 +174,9 @@ $(document).ready(function()
 		$btn.button('loading');
 
 		// 提交信息
-		submitTaskListSetting(message);
+		submitTaskListSetting(message, curDataSet);
 
-		btn.button('reset');
+		$btn.button('reset');
 		// 禁止响应表单的跳转
 		return false;
 	});
@@ -243,25 +243,26 @@ function fillListSettingForm(curTaskList)
     	}
     	else
     	{
-    		$('#listName').val(data.name);
+    		$('#name').val(data.name);
     		$('#' + data.sort_by).iCheck('check');
     		$('#color').val(data.color);
-    		$('updateTaskListId').val(curTaskList);
+    		$('#id').val(curTaskList);
     	}
     }, 'json');
 }
 
-function submitTaskListSetting(message)
+function submitTaskListSetting(message, curDataSet)
 {
-	$.post('list/updateListSetting', message, function(data)
+	$.get('list/updateListSetting', message, function(data)
 	{
 		if(data.state)
 		{
+			$(TaskListSettingModal).modal('hide');
 			refreshListContent(data.id, curDataSet);
-			$('a[href="#list_' + data.id + '"]').val(
+			$('a[href="#list_' + data.id + '"]').html(
 				data.name + '<span class="glyphicon glyphicon-wrench pull-right" data-toggle="modal" data-target="#TaskListSettingModal"></span>'
 			);
-			$('a[href="#list_' + data.id + '"]').parent('li').removeClass().addClass("task-list-" + data.color); 
+			$('a[href="#list_' + data.id + '"]').parent('li').removeClass().addClass("active task-list-" + data.color); 
 		}
 		else
 		{

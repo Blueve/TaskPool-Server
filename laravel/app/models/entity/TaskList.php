@@ -36,9 +36,9 @@ class TaskList extends Eloquent {
 
 	public static function updateTaskList(ListSettingForm $listSettingForm)
 	{
-		if($listSettingForm->isValid())
+		if(!$listSettingForm->isValid())
 		{
-			$taskList = TaskList::where('id', '=', $listSettingForm->updateTaskListId)->first();
+			$taskList = TaskList::where('id', '=', $listSettingForm->id)->first();
 			$taskList->name = $listSettingForm->name;
 			$taskList->sort_by = $listSettingForm->sortBy;
 			$taskList->color = $listSettingForm->color;

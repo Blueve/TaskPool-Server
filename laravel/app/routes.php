@@ -48,5 +48,5 @@ Route::group(array('before' => 'auth|confirmed'), function()
 	Route::post('list/content', 'ListController@content');
 	Route::post('list/reorder', 'ListController@reorder');
 	route::get('list/getListSetting', 'ListController@getListSetting');
-	route::post('list/updateListSetting', 'ListController@updateListSetting');
+	route::get('list/updateListSetting', 'ListController@updateListSetting');
 });

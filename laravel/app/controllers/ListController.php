@@ -73,6 +73,9 @@ class ListController extends BaseController {
 	{
 		$listSettingForm = new ListSettingForm(Input::all());
 
+		//Helper::VarDump($listSettingForm);
+		TaskList::updateTaskList($listSettingForm);
+
 		$response = array(
 			'state'   => false,
 			'id'      =>'', 
@@ -81,11 +84,11 @@ class ListController extends BaseController {
 			'color'   =>'',
 			);
 
-		if($listSettingForm->isValid())
+		if(!$listSettingForm->isValid())
 		{
 			TaskList::updateTaskList($listSettingForm);
-			$response['state'] = true;
-			$response['id']    = $listSettingForm->updateTaskListId;
+			$response['state']   = true;
+			$response['id']      = $listSettingForm->id;
 			$response['name']    = $listSettingForm->name;
 			$response['sort_by'] = $listSettingForm->sortBy;
 			$response['color']   = $listSettingForm->color;
