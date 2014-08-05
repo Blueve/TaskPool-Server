@@ -22,6 +22,14 @@ class CreateTasksTable extends Migration {
 			$table->tinyInteger('level')->unsigned();	// 任务层级 - 最高为0 每一层子任务+1
 			$table->text('description');				// 任务详情
 			$table->integer('priority')->unsigned();	// 任务顺位 - 自定义排序模式下有效
+			$table->timestamp('start');					// 任务开始时间
+			$table->timestamp('end');					// 任务截止时间
+			$table->enum('type', 						// 任务分类 - 默认为不重要且不紧急
+				array(
+					'i_u', 
+					'i_nu', 
+					'ni_u',
+					'ni_nu'))->default('ni_nu');
 			$table->timestamps();						// created_at update_at 时间戳
 			$table->softDeletes();						// deleted_at
 			$table->integer('version')->unsigned();		// 版本号
@@ -35,15 +43,6 @@ class CreateTasksTable extends Migration {
 			$table->integer('task_id')->unsigned();		// 所属任务id
 			$table->integer('topic_id')->unsigned();	// 所属评论id - 仅在为指向回复时有值
 			$table->text('content');					// 评论内容
-			$table->timestamp('start');					// 任务开始时间
-			$table->timestamp('end');					// 任务截止时间
-			$table->enum('type', 						// 任务分类 - 默认为不重要且不紧急
-				array(
-					'i_u', 
-					'i_nu', 
-					'ni_u',
-					'ni_nu'))->default('ni_nu');
-			$table->integer('priority')->unsigned();	// 列表顺位
 			$table->timestamps();						// created_at update_at 时间戳
 
 		});
