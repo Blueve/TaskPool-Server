@@ -144,8 +144,9 @@ $(document).ready(function()
 	 * ----------------------------------------
 	 */
     // 列表设置图标初始化
-    $('.glyphicon.glyphicon-wrench').hide();							// 默认隐藏
-    $('.glyphicon.glyphicon-wrench').parent('a').hover(function() 		// 鼠标悬停时显示
+    $('.glyphicon.glyphicon-wrench').hide();							// 默认隐藏 
+    /*
+    $('.glyphicon.glyphicon-wrench').parent('a').hover(function() 		
     {
     	if($(this).parent('li').hasClass('active'))
     	{
@@ -154,9 +155,29 @@ $(document).ready(function()
     }, function() {
     	$(this).find('span:first-child').hide(200);
     });
+	*/
+	$(document).on('mouseenter mouseout', 'li.active a', function(e)				// 鼠标悬停时显示
+	{
+		if(e.type === 'mouseenter')
+		{
+			$(e.target).find('span').show(200);
+		}
+		else
+		{
+			if(!($(e.relatedTarget).hasClass('glyphicon-wrench')))
+			{
+				$(e.target).find('span').hide(200);
+			}
+		}
+	});
+	//$(document).on('mouseout', 'li.active > a', function(e)
+	//{
+	//	$(e.target).find('span').hide(200);
+	//});
     // 列表设置图标点击Ajax事件
-    $('.glyphicon.glyphicon-wrench').click(function()
+    $(document).on('click', '.glyphicon.glyphicon-wrench', function(e)
     {
+    	$(e.target).hide(200);
     	fillListSettingForm(curTaskList);		// Ajax 填充表单
     });
 
