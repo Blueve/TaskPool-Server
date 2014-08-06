@@ -329,7 +329,7 @@ function submitTaskListSetting(message, curTaskList, curDataSet, callback)
 			$('#TaskListSettingModal').modal('hide');
 			refreshListContent(curTaskList, curDataSet);
 			$('a[href="#list_' + curTaskList + '"]').html(
-				data.name + '<i class="fa fa-cog fa-lg pull-right" data-toggle="modal" data-target="#TaskListSettingModal"></i>'
+				data.name + '<i class="fa fa-cog fa-lg pull-right" data-toggle="modal" data-target="#TaskListSettingModal" style="display: none;"></i>'
 			);
 			$('a[href="#list_' + curTaskList + '"]').parent('li').removeClass().addClass("active task-list-" + data.color); 
 			callback();
