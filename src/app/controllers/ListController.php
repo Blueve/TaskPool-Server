@@ -92,13 +92,13 @@ class ListController extends BaseController {
 		return Response::json($response);
 	}
 
-	public function deleteTaskList($listId)
+	public function delete($listId)
 	{
 		$response = array(
 			'state'   => false,
 			);
 
-		if(TaskList::deleteTaskList($listId))
+		if(TaskList::softDeleteById($listId))
 		{
 			$response['state'] = true;
 		}

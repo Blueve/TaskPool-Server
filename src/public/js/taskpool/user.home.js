@@ -232,7 +232,7 @@ $(document).ready(function()
 
 		$btn.button('loading');
 
-		$.get('list/deleteTaskList/' + curTaskList, '', function(data)
+		$.get('list/delete/' + curTaskList, '', function(data)
 	    {
 	    	if(!data.state)
 	    	{

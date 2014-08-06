@@ -46,7 +46,7 @@ class TaskList extends Eloquent {
 		}
 	}
 
-	public static function deleteTaskList($listId)
+	public static function softDeleteById($listId)
 	{
 		if($listId)
 		{
