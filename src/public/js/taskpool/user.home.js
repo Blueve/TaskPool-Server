@@ -1,8 +1,9 @@
 $(document).ready(function()
 {
 	// 全局状态
-	var curTaskList = 0;		// 当前选中的列表id - 0为总概列表
-	var curDataSet = 'today';	// 当前选中的数据集类型
+	var curTaskList     = 0;		// 当前选中的列表id - 0为总概列表
+	var curDataSet      = 'today';	// 当前选中的数据集类型
+	var curTaskListHtml = ''; 		// 当前列表的Html
 
 	/* 添加新的列表
 	 * ----------------------------------------
@@ -126,15 +127,27 @@ $(document).ready(function()
     	taskLists = taskLists.join(',');
 
     	submitListOrder(taskLists);				// 提交列表顺位
-    	$('#sort').removeAttr('disabled');		// 允许排序
+    	$('#sort').removeAttr('disabled');		// 禁止排序
+
+    	curTaskListHtml = $('#tasklist').html();// 保存当前列表的Html
     });
     // 注册列表顺位调整取消的时间
     $('#cancel').click(function() 
     {
     	$('#save').hide(400);					// 隐藏保存按钮组
+
+    	// 恢复初始排序	
+    	if(!curTaskListHtml)
+    	{
+    		$('#tasklist').sortable('cancel');	
+    	}
+    	else
+    	{
+    		$('#tasklist').html(curTaskListHtml);
+    	}
     	$('#tasklist').sortable('disable');		// 禁用排序
-    	$('#tasklist').sortable('cancel');		// 恢复初始排序
     	$('#sort').removeAttr('disabled');		// 允许使用调序按钮
+    	
     });
 
     /* 列表设置
