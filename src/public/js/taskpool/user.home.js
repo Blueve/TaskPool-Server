@@ -211,9 +211,12 @@ $(document).ready(function()
 		$btn.button('loading');
 
 		// 提交信息
-		submitTaskListSetting(message, curDataSet);
+		submitTaskListSetting(message, curDataSet, function()
+		{
+			$btn.button('reset');
+		});
 
-		$btn.button('reset');
+		
 		// 禁止响应表单的跳转
 		return false;
 	});
@@ -272,7 +275,7 @@ function submitListOrder(taskLists)
 
 function fillListSettingForm(curTaskList)
 {
-	$.get('list/getListSetting', {curTaskList:curTaskList}, function(data)
+	$.get('list/getListSetting/' + curTaskList, '', function(data)
     {
     	if(!data.state)
     	{
@@ -288,18 +291,19 @@ function fillListSettingForm(curTaskList)
     }, 'json');
 }
 
-function submitTaskListSetting(message, curDataSet)
+function submitTaskListSetting(message, curDataSet, callback)
 {
-	$.get('list/updateListSetting', message, function(data)
+	$.post('list/updateListSetting', message, function(data)
 	{
 		if(data.state)
 		{
-			$(TaskListSettingModal).modal('hide');
+			$('#TaskListSettingModal').modal('hide');
 			refreshListContent(data.id, curDataSet);
 			$('a[href="#list_' + data.id + '"]').html(
-				data.name + '<span class="glyphicon glyphicon-wrench pull-right" data-toggle="modal" data-target="#TaskListSettingModal"></span>'
+				data.name + '<i class="fa fa-cog fa-lg pull-right" data-toggle="modal" data-target="#TaskListSettingModal"></i>'
 			);
 			$('a[href="#list_' + data.id + '"]').parent('li').removeClass().addClass("active task-list-" + data.color); 
+			callback();
 		}
 		else
 		{

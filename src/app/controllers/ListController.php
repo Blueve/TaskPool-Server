@@ -45,10 +45,8 @@ class ListController extends BaseController {
 		return Response::json($response);
 	}
 
-	public function getListSetting()
+	public function getListSetting($listId)
 	{
-		$curTaskListId = Input::get('curTaskList');
-
 		$response = array(
 			'state'   => false, 
 			'name'    =>'',
@@ -56,14 +54,14 @@ class ListController extends BaseController {
 			'color'   =>'',
 			);
 
-		$curTaskList = TaskList::getTaskListById($curTaskListId);
+		$list = TaskList::getTaskListById($listId);
 
-		if($curTaskList)
+		if($list)
 		{
 			$response['state']   = true;
-			$response['name']    = $curTaskList->name;
-			$response['sort_by'] = $curTaskList->sort_by;
-			$response['color']   = $curTaskList->color;
+			$response['name']    = $list->name;
+			$response['sort_by'] = $list->sort_by;
+			$response['color']   = $list->color;
 		}
 
 		return Response::json($response);
