@@ -44,9 +44,16 @@ Route::group(array('before' => 'auth|confirmed'), function()
 	Route::get('user/setting', 'UserController@setting');
 	Route::post('user/setting', 'UserController@setting_post');
 
+	// JSON
 	Route::post('list/create', 'ListController@create');
+	// HTML
 	Route::post('list/content', 'ListController@content');
+	// JSON
 	Route::post('list/reorder', 'ListController@reorder');
-	route::get('list/getListSetting/{listId}', 'ListController@getListSetting');
-	route::post('list/updateListSetting', 'ListController@updateListSetting');
+	// JSON
+	Route::post('list/updateListSetting', 'ListController@updateListSetting');
+	// JSON
+	Route::post('list/delete/{listId}', 'ListController@deleteList');
+	// JSON
+	Route::get('list/getListSetting/{listId}', 'ListController@getListSetting');
 });
