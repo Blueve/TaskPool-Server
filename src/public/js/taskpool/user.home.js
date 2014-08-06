@@ -5,6 +5,8 @@ $(document).ready(function()
 	var curDataSet      = 'today';	// 当前选中的数据集类型
 	var curTaskListHtml = ''; 		// 当前列表的Html
 
+	var sortable        = false;	// 是否可排序
+
 	/* 添加新的列表
 	 * ----------------------------------------
 	 * 创建添加新列表的Popover
@@ -106,6 +108,8 @@ $(document).ready(function()
     	});
     	$('#save').show(400);					// 保存组合框显示
     	//允许列表拖动
+    	sortable = true;
+    	$('.fa.fa-cog').hide();
 		$('#tasklist').sortable('enable');		// 开启调序
     	
     });
@@ -127,6 +131,7 @@ $(document).ready(function()
     	taskLists = taskLists.join(',');
 
     	submitListOrder(taskLists);				// 提交列表顺位
+    	sortable = false;
     	$('#sort').removeAttr('disabled');		// 禁止排序
 
     	curTaskListHtml = $('#tasklist').html();// 保存当前列表的Html
@@ -145,9 +150,9 @@ $(document).ready(function()
     	{
     		$('#tasklist').html(curTaskListHtml);
     	}
+    	sortable = false;
     	$('#tasklist').sortable('disable');		// 禁用排序
     	$('#sort').removeAttr('disabled');		// 允许使用调序按钮
-    	
     });
 
     /* 列表设置
@@ -162,7 +167,7 @@ $(document).ready(function()
     $('.fa.fa-cog').hide();							// 默认隐藏 
 	$(document).on('mouseenter mouseout', 'li.active a', function(e)				// 鼠标悬停时显示
 	{
-		if(e.type === 'mouseenter')
+		if(e.type === 'mouseenter' && !sortable)
 		{
 			$(e.target).find('i').show(200);
 		}
