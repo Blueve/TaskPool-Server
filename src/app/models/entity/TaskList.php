@@ -45,4 +45,15 @@ class TaskList extends Eloquent {
 			$taskList->save();
 		}
 	}
+
+	public static function deleteTaskList($listId)
+	{
+		if($listId)
+		{
+			TaskList::destroy($listId);
+			return true;
+		}
+
+		return false;
+	}
 }

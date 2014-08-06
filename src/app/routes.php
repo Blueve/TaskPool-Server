@@ -53,7 +53,7 @@ Route::group(array('before' => 'auth|confirmed'), function()
 	// JSON
 	Route::post('list/updateListSetting', 'ListController@updateListSetting');
 	// JSON
-	Route::post('list/delete/{listId}', 'ListController@deleteList');
+	Route::post('list/delete/{listId}', 'ListController@delete');
 	// JSON
 	Route::get('list/getListSetting/{listId}', 'ListController@getListSetting');
 });

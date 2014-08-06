@@ -29,7 +29,8 @@ return array(
 	
 	"go"                    => "继续",
 	"create"                => "创建",
-
-	"save"					=> "保存",
-	"cancel"				=> "取消",
+	
+	"save"                  => "保存",
+	"cancel"                => "取消",
+	"delete"                => "删除"
 	);

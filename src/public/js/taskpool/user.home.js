@@ -161,6 +161,7 @@ $(document).ready(function()
 	 * 列表设置图标点击Ajax事件
 	 * 初始化列表设置弹框内容
 	 * 注册列表设置表单提交的Ajax事件
+	 * 删除列表
 	 * ----------------------------------------
 	 */
     // 列表设置图标初始化
@@ -216,14 +217,37 @@ $(document).ready(function()
 		$btn.button('loading');
 
 		// 提交信息
-		submitTaskListSetting(message, curDataSet, function()
+		submitTaskListSetting(message, curTaskList, curDataSet, function()
 		{
 			$btn.button('reset');
 		});
 
-		
 		// 禁止响应表单的跳转
 		return false;
+	});
+
+	$('#TaskListSettingModal_delete').click(function()
+	{
+		var $btn = $('#TaskListSettingModal_delete');
+
+		$btn.button('loading');
+
+		$.get('list/deleteTaskList/' + curTaskList, '', function(data)
+	    {
+	    	if(!data.state)
+	    	{
+	    		alert('error');
+	    	}
+
+	    	else
+	    	{
+	    		$('a[href="#list_' + curTaskList + '"]').parent('li').remove();
+	    	}
+
+	    	$('#TaskListSettingModal').modal('hide');
+	    	$btn.button('reset');
+	    	
+	    }, 'json');		
 	});
 });
 
@@ -296,18 +320,18 @@ function fillListSettingForm(curTaskList)
     }, 'json');
 }
 
-function submitTaskListSetting(message, curDataSet, callback)
+function submitTaskListSetting(message, curTaskList, curDataSet, callback)
 {
 	$.post('list/updateListSetting', message, function(data)
 	{
 		if(data.state)
 		{
 			$('#TaskListSettingModal').modal('hide');
-			refreshListContent(data.id, curDataSet);
-			$('a[href="#list_' + data.id + '"]').html(
+			refreshListContent(curTaskList, curDataSet);
+			$('a[href="#list_' + curTaskList + '"]').html(
 				data.name + '<i class="fa fa-cog fa-lg pull-right" data-toggle="modal" data-target="#TaskListSettingModal"></i>'
 			);
-			$('a[href="#list_' + data.id + '"]').parent('li').removeClass().addClass("active task-list-" + data.color); 
+			$('a[href="#list_' + curTaskList + '"]').parent('li').removeClass().addClass("active task-list-" + data.color); 
 			callback();
 		}
 		else
