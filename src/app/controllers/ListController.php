@@ -76,7 +76,6 @@ class ListController extends BaseController {
 
 		$response = array(
 			'state'   => false,
-			'id'      =>'', 
 			'name'    =>'',
 			'sort_by' =>'',
 			'color'   =>'',
@@ -86,10 +85,22 @@ class ListController extends BaseController {
 		{
 			TaskList::updateTaskList($listSettingForm);
 			$response['state']   = true;
-			$response['id']      = $listSettingForm->id;
 			$response['name']    = $listSettingForm->name;
 			$response['sort_by'] = $listSettingForm->sortBy;
 			$response['color']   = $listSettingForm->color;
+		}
+		return Response::json($response);
+	}
+
+	public function deleteTaskList($listId)
+	{
+		$response = array(
+			'state'   => false,
+			);
+
+		if(TaskList::deleteTaskList($listId))
+		{
+			$response['state'] = true;
 		}
 		return Response::json($response);
 	}
