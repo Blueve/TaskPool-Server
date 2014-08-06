@@ -12,11 +12,13 @@ return array(
 	
 	"change_list_order" => "调整列表顺序",
 	
-	"sort_by"           =>"排序方式",
+	"sort_by"           => "排序方式",
 	
-	"color"             =>"颜色",
-	"important"         =>"重要的任务优先",
-	"urgent"            =>"紧急的任务优先",
-	"date"              =>"按照任务开始时间",
-	"custom"            =>"自定义顺序"
+	"color"             => "颜色",
+	"important"         => "重要的任务优先",
+	"urgent"            => "紧急的任务优先",
+	"date"              => "按照任务开始时间",
+	"custom"            => "自定义顺序",
+
+	"create_list"		=> "创建新列表"
 );

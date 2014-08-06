@@ -59,7 +59,7 @@ $(document).ready(function()
 		var targetId = $target.data('id');
 
 		// 更改设置按钮的显示
-		$target.find('span:first-child').show(200);
+		$target.find('i:first-child').show(200);
 
 		// 刷新页面
 		refreshListContent(targetId, curDataSet);
@@ -133,7 +133,7 @@ $(document).ready(function()
     {
     	$('#save').hide(400);					// 隐藏保存按钮组
     	$('#tasklist').sortable('disable');		// 禁用排序
-    	$('#tasklist').sortable('cancel');		// 禁用排序
+    	$('#tasklist').sortable('cancel');		// 恢复初始排序
     	$('#sort').removeAttr('disabled');		// 允许使用调序按钮
     });
 
@@ -141,52 +141,55 @@ $(document).ready(function()
 	 * ----------------------------------------
 	 * 列表设置图标初始化
 	 * 列表设置图标点击Ajax事件
+	 * 初始化列表设置弹框内容
+	 * 注册列表设置表单提交的Ajax事件
 	 * ----------------------------------------
 	 */
     // 列表设置图标初始化
-    $('.glyphicon.glyphicon-wrench').hide();							// 默认隐藏 
-    /*
-    $('.glyphicon.glyphicon-wrench').parent('a').hover(function() 		
-    {
-    	if($(this).parent('li').hasClass('active'))
-    	{
-    		$(this).find('span:first-child').show(200);
-    	}
-    }, function() {
-    	$(this).find('span:first-child').hide(200);
-    });
-	*/
+    $('.fa.fa-cog').hide();							// 默认隐藏 
 	$(document).on('mouseenter mouseout', 'li.active a', function(e)				// 鼠标悬停时显示
 	{
 		if(e.type === 'mouseenter')
 		{
-			$(e.target).find('span').show(200);
+			$(e.target).find('i').show(200);
 		}
 		else
 		{
-			if(!($(e.relatedTarget).hasClass('glyphicon-wrench')))
+			if(!($(e.relatedTarget).hasClass('fa-cog')))
 			{
-				$(e.target).find('span').hide(200);
+				$(e.target).find('i').hide(200);
+			}
+			else
+			{
+				$(e.relatedTarget).addClass('fa-spin');
 			}
 		}
 	});
-	//$(document).on('mouseout', 'li.active > a', function(e)
-	//{
-	//	$(e.target).find('span').hide(200);
-	//});
+	$(document).on('mouseenter mouseout', '.fa.fa-cog', function(e)				// 鼠标悬停时显示
+	{
+		if(e.type === 'mouseenter')
+		{
+			$(e.target).addClass('fa-spin');
+		}
+		else
+		{
+			$(e.target).removeClass('fa-spin');
+		}
+	});
     // 列表设置图标点击Ajax事件
-    $(document).on('click', '.glyphicon.glyphicon-wrench', function(e)
+    $(document).on('click', 'i.fa.fa-cog', function(e)
     {
     	$(e.target).hide(200);
     	fillListSettingForm(curTaskList);		// Ajax 填充表单
     });
 
-
+    // 初始化列表设置弹框内容
     $('.radio-normal').iCheck({
 		checkboxClass: 'icheckbox_square-blue',
 		radioClass: 'iradio_square-blue',
 	});
 
+    // 注册列表设置表单提交的Ajax事件
 	$('#TaskListSettingModal').on('submit', '#tasklitsetting_form', function()
 	{
 		var message = $("#tasklitsetting_form").serialize();
@@ -212,7 +215,7 @@ function submitNewList(message)
 			var item = '<li class="task-list-darkgray">\
 				            <a href="#list_' + data.id + '" role="tab" data-toggle="tab" data-id="' + data.id + '">\
 				             	' + data.name + '\
-				             	<span class="glyphicon glyphicon-wrench pull-right" data-toggle="modal" data-target="#TaskListSettingModal"></span>\
+				             	<i class="fa fa-cog fa-lg pull-right" data-toggle="modal" data-target="#TaskListSettingModal"></i>\
 				            </a>\
 				         </li>';
 			$(item).insertBefore('#create_list_pop');

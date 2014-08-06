@@ -12,11 +12,17 @@
     <div class="row">
       <div class="col-md-2 col-md-offset-1 column text-right">
         <div class="btn-group btn-group-lg">
-          <button type="button" class="btn btn-default" id="sort" data-toggle="tooltip" data-placement="top" title="{{{ Lang::get('task.change_list_order') }}}"><span class="glyphicon glyphicon-sort"></span></button>
+          <button type="button" class="btn btn-default" id="sort" >
+            <i class="fa fa-sort" data-toggle="tooltip" data-placement="top" title="{{{ Lang::get('task.change_list_order') }}}"></i>
+          </button>
         </div>
         <div class="btn-group btn-group-lg" id="save">
-          <button type="button" class="btn btn-default" id="ok" data-toggle="tooltip" data-placement="top" title="{{{ Lang::get('site.save') }}}"><span class="glyphicon glyphicon-ok"></span></button>
-          <button type="button" class="btn btn-default" id="cancel" data-toggle="tooltip" data-placement="top" title="{{{ Lang::get('site.cancel') }}}"><span class="glyphicon glyphicon-remove"></span></button>
+          <button type="button" class="btn btn-default" id="ok" >
+            <i class="fa fa-check" data-toggle="tooltip" data-placement="top" title="{{{ Lang::get('site.save') }}}"></i>
+          </button>
+          <button type="button" class="btn btn-default" id="cancel" >
+            <i class="fa fa-times" data-toggle="tooltip" data-placement="top" title="{{{ Lang::get('site.cancel') }}}"></i>
+          </button>
         </div>
       </div>
       {{-- 选择子集 --}}
@@ -58,14 +64,15 @@
           <li class="task-list-{{{ $item->color }}}">
             <a href="#list_{{{ $item->id }}}" role="tab" data-toggle="tab" data-id="{{{ $item->id }}}">
               {{{ $item->name }}}
-              <span class="glyphicon glyphicon-wrench pull-right" data-toggle="modal" data-target="#TaskListSettingModal"></span>
+              <i class="fa fa-cog fa-lg pull-right" data-toggle="modal" data-target="#TaskListSettingModal"></i>
+              {{--<span class="glyphicon glyphicon-wrench pull-right" data-toggle="modal" data-target="#TaskListSettingModal"></span>--}}
             </a>
           </li>
           @endforeach
 
           <li {{ count($taskLists) == 0 ? 'class="active task-list-darkgray"' : 'class="task-list-darkgray"' }} id='create_list_pop'>
             <a data-toggle="popover">
-              创建列表 <span class="glyphicon glyphicon-plus pull-right"></span>
+              <i class="fa fa-plus fa-lg" data-toggle="tooltip" data-placement="top" title="{{{ Lang::get('task.create_list') }}}"></i></span>
             </a>
           </li>
         </ul>
