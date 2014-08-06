@@ -1,0 +1,165 @@
+body { padding-top: 60px; }
+
+.more-margin-bottom {
+	margin-bottom: 20px;
+}
+
+.less-padding-left {
+	padding-left: 0px;
+}
+
+.popover {
+	min-width: 222px;
+}
+
+.nav-pills { 
+	margin-bottom: 20px;
+}
+.nav-pills > li > a {
+	background-color: #eee;
+	border: 1px solid #ddd;
+}
+.nav-pills > li > a:hover,
+.nav-pills > li > a:focus {
+	background-color: #ddd;
+}
+
+
+.nav-tabs.nav-stacked {
+	border-bottom: 0 none;
+	border-right: 1px solid #ddd;
+	min-height: 500px;
+	background-image: linear-gradient(to left, #f6f6f6 0%, #fff 8px);
+}
+.nav-tabs.nav-stacked > li {
+	margin-right: -1px;
+}
+.nav-tabs.nav-stacked > li > a {
+	text-align: center;
+	border-radius: 4px 0 0 4px;
+	margin-right: 0px;
+	margin-bottom: 2px;
+	border: 1px solid transparent;
+}
+.nav-tabs.nav-stacked > li > a:hover {
+	border-right: 4px solid #aaa;
+	background-color: transparent;
+}
+.nav-tabs.nav-stacked > li.active > a {
+	color: #555;
+	cursor: default;
+	background-color: #fff;
+	border: 1px solid #ddd;
+	border-right-color: transparent;
+	box-shadow: -2px 2px 5px #eee;
+}
+
+.nav-tabs.nav-stacked > li.active > a > span:hover,
+.nav-tabs.nav-stacked > li.active > a > span:focus {
+	color: #428bca;
+}
+
+.nav-tabs.nav-stacked > li.active.task-list-red > a {
+	border-left-color: #c30;
+	border-left-width: 5px;
+	background-image: none;
+}
+
+.nav-tabs.nav-stacked > li.active.task-list-orange > a {
+	border-left-color: #f60;
+	border-left-width: 4px;
+}
+
+.nav-tabs.nav-stacked > li.active.task-list-yellow > a {
+	border-left-color: #ff6;
+	border-left-width: 4px;
+}
+
+.nav-tabs.nav-stacked > li.active.task-list-green > a {
+	border-left-color: #3c3;
+	border-left-width: 4px;
+}
+
+.nav-tabs.nav-stacked > li.active.task-list-blue > a {
+	border-left-color: #09f;
+	border-left-width: 5px;
+	background-image: none;
+}
+
+.nav-tabs.nav-stacked > li.active.task-list-indigo > a {
+	border-left-color: #639;
+	border-left-width: 4px;
+}
+
+.nav-tabs.nav-stacked > li.active.task-list-purple > a {
+	border-left-color: #c0f;
+	border-left-width: 4px;
+}
+
+.nav-tabs.nav-stacked > li.active.task-list-black > a {
+	border-left-color: #000;
+	border-left-width: 4px;
+}
+
+.nav-tabs.nav-stacked > li.active.task-list-darkgray > a {
+	border-left-color: #555;
+	border-left-width: 5px;
+	background-image: none;
+}
+
+.nav-tabs.nav-stacked > li.active.task-list-gray > a {
+	border-left-color: #999;
+	border-left-width: 4px;
+}
+
+/*
+.nav-tabs.nav-stacked > li.task-list-red > a {
+	background-image: linear-gradient(to left, #c30 0%, #fff 3px);
+	border-left-color: #fff;
+}
+
+.nav-tabs.nav-stacked > li.task-list-orange > a {
+	border-left-color: #f60;
+	border-left-width: 4px;
+}
+
+.nav-tabs.nav-stacked > li.task-list-yellow > a {
+	border-left-color: #ff6;
+	border-left-width: 4px;
+}
+
+.nav-tabs.nav-stacked > li.task-list-green > a {
+	border-left-color: #3c3;
+	border-left-width: 4px;
+}
+
+.nav-tabs.nav-stacked > li.task-list-blue > a {
+	background-image: linear-gradient(to left, #09f 0%, #fff 3px);
+	border-left-color: #fff;
+}
+
+.nav-tabs.nav-stacked > li.task-list-indigo > a {
+	border-left-color: #639;
+	border-left-width: 4px;
+}
+
+.nav-tabs.nav-stacked > li.task-list-purple > a {
+	border-left-color: #c0f;
+	border-left-width: 4px;
+}
+
+.nav-tabs.nav-stacked > li.task-list-black > a {
+	border-left-color: #000;
+	border-left-width: 4px;
+}
+
+.nav-tabs.nav-stacked > li.task-list-darkgray > a {
+	background-image: linear-gradient(to left, #555 0%, #fff 3px);
+	border-left-color: #fff;
+}
+
+.nav-tabs.nav-stacked > li.active.task-list-gray > a {
+	border-left-color: #999;
+	border-left-width: 4px;
+}
+*/
