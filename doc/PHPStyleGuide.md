@@ -2,9 +2,9 @@
 
 ##目录
 1. [源代码文件](#1-源代码文件)
-2. [缩进、括号及注释](#2-缩进、括号及注释)
+2. [缩进、括号及注释](#2-缩进括号及注释)
 3. [变量](#3-变量)
-4. [函数/方法](#4-函数/方法)
+4. [函数/方法](#4-函数方法)
 5. [类](#5-类)
 
 ##正文
@@ -23,7 +23,7 @@
 
 ###2. 缩进、括号及注释
 
-####1. 流程控制语句
+####2.1 流程控制语句
 ```php
 // good
 if($a > $b)
@@ -49,7 +49,7 @@ else
     // statement
 ```
 
-####2. 函数/方法
+####2.2 函数/方法
 
 ```php
 // good
@@ -64,7 +64,7 @@ function foo() {
 }
 ```
 
-####3. 闭包
+####2.3 闭包
 
 ```php
 // good
@@ -79,7 +79,7 @@ $foo = function() {
 }
 ```
 
-####4. 表达式
+####2.4 表达式
 
 ```php
 // good
@@ -89,7 +89,7 @@ $expr = ($a + $b) * $c;
 $expr=($a+$b)*$c;
 ```
 
-####5. 参数表
+####2.5 参数表
 
 ```php
 // good
@@ -104,9 +104,57 @@ $bar = foo($longLongLongParameterA,
 $bar = foo($a,$b,$c);
 ```
 
+####2.6 注释
+
+```php
+// good
+/* Title
+ * Description
+ */
+
+// good
+/**
+ * Doc title
+ *
+ * Doc description
+ *
+ * @return TYPE
+ */  
+
+// good
+// Description
+while($a > $b)
+{
+    // while body
+}
+
+// good
+class Apple
+{
+    public $color;  // Description
+    public $type;   // Description
+}
+
+// good
+// Description
+fooA();
+
+// Description
+fooB();
+
+// bad
+$result = OBJECT::getResult();  //Description
+
+// bad
+// Description
+fooA();
+// Description
+fooB();
+```
+
 ###3. 变量
 
-####1. 命名
+####3.1 命名
 
 ```php
 // good
@@ -118,7 +166,7 @@ $MyVar;
 // bad
 $my_var;
 ```
-####2. 字符串
+####3.2 字符串
 
 ```php
 // good
@@ -140,7 +188,7 @@ $sql = 'SELECT name
         WHERE id = 1';
 ```
 
-####3. 数组
+####3.3 数组
 
 ```php
 // good
@@ -167,7 +215,7 @@ $arr = array(
 
 ###4. 函数/方法
 
-####1. 命名
+####4.1 命名
 
 ```php
 // good
@@ -195,7 +243,7 @@ function IsValid()
 }
 ```
 
-####2. 参数表
+####4.2 参数表
 
 ```php
 // good
@@ -223,7 +271,7 @@ function foo($longLongLongParameterA, $longLongLongParameterB, $longLongLongPara
 
 ###5. 类
 
-####1. 定义
+####5.1 定义
 
 ```php
 // good
@@ -238,7 +286,7 @@ class myClass
     // class body
 }
 ```
-####2. 属性和方法
+####5.2 属性和方法
 
 ```php
 class MyClass
