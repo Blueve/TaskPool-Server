@@ -6,11 +6,11 @@
 ```php
 // good
 <?php
-    #...your code...#
+    #...your code...
 
 // bad
 <?php
-    #...your code...#
+    #...your code...
 ?>
 ```
 ###2.变量
@@ -71,4 +71,78 @@ $arr = array(
             '3' => 'c'
             );
 
+```
+
+###3. 函数
+
+####1. 函数命名
+
+```php
+// good
+function VarDump()
+{
+
+}
+
+// good
+function isValid()
+{
+
+}
+
+// bad
+function var_dump()
+{
+
+}
+
+function IsValid()
+{
+
+}
+```
+
+###4. 类
+
+```php
+// good
+class MyClass
+{
+
+}
+
+// bad
+class myClass
+{
+
+}
+
+// bad
+class MyClass {
+    
+}
+```
+
+```php
+class MyClass
+{
+    // good
+    public $id;
+    // good
+    public $leftChildId;
+    // bad
+    public $RightChildId;
+
+    // good
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    // bad
+    public function GetId()
+    {
+        return $this->Id;
+    }
+}
 ```
