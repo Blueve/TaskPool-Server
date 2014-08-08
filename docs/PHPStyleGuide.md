@@ -334,6 +334,15 @@
     }
     ```
 
+  - 常量全部字母大写，单词用`_`连接
+
+    ```php
+    class MyClass
+    {
+        const FIND_PSW = 'FIND_PSW';
+    }
+    ```
+
   - 接收POST请求的方法，在前一种命名的基础上增加`_post`后缀
     ```php
     class MyClass
@@ -345,7 +354,7 @@
     }
     ```
 
-  - 静态方法的`static`放置在方法访问权限标识符`public``private``protocted`的后面
+  - 静态方法的`static`放置在方法访问权限标识符`public` `private` `protocted`的后面
     ```php
     class MyClass
     {
