@@ -2,7 +2,7 @@
 
 ##目录
 1. [源代码文件](#源代码文件)
-1. [缩进](#缩进)
+1. [缩进与空格](#缩进与空格)
 1. [区块](#区块)
 1. [运算符](#运算符)
 1. [注释](#注释)
@@ -19,7 +19,17 @@
         // ...stuff...
     ```
 
-## 缩进
+  - 一个类保存为一个文件，文件名与类名一致
+
+    > User.php
+    ```php
+    class User
+    {
+        // ...stuff...
+    }
+    ```
+
+## 缩进与空格
 
   - 块内部的代码必须缩进，大小为4个空格
 
@@ -27,7 +37,7 @@
     // good
     $foo = function($var)
     {
-        return $var * $var;
+    ∙∙∙∙return $var * $var;
     }
 
     // bad
@@ -35,6 +45,37 @@
     {
     return $var * $var;
     }
+
+    // bad
+    $foo = function()
+    {
+    ∙∙return $var * $var;
+    }
+    ```
+
+  - 运算符的前后都应该添加空格
+
+    ```php
+    // good
+    $expr = ($a + $b) * $c;
+
+    // bad
+    $expr=($a+$b)*$c;
+    ```
+
+  - 参数表的逗号之后需空格，比较长的参数可以换行
+
+    ```php
+    // good
+    $bar = foo($a, $b, $c);
+    
+    // good
+    $bar = foo($longLongLongParameterA,
+               $longLongLongParameterB,
+               $longLongLongParameterC);
+    
+    // bad
+    $bar = foo($a,$b,$c);
     ```
 
 ## 区块
@@ -64,33 +105,6 @@
         // statement
     else
         // statement
-    ```
-
-## 运算符
-
-  - 运算符的前后都应该添加空格
-
-    ```php
-    // good
-    $expr = ($a + $b) * $c;
-
-    // bad
-    $expr=($a+$b)*$c;
-    ```
-
-  - 参数表的逗号之后需空格，比较长的参数可以换行
-
-    ```php
-    // good
-    $bar = foo($a, $b, $c);
-    
-    // good
-    $bar = foo($longLongLongParameterA,
-               $longLongLongParameterB,
-               $longLongLongParameterC);
-    
-    // bad
-    $bar = foo($a,$b,$c);
     ```
 
 ## 注释
@@ -309,6 +323,15 @@
         {
             return $this->Id;
         }
+    }
+    ```
+
+  - 私有类型的属性增加`_`前缀
+
+    ```php
+    class MyClass
+    {
+        private $_id;
     }
     ```
 
