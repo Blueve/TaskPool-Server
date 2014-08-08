@@ -1,96 +1,85 @@
 #PHP 代码风格指南
 
 ##目录
-  1. [源代码文件](#1-源代码文件)
-  2. [缩进、括号及注释](#2-缩进括号及注释)
-  3. [变量](#3-变量)
-  4. [函数/方法](#4-函数方法)
-  5. [类](#5-类)
+1. [源代码文件](#源代码文件)
+1. [缩进](#缩进)
+1. [区块](#区块)
+1. [运算符](#运算符)
+1. [注释](#注释)
+1. [变量](#变量)
+1. [函数](#函数)
+1. [类](#类)
 
-##正文
+## 源代码文件
 
-  ###1. 源代码文件
-  ```php
-  // good
-  <?php
-      # body
-  
-  // bad
-  <?php
-      # body
-  ?>
-  ```
-  
-  ###2. 缩进、括号及注释
-  
-    ####2.1 流程控制语句
+  - 纯PHP脚本程序**不使用`?>`**封闭
+
+    ```php
+    <?php
+        // ...stuff...
+    ```
+
+## 缩进
+
+  - 块内部的代码必须缩进，大小为4个空格
+
+    ```php
+    // good
+    $foo = function($var)
+    {
+        return $var * $var;
+    }
+
+    // bad
+    $foo = function()
+    {
+    return $var * $var;
+    }
+    ```
+
+## 区块
+
+  - 起始的大括号永远换到下一行，且不应被省略
+
     ```php
     // good
     if($a > $b)
     {
-        // if body
+        // ...stuff...
     } 
     else 
     {
-        // else body
+        // ...stuff...
     }
-    
+
     // bad
     if($a > $b) {
-        // if body
+        // ...stuff...
     } else {
-        // else body
+        // ...stuff...
     }
-    
+
     // bad
     if($a > $b)
         // statement
     else
         // statement
     ```
-    
-    ####2.2 函数/方法
-    
-    ```php
-    // good
-    function foo()
-    {
-        // function body
-    }
-    
-    // bad
-    function foo() {
-        // function body
-    }
-    ```
-    
-    ####2.3 闭包
-    
-    ```php
-    // good
-    $foo = function()
-    {
-        // closure body
-    }
-    
-    // bad
-    $foo = function() {
-        // closure body
-    }
-    ```
-    
-    ####2.4 表达式
-    
+
+## 运算符
+
+  - 运算符的前后都应该添加空格
+
     ```php
     // good
     $expr = ($a + $b) * $c;
-    
+
     // bad
     $expr=($a+$b)*$c;
     ```
-    
-    ####2.5 参数表
-    
+
+  - 参数表的逗号之后需空格，比较长的参数可以换行
+
     ```php
     // good
     $bar = foo($a, $b, $c);
@@ -103,16 +92,20 @@
     // bad
     $bar = foo($a,$b,$c);
     ```
-    
-    ####2.6 注释
-    
+
+## 注释
+
+  - 多行注释需要标明标题和描述
+
     ```php
-    // good
     /* Title
      * Description
      */
-    
-    // good
+    ```
+
+  - 文档型注释参考[phpDocumentor](http://phpdoc.org/docs/latest/getting-started/your-first-set-of-documentation.html)标准
+
+    ```php
     /**
      * Doc title
      *
@@ -120,62 +113,72 @@
      *
      * @return TYPE
      */  
-    
-    // good
+    ```
+
+  - 对较长块的单行注释需要放在块的前一行
+
+    ```php
     // Description
     while($a > $b)
     {
-        // while body
+        // ...stuff...
     }
-    
-    // good
+    ```
+
+  - 对单行语句的注释需要放到语句后并对齐
+
+    ```php
     class Apple
     {
         public $color;  // Description
         public $type;   // Description
     }
-    
+    ```
+
+  - 块的注释需要在注释前面空一行
+
+    ```php
     // good
     // Description
     fooA();
-    
+
     // Description
     fooB();
-    
-    // bad
-    $result = OBJECT::getResult();  //Description
-    
+
     // bad
     // Description
     fooA();
     // Description
     fooB();
     ```
-  
-  ###3. 变量
-  
-    ####3.1 命名
-    
+
+## 变量
+
+  - 变量的首字母小写，后继的单词首字母都大写
+
     ```php
     // good
     $myVar;
-    
+
     // bad
     $MyVar;
-    
+
     // bad
     $my_var;
     ```
-    ####3.2 字符串
-    
+
+  - 字符串使用单引号包围
+
     ```php
     // good
     $str = 'hello world';
-    
+
     // bad
     $str = "hello world";
     ```
-    
+
+  - 多行字符串使用拼接符号换行拼接，`.`与`=`对齐
+
     ```php
     // good
     $sql = 'SELECT name'
@@ -187,107 +190,104 @@
             FROM user
             WHERE id = 1';
     ```
-    
-    ####3.3 数组
-    
+
+  - 简单数组使用中括号的方式定义
+
     ```php
     // good
     $arr = ['a', 'b', 'c'];
-    
+
     // bad
     $arr = array('a', 'b', 'c');
-    
+    ```
+
+  - 较复杂的数组换行声明，并且每一行末位都要添加`,`
+
+    ```php
     // good
     $arr = array(
                 '1' => 'a',
                 '2' => 'b',
                 '3' => 'c',
                 );
-    
+
     // bad
     $arr = array(
                 '1' => 'a',
                 '2' => 'b',
                 '3' => 'c'
                 );
-    
+
     ```
-  
-  ###4. 函数/方法
-  
-    ####4.1 命名
-    
+
+## 函数
+
+  - 函数的首字母大写，后继单词首字母大写
+
     ```php
     // good
     function VarDump()
     {
-        // function body
+        // ...stuff...
     }
-    
-    // good
-    function isValid()
-    {
-        // function body
-    }
-    
+
     // bad
     function var_dump()
     {
-        // function body
+        // ...stuff...
     }
-    
+
     // bad
-    function IsValid()
+    function vardump()
     {
-        // function body
+        // ...stuff...
     }
     ```
-    
-    ####4.2 参数表
-    
+
+  - 参数表逗号后面需要加空格，较复杂参数表需要逐个换行声明
+
     ```php
     // good
-    function foo($a, $b)
+    function Foo($a, $b)
     {
         // function body
     }
-    
+
     // good
-    function foo(Type1 $longLongLongParameterA,
+    function Foo(Type1 $longLongLongParameterA,
                  Type2 $longLongLongParameterB,
                  Type3 $longLongLongParameterC)
     {
         // function body
     }
-    
+
     // bad
-    function foo($longLongLongParameterA, $longLongLongParameterB, $longLongLongParameterC)
+    function Foo($longLongLongParameterA, $longLongLongParameterB, $longLongLongParameterC)
     {
         // function body
     }
-    
-    // bad
     ```
-  
-  ###5. 类
-  
-    ####5.1 定义
-    
+
+## 类
+
+  - 类名首字母大写，后继单词首字母大写
+
     ```php
     // good
     class MyClass
     {
         // class body
     }
-    
+
     // bad
     class myClass
     {
         // class body
     }
     ```
-    ####5.2 属性和方法
-    
+
+  - 属性和方法首字母小写，后继单词首字母大写
+
     ```php
     class MyClass
     {
@@ -297,17 +297,39 @@
         public $leftChildId;
         // bad
         public $RightChildId;
-    
+
         // good
         public function getId()
         {
             return $this->id;
         }
-    
+
         // bad
         public function GetId()
         {
             return $this->Id;
         }
     }
-    ``` 
+    ```
+
+  - 接收POST请求的方法，在前一种命名的基础上增加`_post`后缀
+    ```php
+    class MyClass
+    {
+        public function findPassword_post()
+        {
+            // ...stuff...
+        }
+    }
+    ```
+
+  - 静态方法的`static`放置在方法访问权限标识符`public``private``protocted`的后面
+    ```php
+    class MyClass
+    {
+        public static function find()
+        {
+            // ...stuff...
+        }
+    }
+    ```
