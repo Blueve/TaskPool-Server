@@ -343,6 +343,18 @@
     }
     ```
 
+  - EntityModel中的枚举类型(与数据库ENUM对应)使用常量表示时，全部字母小写，使用`_`连接
+
+    ```php
+    class MyClass
+    {
+        const important = 'important';
+        const urgent    = 'urgent';
+        const date      = 'date';
+        const custom    = 'custom';
+    }
+    ```
+
   - 接收POST请求的方法，在前一种命名的基础上增加`_post`后缀
     ```php
     class MyClass
