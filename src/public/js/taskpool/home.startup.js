@@ -18,4 +18,7 @@ $(document).ready(function()
 		$('#signup_form').slideUp();
 		$('#signin_form').slideDown();
 	});
+
+	// 初始化验证插件
+	$("input,select,textarea").not("[type=submit]").jqBootstrapValidation();
 });
