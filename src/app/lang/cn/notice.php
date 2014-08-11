@@ -22,7 +22,7 @@ return array(
 					"content" => 
 					"你已经完成了注册<br />
 					一封邮件已经发送到你的邮箱：<br />
-					<strong>:email </strong><br /> 
+					<strong> :email </strong><br /> 
 					请尽快查收并进行验证",
 		),
 
@@ -55,7 +55,7 @@ return array(
 					"title" => "正在努力!",
 					"content" => 
 					"一封新的邮件已经发送到你的邮箱：<br />
-					<strong>:email </strong><br /> 
+					<strong> :email </strong><br /> 
 					请尽快查收并进行验证",
 		),
 
@@ -67,7 +67,7 @@ return array(
 
 	"findpsw_success" => array(
 				"title"   => "好极了！",
-				"content" => "一封邮件已经发送到你的邮箱：<br /><strong>:email </strong><br /> 请尽快查收并进行验证",
+				"content" => "一封邮件已经发送到你的邮箱：<br /><strong> :email </strong><br /> 请尽快查收并进行验证",
 		),
 
 	"findpsw_expired" => array(
