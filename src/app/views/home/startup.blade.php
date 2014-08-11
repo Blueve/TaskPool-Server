@@ -6,10 +6,12 @@
     {{-- 登录表单 --}}
     <form role="form" method="post" id="signin_form" action="{{{ URL::action('AccountController@signin') }}}">
       <div class="form-group">
-         <label for="userId">{{{ Lang::get('site.user_id') }}}</label><input type="text" class="form-control" id="userId" name="userId" />
+         <label for="userId">{{{ Lang::get('site.user_id') }}}</label>
+         <input type="text" class="form-control" id="userId" name="userId" required/>
       </div>
       <div class="form-group">
-         <label for="password">{{{ Lang::get('site.password') }}}</label><input type="password" class="form-control" id="password" name="password" />
+         <label for="password">{{{ Lang::get('site.password') }}}</label>
+         <input type="password" class="form-control" id="password" name="password" minlength="8" required/>
       </div>
       <div class="form-group">
         <div class="row">
@@ -31,16 +33,31 @@
     {{-- 注册表单 --}}
     <form role="form" method="post" id="signup_form" action="{{{ URL::action('AccountController@signup') }}}">
       <div class="form-group">
-         <label for="email">{{{ Lang::get('site.email') }}}</label><input type="email" class="form-control" id="email" name="email"/>
+        <label for="email">{{{ Lang::get('site.email') }}}</label>
+        <input type="email" class="form-control" id="email" name="email"
+          data-validation-email-message="{{{ Lang::get('validation.email', array('attribute' => '')) }}}"/>
+        <p class="help-block"></p>
       </div>
       <div class="form-group">
-         <label for="name">{{{ Lang::get('site.username') }}}</label><input type="text" class="form-control" id="name" name="name"/>
+        <label for="name">{{{ Lang::get('site.username') }}}</label>
+        <input type="text" class="form-control" id="name" name="name" minlength="6" maxlength="16"
+          data-validation-maxlength-message="{{{ Lang::get('validation.max.string', array('attribute' => '', 'max' => '16')) }}}"
+          data-validation-minlength-message="{{{ Lang::get('validation.min.string', array('attribute' => '', 'min' => '6')) }}}"
+          data-validation-regex-regex="[^@]*" 
+          data-validation-regex-message="{{{ Lang::get('validation.not_email') }}}" />
+        <p class="help-block"></p>
       </div>
       <div class="form-group">
-         <label for="password">{{{ Lang::get('site.password') }}}</label><input type="password" class="form-control" id="password" name="password"/>
+        <label for="password">{{{ Lang::get('site.password') }}}</label>
+        <input type="password" class="form-control" id="password" name="password" minlength="8"
+          data-validation-minlength-message="{{{ Lang::get('validation.min.string', array('attribute' => '', 'min' => '8')) }}}"/>
+        <p class="help-block"></p>
       </div>
       <div class="form-group">
-         <label for="passwordConfirm">{{{ Lang::get('site.password_confirm') }}}</label><input type="password" class="form-control" id="passwordConfirm" name="passwordConfirm"/>
+        <label for="passwordConfirm">{{{ Lang::get('site.password_confirm') }}}</label>
+        <input type="password" class="form-control" id="passwordConfirm" name="passwordConfirm" data-validation-match-match="password"
+          data-validation-match-message="{{{ Lang::get('validation.confirmed', array('attribute' => '')) }}}"/>
+        <p class="help-block"></p>
       </div>
       <div class="form-group">
         <button type="submit" class="btn btn-lg btn-primary btn-block">{{{ Lang::get('site.signup') }}}</button>

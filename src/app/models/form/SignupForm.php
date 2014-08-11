@@ -11,7 +11,7 @@ class SignupForm extends BaseFormModel
 	{
 		$rule = array(
 			'email' 			=> 'required|email|unique:tp_users',
-			'name' 				=> 'required|min:6|unique:tp_users',
+			'name' 				=> 'required|min:6|max:16|regex:/^[^@]*$/|unique:tp_users',
 			'password' 			=> 'required|min:8',
 			'passwordConfirm' 	=> 'required|same:password'
 			);
