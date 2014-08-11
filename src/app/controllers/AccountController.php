@@ -8,7 +8,7 @@ class AccountController extends BaseController {
 		$signinForm = new SigninForm(Input::all());
 		$user = User::retrieveByNameOrEmail($signinForm->userId);
 
-		$notice = new Notice(Notice::danger, Lang::get('notice.signin_error'));
+		$notice = new Notice(Notice::danger, 'signin_error');
 
 		if($user)
 		{
@@ -20,7 +20,7 @@ class AccountController extends BaseController {
 			if(Auth::attempt($credentials, $signinForm->rememberMe))
 			{
 				// 登陆成功
-				$notice = new Notice(Notice::success, Lang::get('notice.signin_success'));
+				$notice = new Notice(Notice::success, 'signin_success');
 			}
 			
 		}
@@ -35,7 +35,7 @@ class AccountController extends BaseController {
 		// 对输入进行校验
 		$signupForm = new SignupForm(Input::all());
 
-		$notice = new Notice(Notice::danger, Lang::get('notice.signup_error'));
+		$notice = new Notice(Notice::danger, 'signup_error');
 
 		if($signupForm->isValid())
 		{
@@ -53,7 +53,8 @@ class AccountController extends BaseController {
 				$message->to($user->email)->subject(Lang::get('site.signup_email_subject'));
 			});
 			$notice = new Notice(Notice::success, 
-				Lang::get('notice.signup_success', array('email' => $user->email)));
+								array('title' => 'signup_success', 
+									  'data'  => array('email' => $user->email)));
 		}
 		
 		$this->MergeData(Lang::get('base.signup'));
@@ -64,7 +65,7 @@ class AccountController extends BaseController {
 	public function signout()
 	{
 		Auth::logout();
-		$notice = new Notice(Notice::success, Lang::get('notice.signout_success'));
+		$notice = new Notice(Notice::success, 'signout_success');
 
 		$this->MergeData(Lang::get('base.signout'));
 		$this->MergeData($notice->getData());
@@ -81,16 +82,16 @@ class AccountController extends BaseController {
 			User::confirmUser($toBeConfirmed->user_id);
 			// 删除待验证条目
 			ToBeConfirmed::destroy($toBeConfirmed->id);
-			$notice = new Notice(Notice::success, Lang::get('notice.confirm_success'));
+			$notice = new Notice(Notice::success, 'confirm_success');
 		}
 		elseif($toBeConfirmed)
 		{
-			$notice = new Notice(Notice::danger, Lang::get('notice.confirm_expired'),
+			$notice = new Notice(Notice::danger, 'confirm_expired',
 								'user/reconfirm', array($userId, $checkCode));
 		}
 		else
 		{
-			$notice = new Notice(Notice::danger, Lang::get('notice.confirm_error'));
+			$notice = new Notice(Notice::danger, 'confirm_error');
 		}
 		
 		$this->MergeData(Lang::get('base.confirm'));
@@ -130,11 +131,11 @@ class AccountController extends BaseController {
 				$message->to($user->email)->subject(Lang::get('signup_email_subject'));
 			});
 
-			$notice = new Notice(Notice::success, Lang::get('notice.reconfirm_success'));
+			$notice = new Notice(Notice::success, 'reconfirm_success');
 		}
 		else
 		{
-			$notice = new Notice(Notice::danger, Lang::get('notice.confirm_error'));
+			$notice = new Notice(Notice::danger, 'confirm_error');
 		}
 
 		$this->MergeData(Lang::get('base.reconfirm'));
@@ -144,7 +145,7 @@ class AccountController extends BaseController {
 
 	public function unconfirmed($userId, $checkCode)
 	{
-		$notice = new Notice(Notice::warning, Lang::get('notice.unconfirmed'), 'user/reconfirm');
+		$notice = new Notice(Notice::warning, 'unconfirmed', 'reconfirm');
 
 		$this->MergeData(Lang::get('base.unconfirmed'));
 		$this->MergeData($notice->getData());
@@ -168,7 +169,7 @@ class AccountController extends BaseController {
 				{
 					// 删除待验证条目
 					ToBeConfirmed::destroy($toBeConfirmed->id);
-					$notice = new Notice(Notice::danger, Lang::get('notice.findpsw_expired'));
+					$notice = new Notice(Notice::danger, 'findpsw_expired');
 				}
 				else
 				{
@@ -180,7 +181,7 @@ class AccountController extends BaseController {
 			}
 			else
 			{
-				$notice = new Notice(Notice::danger, Lang::get('notice.findpsw_error'));
+				$notice = new Notice(Notice::danger, 'findpsw_error');
 			}
 		}
 
@@ -208,17 +209,19 @@ class AccountController extends BaseController {
 				{
 					$message->to($user->email)->subject(Lang::get('site.findpsw_email_subject'));
 				});
-				$notice = new Notice(Notice::success, Lang::get('notice.findpsw_success', array('eamil' => $user->email)));
+				$notice = new Notice(Notice::success, 
+									array('title' => 'findpsw_success', 
+									'data'  => array('email' => $user->email)));
 			}
 			else
 			{
-				$notice = new Notice(Notice::danger, Lang::get('notice.findpsw_miss'));
+				$notice = new Notice(Notice::danger, 'findpsw_miss');
 			}
 
 		}
 		else
 		{
-			$notice = new Notice(Notice::danger, Lang::get('notice.findpsw_invalid'), 'user/findpassword');
+			$notice = new Notice(Notice::danger, 'findpsw_invalid', 'findpassword');
 
 		}
 
@@ -240,16 +243,16 @@ class AccountController extends BaseController {
 			{
 				$user->updatePassword($setPasswordForm->password);
 				ToBeConfirmed::destroy($toBeConfirmed->id);
-				$notice = new Notice(Notice::success, Lang::get('notice.setpsw_success'));
+				$notice = new Notice(Notice::success, 'setpsw_success');
 			}
 			else
 			{
-				$notice = new Notice(Notice::danger, Lang::get('notice.setpsw_error'));
+				$notice = new Notice(Notice::danger, 'setpsw_error');
 			}
 		}
 		else
 		{
-			$notice = new Notice(Notice::danger, Lang::get('notice.setpsw_invalid'));
+			$notice = new Notice(Notice::danger, 'setpsw_invalid');
 		}
 
 		$this->MergeData(Lang::get('base.findpassword'));

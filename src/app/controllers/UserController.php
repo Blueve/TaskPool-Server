@@ -27,16 +27,16 @@ class UserController extends BaseController {
 			{
 				$user->updatePassword($SettingEditForm->password);
 				Auth::logout();
-				$notice = new Notice(Notice::success, Lang::get('changepsw_success'));
+				$notice = new Notice(Notice::success, 'changepsw_success');
 			}
 			else
 			{
-				$notice = new Notice(Notice::danger, Lang::get('changepsw_oldpsw_invalid'));
+				$notice = new Notice(Notice::danger, 'changepsw_oldpsw_invalid');
 			}
 		}
 		else
 		{
-			$notice = new Notice(Notice::danger, Lang::get('changepsw_invalid'), 'user/setting');
+			$notice = new Notice(Notice::danger, 'changepsw_invalid', 'user/setting');
 		}
 
 		$this->MergeData(Lang::get('base.setting_edit'));
