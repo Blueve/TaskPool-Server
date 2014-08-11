@@ -11,12 +11,12 @@ class ToBeConfirmed extends Eloquent {
 
 	public static function newSignupConfirm($userId)
 	{
-		return $this->newConfirm($userId, ToBeConfirmed::signup);
+		return self::newConfirm($userId, ToBeConfirmed::signup);
 	}
 
 	public static function newFindPasswordConfirm($userId)
 	{
-		return $this->newConfirm($userId, ToBeConfirmed::findpsw);
+		return self::newConfirm($userId, ToBeConfirmed::findpsw);
 	}
 
 	public static function newConfirm($userId, $type)
@@ -32,12 +32,12 @@ class ToBeConfirmed extends Eloquent {
 
 	public static function retrieveSignupConfirm($userId, $checkCode)
 	{
-		return $this->retrieveConfirm($userId, ToBeConfirmed::signup, $checkCode);
+		return self::retrieveConfirm($userId, ToBeConfirmed::signup, $checkCode);
 	}
 
 	public static function retrieveFindPswConfirm($userId, $checkCode)
 	{
-		return $this->retrieveConfirm($userId, ToBeConfirmed::findpsw, $checkCode);
+		return self::retrieveConfirm($userId, ToBeConfirmed::findpsw, $checkCode);
 	}
 
 	public static function retrieveConfirm($userId, $type, $checkCode = null)
