@@ -45,15 +45,15 @@ Route::group(array('before' => 'auth|confirmed'), function()
 	Route::post('user/setting', 'UserController@setting_post');
 
 	// JSON
-	Route::post('list/create', 'ListController@create');
+	Route::post('list/create', 'ListController@create_post');
 	// HTML
-	Route::post('list/content', 'ListController@content');
+	Route::post('list/content', 'ListController@content_post');
 	// JSON
-	Route::post('list/reorder', 'ListController@reorder');
+	Route::post('list/reorder', 'ListController@reorder_post');
 	// JSON
-	Route::post('list/updateListSetting', 'ListController@updateListSetting');
+	Route::post('list/updateListSetting', 'ListController@updateListSetting_post');
 	// JSON
-	Route::post('list/delete/{listId}', 'ListController@delete');
+	Route::post('list/delete/{listId}', 'ListController@delete_post');
 	// JSON
 	Route::get('list/getListSetting/{listId}', 'ListController@getListSetting');
 });

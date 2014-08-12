@@ -2,38 +2,50 @@
 
 class ListController extends BaseController {
 
-	public function create()
+	//创建TaskList
+	public function create_post()
 	{
 		$user = Auth::user();
-		$newListForm = new NewListForm(Input::all());
-		$list = TaskList::newTaskList($newListForm, $user);
+		$newListForm = new NewListForm(Input::all());		//对输入进行校验
+		$list = TaskList::create($newListForm, $user);
 
-		$response = array('state' => false, 'id' => 0, 'name' => '');
+		$response = array(
+			'state' => false,
+			'id'    => 0,
+			'name'  => '',
+			);
+
 		if($list)
 		{
 			$response['state'] = true;
 			$response['id'] = $list->id;
 			$response['name'] = $list->name;
 		}
+
 		return Response::json($response);
 	}
 
-	public function content()
+	//填充Task
+	//TODO
+	public function content_post()
 	{
-
-		$response = array('state' => true, 
-			'tasks' => 'list_'.Input::get('id').' --- '.(Input::has('dataset') ? Input::get('dataset') : 'today')
+		$response = array(
+			'state' => true, 
+			'tasks' => 'list_'.Input::get('id').' --- '.(Input::has('dataset') ? Input::get('dataset') : 'today'),
 			);
 		return Response::json($response);
 	}
 
-	public function reorder()
+	//保存TaskList的排列顺序
+	public function reorder_post()
 	{
 		$user = Auth::user();
 
 		$taskLists = explode(',', Input::get('taskLists'));
 
-		$response = array('state' => false);
+		$response = array(
+			'state' => false,
+			);
 		if($user->checkTaskLists($taskLists))
 		{
 			foreach ($taskLists as $key => $value) 
@@ -45,6 +57,7 @@ class ListController extends BaseController {
 		return Response::json($response);
 	}
 
+	//获取TaskList的相关设置内容
 	public function getListSetting($listId)
 	{
 		$response = array(
@@ -54,7 +67,7 @@ class ListController extends BaseController {
 			'color'   =>'',
 			);
 
-		$list = TaskList::getTaskListById($listId);
+		$list = TaskList::getById($listId);
 
 		if($list)
 		{
@@ -67,12 +80,12 @@ class ListController extends BaseController {
 		return Response::json($response);
 	}
 
-	public function updateListSetting()
+	//更新TaskList设置
+	public function updateListSetting_post()
 	{
 		$listSettingForm = new ListSettingForm(Input::all());
 
 		//Helper::VarDump($listSettingForm);
-		TaskList::updateTaskList($listSettingForm);
 
 		$response = array(
 			'state'   => false,
@@ -81,9 +94,8 @@ class ListController extends BaseController {
 			'color'   =>'',
 			);
 
-		if(!$listSettingForm->isValid())
+		if(TaskList::update($listSettingForm))
 		{
-			TaskList::updateTaskList($listSettingForm);
 			$response['state']   = true;
 			$response['name']    = $listSettingForm->name;
 			$response['sort_by'] = $listSettingForm->sortBy;
@@ -92,7 +104,8 @@ class ListController extends BaseController {
 		return Response::json($response);
 	}
 
-	public function delete($listId)
+	//删除TaskList
+	public function delete_post($listId)
 	{
 		$response = array(
 			'state'   => false,

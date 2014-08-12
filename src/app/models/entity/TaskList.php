@@ -9,7 +9,7 @@ class TaskList extends Eloquent {
 	const date      = 'date';
 	const custom    = 'custom';
 
-	public static function newTaskList(NewListForm $newListForm, User $user)
+	public static function create(NewListForm $newListForm, User $user)
 	{
 		if($newListForm->isValid())
 		{
@@ -29,21 +29,23 @@ class TaskList extends Eloquent {
 		TaskList::where('id', '=', $id)->increment('version', 1, array('priority' => $priority));
 	}
 
-	public static function getTaskListById($id)
+	public static function getById($id)
 	{
 		return TaskList::where('id', '=', $id)->first();
 	}
 
-	public static function updateTaskList(ListSettingForm $listSettingForm)
+	public static function update(ListSettingForm $listSettingForm)
 	{
 		if(!$listSettingForm->isValid())
 		{
 			$taskList = TaskList::where('id', '=', $listSettingForm->id)->first();
-			$taskList->name = $listSettingForm->name;
+			$taskList->name    = $listSettingForm->name;
 			$taskList->sort_by = $listSettingForm->sortBy;
-			$taskList->color = $listSettingForm->color;
+			$taskList->color   = $listSettingForm->color;
 			$taskList->save();
+			return true;
 		}
+		return false;
 	}
 
 	public static function softDeleteById($listId)
