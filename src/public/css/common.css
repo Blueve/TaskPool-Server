@@ -62,43 +62,41 @@ body { padding-top: 60px; }
 .nav-tabs.nav-stacked > li.active.task-list-red > a {
 	border-left-color: #c30;
 	border-left-width: 5px;
-	background-image: none;
 }
 
 .nav-tabs.nav-stacked > li.active.task-list-orange > a {
 	border-left-color: #f60;
-	border-left-width: 4px;
+	border-left-width: 5px;
 }
 
 .nav-tabs.nav-stacked > li.active.task-list-yellow > a {
 	border-left-color: #f0ad4e;
-	border-left-width: 4px;
+	border-left-width: 5px;
 }
 
 .nav-tabs.nav-stacked > li.active.task-list-green > a {
 	border-left-color: #5cb85c;
-	border-left-width: 4px;
+	border-left-width: 5px;
 }
 
 .nav-tabs.nav-stacked > li.active.task-list-blue > a {
 	border-left-color: #4286ca;
 	border-left-width: 5px;
-	background-image: none;
 }
 
 .nav-tabs.nav-stacked > li.active.task-list-indigo > a {
 	border-left-color: #9966ff;
-	border-left-width: 4px;
+	border-left-width: 5px;
 }
 
 .nav-tabs.nav-stacked > li.active.task-list-purple > a {
 	border-left-color: #993399;
-	border-left-width: 4px;
+	border-left-width: 5px;
 }
 
 .nav-tabs.nav-stacked > li.active.task-list-black > a {
 	border-left-color: #000;
-	border-left-width: 4px;
+	border-left-width: 5px;
 }
 
 .nav-tabs.nav-stacked > li.active.task-list-darkgray > a {
@@ -109,7 +107,7 @@ body { padding-top: 60px; }
 
 .nav-tabs.nav-stacked > li.active.task-list-gray > a {
 	border-left-color: #999;
-	border-left-width: 4px;
+	border-left-width: 5px;
 }
 
 /*
@@ -182,10 +180,6 @@ body { padding-top: 60px; }
 
 .tile:hover {
 	outline: 2px #3a3a3a solid;
-}
-
-.selected {
-
 }
 
 .tile.red {

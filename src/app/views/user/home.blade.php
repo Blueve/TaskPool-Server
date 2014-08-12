@@ -73,8 +73,8 @@
           </li>
           @endforeach
 
-          <li {{ count($taskLists) == 0 ? 'class="active task-list-darkgray"' : 'class="task-list-darkgray"' }} id='create_list_pop'>
-            <a data-toggle="popover">
+          <li {{ count($taskLists) == 0 ? 'class="active task-list-darkgray"' : 'class="task-list-darkgray"' }} >
+            <a data-toggle="popover" class="popover-dismiss" id="create_list_pop">
               <i class="fa fa-plus fa-lg" data-toggle="tooltip" data-placement="top" title="{{{ Lang::get('task.create_list') }}}"></i></span>
             </a>
           </li>
@@ -147,16 +147,16 @@
               <hr />
               <div class="form-group">
                 <label for="color" class="col-sm-2 control-label">{{{ Lang::get('task.list_color') }}}</label>
-                <div class="tile red selected"><i class="fa fa-check fa-lg"></i></div>
-                <div class="tile orange"></div>
-                <div class="tile yellow"></div>
-                <div class="tile green"></div>
-                <div class="tile blue"></div>
-                <div class="tile indigo"></div>
-                <div class="tile purple"></div>
-                <div class="tile black"></div>
-                <div class="tile darkgray"></div>
-                <div class="tile gray"></div>
+                <div class="tile red" data-color="red"><i class="fa fa-check fa-lg"></i></div>
+                <div class="tile orange" data-color="orange"><i class="fa fa-check fa-lg"></i></div>
+                <div class="tile yellow" data-color="yellow"><i class="fa fa-check fa-lg"></i></div>
+                <div class="tile green" data-color="green"><i class="fa fa-check fa-lg"></i></div>
+                <div class="tile blue" data-color="blue"><i class="fa fa-check fa-lg"></i></div>
+                <div class="tile indigo" data-color="indigo"><i class="fa fa-check fa-lg"></i></div>
+                <div class="tile purple" data-color="purple"><i class="fa fa-check fa-lg"></i></div>
+                <div class="tile black" data-color="black"><i class="fa fa-check fa-lg"></i></div>
+                <div class="tile darkgray" data-color="darkgray"><i class="fa fa-check fa-lg"></i></div>
+                <div class="tile gray" data-color="gray"><i class="fa fa-check fa-lg"></i></div>
                 <input type="hidden" id="color" name="color"/>
               </div>
 

@@ -27,7 +27,8 @@ $(document).ready(function()
 	{
 		html: true,
 		title: '创建',
-		content: template
+		content: template,
+		trigger: 'click focus'
 	});
 	$('#create_list_pop').on('shown.bs.popover', function()
 	{
@@ -161,12 +162,13 @@ $(document).ready(function()
 	 * 列表设置图标点击Ajax事件
 	 * 初始化列表设置弹框内容
 	 * 注册列表设置表单提交的Ajax事件
-	 * 删除列表
+	 * 注册删除列表的按钮事件
+	 * 颜色选择器
 	 * ----------------------------------------
 	 */
     // 列表设置图标初始化
     $('.fa.fa-cog').hide();							// 默认隐藏 
-	$(document).on('mouseenter mouseout', 'li.active a', function(e)				// 鼠标悬停时显示
+	$(document).on('mouseenter mouseout', 'li.active a', function(e)			// 鼠标悬停时显示
 	{
 		if(e.type === 'mouseenter' && !sortable)
 		{
@@ -201,13 +203,11 @@ $(document).ready(function()
     	$(e.target).hide(200);
     	fillListSettingForm(curTaskList);		// Ajax 填充表单
     });
-
     // 初始化列表设置弹框内容
     $('.radio-normal').iCheck({
 		checkboxClass: 'icheckbox_square-blue',
 		radioClass: 'iradio_square-blue',
 	});
-
     // 注册列表设置表单提交的Ajax事件
 	$('#TaskListSettingModal').on('submit', '#tasklitsetting_form', function()
 	{
@@ -225,7 +225,7 @@ $(document).ready(function()
 		// 禁止响应表单的跳转
 		return false;
 	});
-
+	// 注册删除列表的按钮事件
 	$('#TaskListSettingModal_delete').click(function()
 	{
 		var $btn = $('#TaskListSettingModal_delete');
@@ -246,6 +246,12 @@ $(document).ready(function()
 	    	$('#TaskListSettingModal').modal('hide');
 	    	$btn.button('reset');
 	    }, 'json');		
+	});
+	// 颜色选择器
+	$('.tile i').hide();
+	$('.tile.selected i').show();
+	$('.tile').click(function(event) {
+		changeColorTo($(this).data('color'));
 	});
 });
 
@@ -313,6 +319,7 @@ function fillListSettingForm(curTaskList)
     		$('#name').val(data.name);
     		$('#' + data.sort_by).iCheck('check');
     		$('#color').val(data.color);
+    		changeColorTo(data.color);
     		$('#id').val(curTaskList);
     	}
     }, 'json');
@@ -337,4 +344,17 @@ function submitTaskListSetting(message, curTaskList, curDataSet, callback)
 			alert('error');
 		}
 	}, 'json');
+}
+
+function changeColorTo(color)
+{
+	$preSelected = $('.tile.selected');
+	$nowSelected = $('[data-color="' + color + '"]');
+	// 取消原先的选择
+	$preSelected.removeClass('selected');
+	$preSelected.find('i').hide(200);
+	// 选中新的颜色
+	$nowSelected.addClass('selected');
+	$nowSelected.find('i').show(200);
+	$('#color').val(color);
 }
