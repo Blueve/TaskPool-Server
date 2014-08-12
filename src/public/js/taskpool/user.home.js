@@ -18,7 +18,7 @@ $(document).ready(function()
 		<form role="form" id="newlist_form">\
           <div class="form-group" width="276px">\
             <label class="sr-only" for="name">列表名</label>\
-            <input type="text" class="form-control" id="name" name="name" placeholder="列表名">\
+            <input type="text" class="form-control" id="name" name="name" placeholder="列表名" required/>\
           </div>\
           <button type="submit" id="newlist_submit" class="btn btn-default btn-block">创建</button>\
         </form>\
@@ -232,13 +232,12 @@ $(document).ready(function()
 
 		$btn.button('loading');
 
-		$.get('list/delete/' + curTaskList, '', function(data)
+		$.post('list/delete/' + curTaskList, '', function(data)
 	    {
 	    	if(!data.state)
 	    	{
 	    		alert('error');
 	    	}
-
 	    	else
 	    	{
 	    		$('a[href="#list_' + curTaskList + '"]').parent('li').remove();
@@ -246,7 +245,6 @@ $(document).ready(function()
 
 	    	$('#TaskListSettingModal').modal('hide');
 	    	$btn.button('reset');
-	    	
 	    }, 'json');		
 	});
 });
