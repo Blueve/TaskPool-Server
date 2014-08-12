@@ -20,5 +20,8 @@ return array(
 	"date"              => "按照任务开始时间",
 	"custom"            => "自定义顺序",
 
-	"create_list"		=> "创建新列表"
+	"create_list"		=> "创建新列表",
+
+	"list_color"        => "列表颜色",
+	"list_icon"         => "列表图标",
 );
