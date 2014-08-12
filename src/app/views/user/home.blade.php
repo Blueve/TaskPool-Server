@@ -3,11 +3,13 @@
 @section('content')
 
   <div class="container">
+
     <div class="row">
       <div class="col-md-11 col-md-offset-1 column">
         @include('layouts.pageheader')
       </div>
     </div>
+
     {{-- 列表操作 --}}
     <div class="row">
       <div class="col-md-2 col-md-offset-1 column text-right">
@@ -25,6 +27,7 @@
           </button>
         </div>
       </div>
+
       {{-- 选择子集 --}}
       <div class="col-md-9 column">
         <ul class="nav nav-pills nav-justified" id="tasklist_set">
@@ -57,6 +60,7 @@
     </div>
 
     <div class="row">
+
       <div class="col-md-2 col-md-offset-1 column">
         <ul class="nav nav-tabs nav-stacked" id="tasklist" role="tablist">
           {{-- 列表标题 --}}
@@ -79,65 +83,80 @@
 
       {{-- 列表内容 --}}
       <div class="col-md-9 column">
-        <div>
-
-        </div>
         <div class="tab-content" id="tasklist_content">
           @foreach($taskLists as $item)
           <div class="tab-pane fade" id="list_{{{ $item->id }}}">
 
           </div>
           @endforeach
-
         </div>
       </div>
     </div>
+
     {{-- 列表设置弹框 --}}
-    <div class="modal fade" id="TaskListSettingModal" tabindex="-1" role="dialog" aria-labelledby="TaskListSettingModalLabel" aria-hidden="true">
+    <div class="modal fade" id="TaskListSettingModal" tabindex="-1" role="dialog" 
+      aria-labelledby="TaskListSettingModalLabel" 
+      aria-hidden="true">
+
       <div class="modal-dialog">
         <div class="modal-content">
+
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
             <h4 class="modal-title" id="TaskListSettingModalLabel">{{{ Lang::get('task.list_option') }}}</h4>
           </div>
+
           <div class="modal-body">
-            <form role="form" method="post" id="tasklitsetting_form">
+            <form role="form" method="post" id="tasklitsetting_form" class="form-horizontal">
               <input type="hidden" id="id" name="id" value=""/>
-              <div class="form-group">
-                 <label for="listName">{{{ Lang::get('task.list_name') }}}</label>
-                 <input type="text" class="form-control" id="name" name="name" value=""/>
-              </div>
 
               <div class="form-group">
-                <label for="sort_by">{{{ Lang::get('task.sort_by') }}}</label>
+                 <label for="listName" class="col-sm-2 control-label">{{{ Lang::get('task.list_name') }}}</label>
+                 <div class="col-sm-10">
+                  <input type="text" class="form-control" id="name" name="name" value=""/>
+                </div>
               </div>
 
+              <hr />
               <div class="form-group">
-                <label for="sort_by">
-                   <input type="radio" class="radio-normal" name="sortBy" id="important" value="important" />{{{ Lang::get('task.important') }}}
+                <label for="sort_by" class="col-sm-2 control-label">{{{ Lang::get('task.sort_by') }}}</label>
+              </div>
+              <div class="radio">
+                <label for="important">
+                  <input type="radio" class="radio-normal" name="sortBy" id="important" value="important" />
+                  {{{ Lang::get('task.important') }}}
                 </label>
               </div>
-
-              <div class="form-group">
+              <div class="radio">
+                <label for="urgent">
+                  <input type="radio" class="radio-normal" name="sortBy" id="urgent" value="urgent"/>
+                  {{{ Lang::get('task.urgent') }}}
+              </div>
+              <div class="radio">
                 <label for="sort_by">
-                  <input type="radio" class="radio-normal" name="sortBy" id="urgent" value="urgent"/>{{{ Lang::get('task.urgent') }}}
+                  <input type="radio" class="radio-normal" name="sortBy" id="date" value="date"/>
+                  {{{ Lang::get('task.date') }}}
                 </label>
               </div>
-
-              <div class="form-group">
+              <div class="radio">
                 <label for="sort_by">
-                  <input type="radio" class="radio-normal" name="sortBy" id="date" value="date"/>{{{ Lang::get('task.date') }}}
+                  <input type="radio" class="radio-normal" name="sortBy" id="custom" value="custom"/>
+                  {{{ Lang::get('task.custom') }}}
                 </label>
               </div>
-
+              <hr />
               <div class="form-group">
-                <label for="sort_by">
-                  <input type="radio" class="radio-normal" name="sortBy" id="custom" value="custom"/>{{{ Lang::get('task.custom') }}}
-                </label>
-              </div>
-
-              <div class="form-group">
-                <!--<<label for="color">{{{ Lang::get('task.color') }}}</label>-->
+                <label for="color" class="col-sm-2 control-label">{{{ Lang::get('task.list_color') }}}</label>
+                <div class="tile red selected"><i class="fa fa-check fa-lg"></i></div>
+                <div class="tile orange"></div>
+                <div class="tile yellow"></div>
+                <div class="tile green"></div>
+                <div class="tile blue"></div>
+                <div class="tile indigo"></div>
+                <div class="tile purple"></div>
+                <div class="tile black"></div>
+                <div class="tile darkgray"></div>
+                <div class="tile gray"></div>
                 <input type="hidden" id="color" name="color"/>
               </div>
 
@@ -148,8 +167,10 @@
               </div>
             </form>
           </div>
+
         </div>
       </div>
+
     </div>
 @stop
 
