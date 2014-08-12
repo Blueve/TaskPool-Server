@@ -7,7 +7,7 @@ class ListController extends BaseController {
 	{
 		$user = Auth::user();
 		$newListForm = new NewListForm(Input::all());		//对输入进行校验
-		$list = TaskList::create($newListForm, $user);
+		$list = TaskList::createByForm($newListForm, $user);
 
 		$response = array(
 			'state' => false,
@@ -94,7 +94,7 @@ class ListController extends BaseController {
 			'color'   =>'',
 			);
 
-		if(TaskList::update($listSettingForm))
+		if(TaskList::updateByForm($listSettingForm))
 		{
 			$response['state']   = true;
 			$response['name']    = $listSettingForm->name;

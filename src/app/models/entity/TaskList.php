@@ -9,7 +9,7 @@ class TaskList extends Eloquent {
 	const date      = 'date';
 	const custom    = 'custom';
 
-	public static function create(NewListForm $newListForm, User $user)
+	public static function createByForm(NewListForm $newListForm, User $user)
 	{
 		if($newListForm->isValid())
 		{
@@ -34,7 +34,7 @@ class TaskList extends Eloquent {
 		return TaskList::where('id', '=', $id)->first();
 	}
 
-	public static function update(ListSettingForm $listSettingForm)
+	public static function updateByForm(ListSettingForm $listSettingForm)
 	{
 		if(!$listSettingForm->isValid())
 		{
