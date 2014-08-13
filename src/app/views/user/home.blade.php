@@ -111,9 +111,13 @@
               <input type="hidden" id="id" name="id" value=""/>
 
               <div class="form-group">
-                 <label for="listName" class="col-sm-2 control-label">{{{ Lang::get('task.list_name') }}}</label>
-                 <div class="col-sm-10">
-                  <input type="text" class="form-control" id="name" name="name" value=""/>
+                <div class="col-sm-12">
+                  <div class="input-group input-group-lg">
+                    <span class="input-group-btn">
+                      <button class="btn btn-default" data-iconset="fontawesome" data-icon="fa-heart" data-placement="bottom" role="iconpicker"></button>
+                    </span>
+                    <input type="text" class="form-control" id="name" name="name" value=""/>
+                  </div>
                 </div>
               </div>
 
@@ -178,10 +182,10 @@
 @stop
 
 @section('css')
-  <link href="{{{ asset('css/bootstrap-iconpicker.css') }}}" rel="stylesheet">
+  <link href="{{{ asset('css/bootstrap-iconpicker.min.css') }}}" rel="stylesheet">
 @stop
 
 @section('javascript')
-  <script src="{{{ asset('js/taskpool/bootstrap-iconpicker.js') }}}"></script>
+  <script src="{{{ asset('js/bootstrap-iconpicker.js') }}}"></script>
   <script src="{{{ asset('js/taskpool/user.home.js') }}}"></script>
 @stop
