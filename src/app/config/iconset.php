@@ -1,0 +1,31 @@
+<?php
+
+return array(
+	
+	'list_icon_set' => ['book',
+						'shopping-cart',
+						'gift',
+						'keyboard-o',
+						'institution',
+						'graduation-cap',
+						'car',
+						'space-shuttle',
+						'globe',
+						'heart',
+						'money',
+						'credit-card',
+						'calendar',
+						'pencil-square-o',
+						'tasks',
+						'music',
+						'headphones',
+						'cutlery',
+						'video-camera',
+						'puzzle-piece',
+						'leaf',
+						'star',
+						'archive',
+						'bug',
+						'recycle',
+						],
+);

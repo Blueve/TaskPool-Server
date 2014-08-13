@@ -18,7 +18,7 @@ class CreateTpListsTable extends Migration {
 			$table->increments('id');					// 列表id
 			$table->integer('user_id')->unsigned();		// 用户id
 			$table->string('name');						// 列表名
-			$table->enum('color', 					// 内部排序方式
+			$table->enum('color', 						// 颜色标识
 				array(
 					'red', 
 					'orange', 
@@ -30,6 +30,7 @@ class CreateTpListsTable extends Migration {
 					'black',
 					'darkgray',
 					'gray'))->default('darkgray');
+			$table->enum('icon', Config::get('iconset.list_icon_set'));
 			$table->integer('priority')->unsigned();	// 列表顺位
 			$table->enum('sort_by', 					// 内部排序方式
 				array(
