@@ -1,6 +1,10 @@
 <?php
 
+use Illuminate\Database\Eloquent\SoftDeletingTrait;
+
 class TaskList extends Eloquent {
+
+	use SoftDeletingTrait;
 
 	protected $table = 'tp_lists';
 	
@@ -53,7 +57,8 @@ class TaskList extends Eloquent {
 	{
 		if($listId)
 		{
-			TaskList::destroy($listId);
+			TaskList::where('id', '=', $listId)->increment('version', 1);
+			TaskList::where('id', '=', $listId)->delete();
 			return true;
 		}
 

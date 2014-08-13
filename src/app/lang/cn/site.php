@@ -32,5 +32,7 @@ return array(
 	
 	"save"                  => "保存",
 	"cancel"                => "取消",
-	"delete"                => "删除"
+	"delete"                => "删除",
+	"delete_confirm"        =>"确认删除",
+	"delete_cancel"         =>"取消删除",
 	);

@@ -243,25 +243,31 @@ $(document).ready(function()
 	// 注册删除列表的按钮事件
 	$('#TaskListSettingModal_delete').click(function()
 	{
-		var $btn = $('#TaskListSettingModal_delete');
 
-		$btn.button('loading');
+		$('#TaskListSettingModal_delete').hide();
+		$('#TaskListSettingModal_deleteCancel').show();
+		$('#TaskListSettingModal_deleteConfirm').show();
 
-		$.post('list/delete/' + curTaskList, '', function(data)
-	    {
-	    	if(!data.state)
-	    	{
-	    		alert('error');
-	    	}
-	    	else
-	    	{
-	    		$('a[href="#list_' + curTaskList + '"]').parent('li').remove();
-	    		$('#tasklist a:first').tab('show');
-	    	}
 
-	    	$('#TaskListSettingModal').modal('hide');
-	    	$btn.button('reset');
-	    }, 'json');		
+		// var $btn = $('#TaskListSettingModal_delete');
+
+		// $btn.button('loading');
+
+		// $.post('list/delete/' + curTaskList, '', function(data)
+	 //    {
+	 //    	if(!data.state)
+	 //    	{
+	 //    		alert('error');
+	 //    	}
+	 //    	else
+	 //    	{
+	 //    		$('a[href="#list_' + curTaskList + '"]').parent('li').remove();
+	 //    		$('#tasklist a:first').tab('show');
+	 //    	}
+
+	 //    	$('#TaskListSettingModal').modal('hide');
+	 //    	$btn.button('reset');
+	 //    }, 'json');		
 	});
 	// 颜色选择器
 	$('.tile i').hide();
