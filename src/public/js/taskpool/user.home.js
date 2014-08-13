@@ -189,7 +189,7 @@ $(document).ready(function()
 		{
 			if(!($(e.relatedTarget).hasClass('fa-cog')))
 			{
-				$(e.target).find('i').hide(200);
+				$(e.target).find('i.fa.fa-cog').hide(200);
 			}
 			else
 			{
