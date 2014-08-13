@@ -174,6 +174,11 @@
     </div>
 @stop
 
+@section('css')
+  <link href="{{{ asset('css/bootstrap-iconpicker.css') }}}" rel="stylesheet">
+@stop
+
 @section('javascript')
+  <script src="{{{ asset('js/taskpool/bootstrap-iconpicker.js') }}}"></script>
   <script src="{{{ asset('js/taskpool/user.home.js') }}}"></script>
 @stop
