@@ -7,6 +7,9 @@ $(document).ready(function()
 
 	var sortable        = false;	// 是否可排序
 
+	// 初始化列表阴影
+	refreshListShadow(curTaskList);
+
 	/* 添加新的列表
 	 * ----------------------------------------
 	 * 创建添加新列表的Popover
@@ -53,6 +56,7 @@ $(document).ready(function()
 	/* 列表之间切换的动作
 	 * ----------------------------------------
 	 * 注册列表切换的Ajax事件
+	 * 注册列表切换完毕的样式刷新
 	 * 注册数据集切换的Ajax事件
 	 * ----------------------------------------
 	 */
@@ -70,6 +74,11 @@ $(document).ready(function()
 
 		// 更新状态
 		curTaskList = targetId;
+	});
+	// 注册列表切换完毕的样式刷新
+	$('#tasklist').on('shown.bs.tab', 'a[data-toggle="tab"]', function(e)
+	{
+		refreshListShadow(curTaskList);
 	});
 	// 注册数据集切换的Ajax事件
 	$('#tasklist_set').on('show.bs.tab', 'a[data-toggle="pill"]', function(e)
@@ -90,6 +99,7 @@ $(document).ready(function()
 	 * 注册列表顺序调整按钮事件
 	 * 注册列表顺序调整保存的Ajax事件
 	 * 注册列表顺位调整取消的时间
+	 * 注册列表顺位调整中的事件
 	 * ----------------------------------------
 	 */
 	// 开启列表顺序可调
@@ -97,13 +107,13 @@ $(document).ready(function()
 	    items: 'li:not(#create_list_pop)',
 	    cancel: '#create_list_pop',
 	    axis: 'y',
+	    stop: function(event, ui) {}
 	});
     $('#tasklist').sortable('disable');			// 默认不可调
     // 注册列表顺序调整按钮事件
     $('[data-toggle=tooltip]').tooltip();
     $('#save').hide();							// 默认隐藏保存和取消
-    $('#sort').click(function()					// 点击排序按钮
-    {
+    $('#sort').click(function() {				// 点击排序按钮
     	$(this).attr({							// 禁止再点击排序按钮
     		disabled: 'disabled'
     	});
@@ -112,11 +122,9 @@ $(document).ready(function()
     	sortable = true;
     	$('.fa.fa-cog').hide();
 		$('#tasklist').sortable('enable');		// 开启调序
-    	
     });
     // 注册列表顺序调整保存的Ajax事件
-    $('#ok').click(function()
-    {
+    $('#ok').click(function() {
     	$('#save').hide(400);					// 隐藏保存菜单组
     	$('#tasklist').sortable('disable');		// 禁止列表拖动
 
@@ -137,9 +145,8 @@ $(document).ready(function()
 
     	curTaskListHtml = $('#tasklist').html();// 保存当前列表的Html
     });
-    // 注册列表顺位调整取消的时间
-    $('#cancel').click(function() 
-    {
+    // 注册列表顺位调整取消的事件
+    $('#cancel').click(function() {
     	$('#save').hide(400);					// 隐藏保存按钮组
 
     	// 恢复初始排序	
@@ -155,6 +162,10 @@ $(document).ready(function()
     	$('#tasklist').sortable('disable');		// 禁用排序
     	$('#sort').removeAttr('disabled');		// 允许使用调序按钮
     });
+    // 注册列表顺位调整中的事件
+   	$('#tasklist').on('sortstop', function(event, ui) {
+   		refreshListShadow(curTaskList);
+   	})
 
     /* 列表设置
 	 * ----------------------------------------
@@ -241,6 +252,7 @@ $(document).ready(function()
 	    	else
 	    	{
 	    		$('a[href="#list_' + curTaskList + '"]').parent('li').remove();
+	    		$('#tasklist a:first').tab('show');
 	    	}
 
 	    	$('#TaskListSettingModal').modal('hide');
@@ -254,6 +266,29 @@ $(document).ready(function()
 		changeColorTo($(this).data('color'));
 	});
 });
+
+function refreshListShadow(curTaskList)
+{
+	var increment = true;
+	var $preTarget = null;
+	$('#tasklist li').each(function(index, element) {
+		$target = $(element).find('a');
+		if($target.data('id') == curTaskList)
+		{
+			increment = false;
+		}
+		
+		$target.css('box-shadow', (increment ? '-4px -2px 10px #eee' : '-4px 2px 10px #eee'));
+		$target.css('border-top', (increment ? '1px solid #ddd' : '1px solid transparent'));
+		$target.css('border-bottom', (increment ? '1px solid transparent' : '1px solid #ddd'));
+
+		if($target.data('id') == curTaskList)
+		{
+			$target.css('border-top', '1px solid #ddd');
+		}
+		$preTarget = $target;
+	});
+}
 
 function submitNewList(message)
 {
