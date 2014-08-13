@@ -240,35 +240,55 @@ $(document).ready(function()
 		// 禁止响应表单的跳转
 		return false;
 	});
-	// 注册删除列表的按钮事件
+	
+	// 显示确认删除按钮
 	$('#TaskListSettingModal_delete').click(function()
 	{
-
-		$('#TaskListSettingModal_delete').hide();
-		$('#TaskListSettingModal_deleteCancel').show();
-		$('#TaskListSettingModal_deleteConfirm').show();
-
-
-		// var $btn = $('#TaskListSettingModal_delete');
-
-		// $btn.button('loading');
-
-		// $.post('list/delete/' + curTaskList, '', function(data)
-	 //    {
-	 //    	if(!data.state)
-	 //    	{
-	 //    		alert('error');
-	 //    	}
-	 //    	else
-	 //    	{
-	 //    		$('a[href="#list_' + curTaskList + '"]').parent('li').remove();
-	 //    		$('#tasklist a:first').tab('show');
-	 //    	}
-
-	 //    	$('#TaskListSettingModal').modal('hide');
-	 //    	$btn.button('reset');
-	 //    }, 'json');		
+		$('#TaskListSettingModal_delete').hide(200);
+		$('#TaskListSettingModal_deleteCancel').show(200);
+		$('#TaskListSettingModal_deleteConfirm').show(200);
 	});
+
+	// 隐藏确认删除按钮
+	$('#TaskListSettingModal').on('hidden.bs.modal', function ()
+	{
+		$('#TaskListSettingModal_delete').show(200);
+		$('#TaskListSettingModal_deleteCancel').hide(200);
+		$('#TaskListSettingModal_deleteConfirm').hide(200);
+	});
+
+	$('#TaskListSettingModal_deleteCancel').click(function()
+	{
+		$('#TaskListSettingModal_delete').show(200);
+		$('#TaskListSettingModal_deleteCancel').hide(200);
+		$('#TaskListSettingModal_deleteConfirm').hide(200);
+	});
+
+
+	// 注册确认删除列表的按钮事件
+	$('#TaskListSettingModal_deleteConfirm').click(function()
+	{
+		var $btn = $('#TaskListSettingModal_deleteConfirm');
+
+		$btn.button('loading');
+
+		$.post('list/delete/' + curTaskList, '', function(data)
+	    {
+	    	if(!data.state)
+	    	{
+	    		alert('error');
+	    	}
+	    	else
+	    	{
+	    		$('a[href="#list_' + curTaskList + '"]').parent('li').remove();
+	    		$('#tasklist a:first').tab('show');
+	    	}
+
+	    	$('#TaskListSettingModal').modal('hide');
+	    	$btn.button('reset');
+	    }, 'json');	
+	});
+
 	// 颜色选择器
 	$('.tile i').hide();
 	$('.tile.selected i').show();

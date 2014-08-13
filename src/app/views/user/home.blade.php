@@ -167,9 +167,9 @@
               <div class="modal-footer">
                 <button type="button" class="btn btn-danger pull-left" id="TaskListSettingModal_delete">{{{ Lang::get('site.delete') }}}</button>
                 <button type="button" class="btn btn-default pull-left" style="display: none" id="TaskListSettingModal_deleteCancel">{{{ Lang::get('site.delete_cancel') }}}</button>
-                <button type="button" class="btn btn-primary pull-left" style="display: none" id="TaskListSettingModal_deleteConfirm">{{{ Lang::get('site.delete_confirm') }}}</button>
+                <button type="button" class="btn btn-danger pull-left" style="display: none" id="TaskListSettingModal_deleteConfirm">{{{ Lang::get('site.delete_confirm') }}}</button>
 
-                <button type="button" class="btn btn-default" data-dismiss="modal">{{{ Lang::get('site.cancel') }}}</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal" id="TaskListSettingModal_cancel">{{{ Lang::get('site.cancel') }}}</button>
                 <button type="submit" class="btn btn-primary" id="TaskListSettingModal_submit" >{{{ Lang::get('site.save') }}}</button>
               </div>
             </form>
