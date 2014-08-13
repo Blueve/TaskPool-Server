@@ -193,7 +193,7 @@ $(document).ready(function()
 			}
 			else
 			{
-				$(e.relatedTarget).addClass('fa-spin');
+				//$(e.relatedTarget).addClass('fa-spin');
 			}
 		}
 	});
@@ -206,6 +206,10 @@ $(document).ready(function()
 		else
 		{
 			$(e.target).removeClass('fa-spin');
+			if($(e.relatedTarget).attr('href') !== '#list_' + curTaskList )
+			{
+				$(e.target).hide(200);
+			}
 		}
 	});
     // 列表设置图标点击Ajax事件
