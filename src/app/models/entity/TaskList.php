@@ -42,6 +42,7 @@ class TaskList extends Eloquent {
 			$taskList->name    = $listSettingForm->name;
 			$taskList->sort_by = $listSettingForm->sortBy;
 			$taskList->color   = $listSettingForm->color;
+			$taskList->version++;
 			$taskList->save();
 			return true;
 		}
