@@ -21,6 +21,7 @@ return array(
 						'fa-headphones',
 						'fa-cutlery',
 						'fa-video-camera',
+						'fa-film',
 						'fa-puzzle-piece',
 						'fa-leaf',
 						'fa-star',
@@ -28,4 +29,5 @@ return array(
 						'fa-bug',
 						'fa-recycle',
 						],
+	'default_icon' => 'fa-tasks',
 );

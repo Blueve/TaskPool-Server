@@ -30,7 +30,8 @@ class CreateTpListsTable extends Migration {
 					'black',
 					'darkgray',
 					'gray'))->default('darkgray');
-			$table->enum('icon', Config::get('iconset.list_icon_set'));
+			$table->enum('icon', Config::get('iconset.list_icon_set'))
+				->default(Config::get('iconset.default_icon'));
 			$table->integer('priority')->unsigned();	// 列表顺位
 			$table->enum('sort_by', 					// 内部排序方式
 				array(
