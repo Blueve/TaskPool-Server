@@ -331,7 +331,7 @@ function submitNewList(message)
 				            <a href="#list_' + data.id + '" role="tab" data-toggle="tab" data-id="' + data.id + '">' +
 				            	'<i class="fa ' + data.icon + ' fa-lg fa-fw align-left"></i>' +
 				             	data.name + '\
-				             	<i class="fa fa-cog fa-lg pull-right" data-toggle="modal" data-target="#TaskListSettingModal"></i>\
+				             	<i class="fa fa-cog fa-lg pull-right" data-toggle="modal" data-target="#TaskListSettingModal" style="display: none;"></i>\
 				            </a>\
 				         </li>';
 			$(item).insertBefore('#create_list_pop');
