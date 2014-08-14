@@ -43,6 +43,7 @@ body { padding-top: 60px; }
 	box-shadow: -2px 2px 5px #eee;
 	border-top: 1px solid #ddd;
 	overflow: hidden;
+	word-wrap: break-word;
 }
 /*
 .nav-tabs.nav-stacked> li:first-child > a {
