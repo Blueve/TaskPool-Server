@@ -228,6 +228,8 @@ $(document).ready(function()
 	{
 		var message = $("#tasklitsetting_form").serialize();
 		var $btn = $('#TaskListSettingModal_submit');
+		var icon = $('#icon').find(':input').val();
+		message += "&icon=" + icon;
 
 		$btn.button('loading');
 
@@ -263,7 +265,6 @@ $(document).ready(function()
 		$('#TaskListSettingModal_deleteCancel').hide(200);
 		$('#TaskListSettingModal_deleteConfirm').hide(200);
 	});
-
 
 	// 注册确认删除列表的按钮事件
 	$('#TaskListSettingModal_deleteConfirm').click(function()

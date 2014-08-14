@@ -114,7 +114,7 @@
                 <div class="col-sm-12">
                   <div class="input-group input-group-lg">
                     <span class="input-group-btn">
-                      <button class="btn btn-default" data-iconset="fontawesome" data-icon="fa-heart" data-placement="bottom" role="iconpicker"></button>
+                      <button class="btn btn-default" id="icon" data-iconset="fontawesome" data-icon="fa-heart" data-placement="bottom" role="iconpicker"></button>
                     </span>
                     <input type="text" class="form-control" id="name" name="name" value=""/>
                   </div>

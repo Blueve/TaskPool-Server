@@ -92,6 +92,7 @@ class ListController extends BaseController {
 			'name'    =>'',
 			'sort_by' =>'',
 			'color'   =>'',
+			'icon'    =>'',
 			);
 
 		if(TaskList::updateByForm($listSettingForm))
@@ -100,6 +101,7 @@ class ListController extends BaseController {
 			$response['name']    = $listSettingForm->name;
 			$response['sort_by'] = $listSettingForm->sortBy;
 			$response['color']   = $listSettingForm->color;
+			$response['icon']    = $listSettingForm->icon;
 		}
 		return Response::json($response);
 	}
