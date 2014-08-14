@@ -51,6 +51,7 @@
             'headphones',
             'cutlery',
             'video-camera',
+            'film',
             'puzzle-piece',
             'leaf',
             'star',

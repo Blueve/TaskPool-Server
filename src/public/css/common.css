@@ -226,3 +226,13 @@ body { padding-top: 60px; }
 .tile.gray {
 	background-color: #999;
 }
+
+.align-left {
+	float: left;
+	line-height: 1.2em;
+}
+
+.align-right {
+	float: right;
+	line-height: 1.2em;
+}
