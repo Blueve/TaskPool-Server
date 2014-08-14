@@ -65,6 +65,7 @@ class ListController extends BaseController {
 			'name'    =>'',
 			'sort_by' =>'',
 			'color'   =>'',
+			'icon'    =>'',
 			);
 
 		$list = TaskList::getById($listId);
@@ -75,6 +76,7 @@ class ListController extends BaseController {
 			$response['name']    = $list->name;
 			$response['sort_by'] = $list->sort_by;
 			$response['color']   = $list->color;
+			$response['icon']    = $list->icon;
 		}
 
 		return Response::json($response);

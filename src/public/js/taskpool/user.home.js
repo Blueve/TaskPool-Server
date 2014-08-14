@@ -387,6 +387,7 @@ function fillListSettingForm(curTaskList)
     		$('#color').val(data.color);
     		changeColorTo(data.color);
     		$('#id').val(curTaskList);
+    		$('#icon').iconpicker('setIcon', data.icon);
     	}
     }, 'json');
 }
