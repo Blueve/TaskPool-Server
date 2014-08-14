@@ -229,10 +229,16 @@ body { padding-top: 60px; }
 
 .align-left {
 	float: left;
-	line-height: 1.2em;
+	line-height: 1.1em;
 }
 
 .align-right {
 	float: right;
-	line-height: 1.2em;
+	line-height: 1.1em;
+}
+
+
+/* 修复IE下TAB处于焦点时的外框问题 */
+.nav-tabs > .active > a, .nav-tabs > .active > a:hover {
+	outline:none;
 }

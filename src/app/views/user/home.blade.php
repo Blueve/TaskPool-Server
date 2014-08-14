@@ -69,7 +69,7 @@
             <a href="#list_{{{ $item->id }}}" role="tab" data-toggle="tab" data-id="{{{ $item->id }}}">
               <i class="fa {{{ $item->icon }}} fa-lg fa-fw align-left"></i>
               {{{ $item->name }}}
-              <i class="fa fa-cog fa-lg pull-right" data-toggle="modal" data-target="#TaskListSettingModal"></i>
+              <i class="fa fa-cog fa-lg align-right" data-toggle="modal" data-target="#TaskListSettingModal"></i>
             </a>
           </li>
           @endforeach

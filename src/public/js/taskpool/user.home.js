@@ -67,7 +67,7 @@ $(document).ready(function()
 		var targetId = $target.data('id');
 
 		// 更改设置按钮的显示
-		$target.find('i:first-child').show(200);
+		$target.find('i.fa.fa-cog').show(200);
 
 		// 刷新页面
 		refreshListContent(targetId, curDataSet);
@@ -183,17 +183,13 @@ $(document).ready(function()
 	{
 		if(e.type === 'mouseenter' && !sortable)
 		{
-			$(e.target).find('i').show(200);
+			$(e.target).find('i.fa.fa-cog').show(200);
 		}
 		else
 		{
 			if(!($(e.relatedTarget).hasClass('fa-cog')))
 			{
 				$(e.target).find('i.fa.fa-cog').hide(200);
-			}
-			else
-			{
-				//$(e.relatedTarget).addClass('fa-spin');
 			}
 		}
 	});
