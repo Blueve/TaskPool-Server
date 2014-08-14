@@ -22,6 +22,7 @@ class TaskList extends Eloquent {
 			$list->name     = $newListForm->name;
 			$list->priority = $user->taskLists()->count();
 			$list->sort_by  = 'important';
+			$list->icon     = Config::get('iconset.list_icon_set')[0];
 			$list->version  = 0;
 			$list->save();
 			return $list;

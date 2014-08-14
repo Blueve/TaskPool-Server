@@ -13,6 +13,7 @@ class ListController extends BaseController {
 			'state' => false,
 			'id'    => 0,
 			'name'  => '',
+			'icon'  => '',
 			);
 
 		if($list)
@@ -20,6 +21,7 @@ class ListController extends BaseController {
 			$response['state'] = true;
 			$response['id'] = $list->id;
 			$response['name'] = $list->name;
+			$response['icon'] = $list->icon;
 		}
 
 		return Response::json($response);
