@@ -187,7 +187,7 @@ $(document).ready(function()
 		}
 		else
 		{
-			if(!($(e.relatedTarget).hasClass('fa-cog')))
+			if(!($(e.relatedTarget).hasClass('fa')))
 			{
 				$(e.target).find('i.fa.fa-cog').hide(200);
 			}
@@ -325,9 +325,9 @@ function submitNewList(message)
 		{
 			var item = '<li class="task-list-darkgray">\
 				            <a href="#list_' + data.id + '" role="tab" data-toggle="tab" data-id="' + data.id + '">' +
-				            	'<i class="fa ' + data.icon + ' fa-lg fa-fw align-left"></i>' +
+				            	'<i class="fa ' + data.icon + ' fa-lg-repair fa-fw align-left"></i>' +
 				             	data.name + '\
-				             	<i class="fa fa-cog fa-lg pull-right" data-toggle="modal" data-target="#TaskListSettingModal" style="display: none;"></i>\
+				             	<i class="fa fa-cog fa-lg pull-right" data-toggle="modal" data-target="#TaskListSettingModal"></i>\
 				            </a>\
 				         </li>';
 			$(item).insertBefore('#create_list_pop');
@@ -335,7 +335,7 @@ function submitNewList(message)
 			$('#tasklist_content').append(item);
 			$('#create_list_pop').popover('hide');
 
-			$('a[href="#list_' + data.id + '"]').tab('show');
+			//$('a[href="#list_' + data.id + '"]').tab('show');
 			refreshListContent(data.id);
 		}
 		else
@@ -400,7 +400,7 @@ function submitTaskListSetting(message, curTaskList, curDataSet, callback)
 			$('a[href="#list_' + curTaskList + '"]').html(
 				'<i class="fa ' + data.icon + ' fa-lg fa-fw align-left"></i>' +
 				data.name + 
-				'<i class="fa fa-cog fa-lg pull-right" data-toggle="modal" data-target="#TaskListSettingModal" style="display: none;"></i>'
+				'<i class="fa fa-cog fa-lg-repair pull-right" data-toggle="modal" data-target="#TaskListSettingModal" style="display: none;"></i>'
 			);
 			$('a[href="#list_' + curTaskList + '"]').parent('li').removeClass().addClass("active task-list-" + data.color); 
 			callback();

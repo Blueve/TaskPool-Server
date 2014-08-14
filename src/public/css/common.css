@@ -42,6 +42,7 @@ body { padding-top: 60px; }
 	margin-bottom: 2px;
 	box-shadow: -2px 2px 5px #eee;
 	border-top: 1px solid #ddd;
+	overflow: hidden;
 }
 /*
 .nav-tabs.nav-stacked> li:first-child > a {
@@ -161,7 +162,7 @@ body { padding-top: 60px; }
 	border-left-width: 2px;
 }
 
-.nav-tabs.nav-stacked > li.active.task-list-gray > a {
+.nav-tabs.nav-stacked > li.task-list-gray > a {
 	border-left-color: #999;
 	border-left-width: 2px;
 }
@@ -229,14 +230,19 @@ body { padding-top: 60px; }
 
 .align-left {
 	float: left;
-	line-height: 1.1em;
+	line-height: 1.2em;
 }
 
 .align-right {
 	float: right;
-	line-height: 1.1em;
+	line-height: 1.2em;
 }
 
+/* 修复fa-spin在fa-lg下的问题 */
+.fa-lg-repair {
+	font-size: 1.5em;
+	line-height: 0.9em;
+}
 
 /* 修复IE下TAB处于焦点时的外框问题 */
 .nav-tabs > .active > a, .nav-tabs > .active > a:hover {
