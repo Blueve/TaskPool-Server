@@ -357,9 +357,9 @@ function refreshListContent(listId, dataSet)
 	});
 }
 
-function submitListOrder(taskLists)
+function submitListOrder(userLists)
 {
-	$.post('list/reorder', {taskLists:taskLists}, function(data)
+	$.post('list/reorder', {userLists:userLists}, function(data)
     {
     	if(!data.state)
     	{

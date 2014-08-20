@@ -18,6 +18,11 @@ class User extends Eloquent implements UserInterface {
 		return $this->hasMany('TaskList');
 	}
 
+	public function userLists()
+	{
+		return $this->hasMany('UserList');
+	}
+
 	/*
 	 * 静态方法
 	 */
@@ -80,30 +85,31 @@ class User extends Eloquent implements UserInterface {
 
 	public function allLists()
 	{
-		return $this->taskLists()->orderBy('priority', 'asc')->get();
+		return $this->userLists()->orderBy('priority', 'asc')->get();
 	}
 
 	public function allListsById()
 	{
-		return $this->taskLists()->orderBy('id', 'asc')->get();
+		return $this->userLists()->orderBy('list_id', 'asc')->get();
 	}
 
-	public function getTaskListCount()
+	public function getUserListCount()
 	{
-		return $this->taskLists()->count();
+		return $this->userLists()->count();
 	}
 
-	public function checkTaskLists($taskLists)
+	public function checkUserLists($userLists)
 	{
-		$count = count($taskLists);
-		if($count == $this->getTaskListCount())
+		$count = count($userLists);
+		if($count == $this->getUserListCount())
 		{
-			asort($taskLists);
+			asort($userLists);
 			$i = 0;
-			$dbTaskLists = $this->allListsById();
-			foreach($taskLists as $key => $val) 
+			
+			$dbUserLists = $this->allListsById();
+			foreach($userLists as $key => $val) 
 			{
-				if($val == $dbTaskLists[$i]->id)
+				if($val == $dbUserLists[$i]->list_id)
 				{
 					$i++;
 				}

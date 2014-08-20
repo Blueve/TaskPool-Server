@@ -17,14 +17,22 @@ class TaskList extends Eloquent {
 	{
 		if($newListForm->isValid())
 		{
+			// 创建列表
 			$list           = new TaskList();
 			$list->user_id  = $user->id;
 			$list->name     = $newListForm->name;
-			$list->priority = $user->taskLists()->count();
+			//$list->priority = $user->taskLists()->count();
 			$list->sort_by  = 'important';
 			$list->icon     = Config::get('iconset.list_icon_set')[0];
 			$list->version  = 0;
 			$list->save();
+			// 创建用户列表
+			$userList           = new UserList();
+			$userList->user_id  = $user->id;
+			$userList->list_id  = $list->id;
+			$userList->priority = $user->userLists()->count();
+			$userList->version  = 0;
+			$userList->save();
 			return $list;
 		}
 	}

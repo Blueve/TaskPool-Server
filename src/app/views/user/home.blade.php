@@ -65,10 +65,10 @@
         <ul class="nav nav-tabs nav-stacked" id="tasklist" role="tablist">
           {{-- 列表标题 --}}
           @foreach($taskLists as $item)
-          <li class="task-list-{{{ $item->color }}}">
-            <a href="#list_{{{ $item->id }}}" role="tab" data-toggle="tab" data-id="{{{ $item->id }}}">
-              <i class="fa {{{ $item->icon }}} fa-lg fa-fw align-left"></i>
-              {{{ $item->name }}}
+          <li class="task-list-{{{ $item->taskList->color }}}">
+            <a href="#list_{{{ $item->taskList->id }}}" role="tab" data-toggle="tab" data-id="{{{ $item->taskList->id }}}">
+              <i class="fa {{{ $item->taskList->icon }}} fa-lg fa-fw align-left"></i>
+              {{{ $item->taskList->name }}}
               <i class="fa fa-cog fa-lg-repair align-right" data-toggle="modal" data-target="#TaskListSettingModal"></i>
             </a>
           </li>

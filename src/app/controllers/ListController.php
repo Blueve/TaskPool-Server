@@ -2,7 +2,7 @@
 
 class ListController extends BaseController {
 
-	//创建TaskList
+	// 创建TaskList
 	public function create_post()
 	{
 		$user = Auth::user();
@@ -27,8 +27,8 @@ class ListController extends BaseController {
 		return Response::json($response);
 	}
 
-	//填充Task
-	//TODO
+	// 填充Task
+	// TODO
 	public function content_post()
 	{
 		$response = array(
@@ -38,28 +38,28 @@ class ListController extends BaseController {
 		return Response::json($response);
 	}
 
-	//保存TaskList的排列顺序
+	// 保存TaskList的排列顺序
 	public function reorder_post()
 	{
 		$user = Auth::user();
 
-		$taskLists = explode(',', Input::get('taskLists'));
+		$userLists = explode(',', Input::get('userLists'));
 
 		$response = array(
 			'state' => false,
 			);
-		if($user->checkTaskLists($taskLists))
+		if($user->checkUserLists($userLists))
 		{
-			foreach ($taskLists as $key => $value) 
+			foreach ($userLists as $key => $value)
 			{
-				TaskList::updatePriorityById($value, $key);
+				UserList::updatePriorityById($value, $key);
 			}
 			$response['state'] = true;
 		}
 		return Response::json($response);
 	}
 
-	//获取TaskList的相关设置内容
+	// 获取TaskList的相关设置内容
 	public function getListSetting($listId)
 	{
 		$response = array(
@@ -84,7 +84,7 @@ class ListController extends BaseController {
 		return Response::json($response);
 	}
 
-	//更新TaskList设置
+	// 更新TaskList设置
 	public function updateListSetting_post()
 	{
 		$listSettingForm = new ListSettingForm(Input::all());
@@ -110,7 +110,7 @@ class ListController extends BaseController {
 		return Response::json($response);
 	}
 
-	//删除TaskList
+	// 删除TaskList
 	public function delete_post($listId)
 	{
 		$response = array(
