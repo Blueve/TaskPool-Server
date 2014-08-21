@@ -175,6 +175,7 @@ $(document).ready(function()
 	 * 注册列表设置表单提交的Ajax事件
 	 * 注册删除列表的按钮事件
 	 * 颜色选择器
+	 * 共享开关初始化
 	 * ----------------------------------------
 	 */
     // 列表设置图标初始化
@@ -291,6 +292,12 @@ $(document).ready(function()
 	$('.tile.selected i').show();
 	$('.tile').click(function(event) {
 		changeColorTo($(this).data('color'));
+	});
+
+	// 共享开关初始化
+	$('#share').bootstrapSwitch({
+		'onText':'<i class="fa fa-check"></i>',
+		'offText': '<i class="fa fa-times">',
 	});
 });
 

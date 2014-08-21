@@ -24,4 +24,6 @@ return array(
 
 	"list_color"        => "列表颜色",
 	"list_icon"         => "列表图标",
+
+	"shareable"			=> "共享此列表"
 );

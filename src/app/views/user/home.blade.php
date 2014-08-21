@@ -123,31 +123,42 @@
               </div>
 
               <hr />
-              <div class="form-group">
-                <label for="sort_by" class="col-sm-2 control-label">{{{ Lang::get('task.sort_by') }}}</label>
-              </div>
-              <div class="radio">
-                <label for="important">
-                  <input type="radio" class="radio-normal" name="sortBy" id="important" value="important" />
-                  {{{ Lang::get('task.important') }}}
-                </label>
-              </div>
-              <div class="radio">
-                <label for="urgent">
-                  <input type="radio" class="radio-normal" name="sortBy" id="urgent" value="urgent"/>
-                  {{{ Lang::get('task.urgent') }}}
-              </div>
-              <div class="radio">
-                <label for="sort_by">
-                  <input type="radio" class="radio-normal" name="sortBy" id="date" value="date"/>
-                  {{{ Lang::get('task.date') }}}
-                </label>
-              </div>
-              <div class="radio">
-                <label for="sort_by">
-                  <input type="radio" class="radio-normal" name="sortBy" id="custom" value="custom"/>
-                  {{{ Lang::get('task.custom') }}}
-                </label>
+              
+              <div class="row">
+                <div class="col-xs-6 column">
+                  <div class="form-group">
+                    <label for="sort_by" class="col-xs-6 control-label">{{{ Lang::get('task.sort_by') }}}</label>
+                  </div>
+                  <div class="radio">
+                      <label for="important">
+                        <input type="radio" class="radio-normal" name="sortBy" id="important" value="important" />
+                        {{{ Lang::get('task.important') }}}
+                      </label>
+                  </div>
+                  <div class="radio">
+                      <label for="urgent">
+                        <input type="radio" class="radio-normal" name="sortBy" id="urgent" value="urgent"/>
+                        {{{ Lang::get('task.urgent') }}}
+                  </div>
+                  <div class="radio">
+                      <label for="sort_by">
+                        <input type="radio" class="radio-normal" name="sortBy" id="date" value="date"/>
+                        {{{ Lang::get('task.date') }}}
+                      </label>
+                  </div>
+                  <div class="radio">
+                      <label for="sort_by">
+                        <input type="radio" class="radio-normal" name="sortBy" id="custom" value="custom"/>
+                        {{{ Lang::get('task.custom') }}}
+                      </label>
+                  </div>
+                </div>
+                <div class="col-xs-6 column">
+                  <div class="form-group">
+                    <label for="share" class="control-label">{{{ Lang::get('task.shareable') }}}</label>
+                  </div>
+                  <input type="checkbox" name="share" id="share" />
+                </div>
               </div>
               <hr />
               <div class="form-group">
@@ -184,9 +195,11 @@
 
 @section('css')
   <link href="{{{ asset('css/bootstrap-iconpicker.min.css') }}}" rel="stylesheet">
+  <link href="{{{ asset('css/bootstrap-switch.min.css') }}}" rel="stylesheet">
 @stop
 
 @section('javascript')
   <script src="{{{ asset('js/bootstrap-iconpicker.js') }}}"></script>
+  <script src="{{{ asset('js/bootstrap-switch.min.js') }}}"></script>
   <script src="{{{ asset('js/taskpool/user.home.js') }}}"></script>
 @stop
