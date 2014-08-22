@@ -18,37 +18,38 @@ $(document).ready(function()
 	 */
 	// 创建添加新列表的Popover
 	var template = '\
-		<form role="form" id="newlist_form">\
+		<form role="form" id="newList_form">\
           <div class="form-group" width="276px">\
             <label class="sr-only" for="name">列表名</label>\
             <input type="text" class="form-control" id="name" name="name" placeholder="列表名" required/>\
           </div>\
-          <button type="submit" id="newlist_submit" class="btn btn-default btn-block">创建</button>\
+          <button type="submit" id="newList_submit" class="btn btn-default btn-block">创建</button>\
         </form>\
 	';
-	$('#create_list_pop').popover(
+	$('#createList_pop').popover(
 	{
 		html: true,
 		title: '创建',
 		content: template,
 		trigger: 'click focus'
 	});
-	$('#create_list_pop').on('shown.bs.popover', function()
+	$('#createList_pop').on('shown.bs.popover', function()
 	{
 		$('#name').focus().select(); // 切换焦点
 	});
 	// 注册提交新列表的Ajax事件
-	$('#tasklist').on('submit', '#newlist_form', function()
+	$('#taskList').on('submit', '#newList_form', function()
 	{
-		var message = $("#newlist_form").serialize();
-		var $btn = $('#newlist_submit');
+		var message = $("#newList_form").serialize();
+		var $btn = $('#newList_submit');
 
 		$btn.button('loading');
 
 		// 提交信息
-		submitNewList(message);
+		submitNewList(message, function(){
+			$btn.button('reset');
+		});
 
-		$btn.button('reset');
 		// 禁止响应表单的跳转
 		return false;
 	});
@@ -61,7 +62,7 @@ $(document).ready(function()
 	 * ----------------------------------------
 	 */
 	// 注册列表切换的Ajax事件
-	$('#tasklist').on('show.bs.tab', 'a[data-toggle="tab"]', function(e)
+	$('#taskList').on('show.bs.tab', 'a[data-toggle="tab"]', function(e)
 	{
 		var $target = $(e.target);
 		var targetId = $target.data('id');
@@ -76,12 +77,12 @@ $(document).ready(function()
 		curTaskList = targetId;
 	});
 	// 注册列表切换完毕的样式刷新
-	$('#tasklist').on('shown.bs.tab', 'a[data-toggle="tab"]', function(e)
+	$('#taskList').on('shown.bs.tab', 'a[data-toggle="tab"]', function(e)
 	{
 		refreshListShadow(curTaskList);
 	});
 	// 注册数据集切换的Ajax事件
-	$('#tasklist_set').on('show.bs.tab', 'a[data-toggle="pill"]', function(e)
+	$('#taskListSet').on('show.bs.tab', 'a[data-toggle="pill"]', function(e)
 	{
 		var $target = $(e.target);
 		var targetSet = $target.data('set');
@@ -103,13 +104,13 @@ $(document).ready(function()
 	 * ----------------------------------------
 	 */
 	// 开启列表顺序可调
-    $('#tasklist').sortable({
-	    items: 'li:not(#create_list_pop)',
-	    cancel: '#create_list_pop',
+    $('#taskList').sortable({
+	    items: 'li:not(#createList_pop)',
+	    cancel: '#createList_pop',
 	    axis: 'y',
 	    stop: function(event, ui) {}
 	});
-    $('#tasklist').sortable('disable');			// 默认不可调
+    $('#taskList').sortable('disable');			// 默认不可调
     // 注册列表顺序调整按钮事件
     $('[data-toggle=tooltip]').tooltip();
     $('#save').hide();							// 默认隐藏保存和取消
@@ -121,16 +122,16 @@ $(document).ready(function()
     	//允许列表拖动
     	sortable = true;
     	$('.fa.fa-cog').hide();
-		$('#tasklist').sortable('enable');		// 开启调序
+		$('#taskList').sortable('enable');		// 开启调序
     });
     // 注册列表顺序调整保存的Ajax事件
     $('#ok').click(function() {
     	$('#save').hide(400);					// 隐藏保存菜单组
-    	$('#tasklist').sortable('disable');		// 禁止列表拖动
+    	$('#taskList').sortable('disable');		// 禁止列表拖动
 
     	var taskLists = new Array();
     	var i = 0;
-    	$('#tasklist a').each(function()		// 获取新顺位
+    	$('#taskList a').each(function()		// 获取新顺位
     	{
     		if($(this).data('id'))
     		{
@@ -143,7 +144,7 @@ $(document).ready(function()
     	sortable = false;
     	$('#sort').removeAttr('disabled');		// 禁止排序
 
-    	curTaskListHtml = $('#tasklist').html();// 保存当前列表的Html
+    	curTaskListHtml = $('#taskList').html();// 保存当前列表的Html
     });
     // 注册列表顺位调整取消的事件
     $('#cancel').click(function() {
@@ -152,18 +153,18 @@ $(document).ready(function()
     	// 恢复初始排序	
     	if(!curTaskListHtml)
     	{
-    		$('#tasklist').sortable('cancel');	
+    		$('#taskList').sortable('cancel');	
     	}
     	else
     	{
-    		$('#tasklist').html(curTaskListHtml);
+    		$('#taskList').html(curTaskListHtml);
     	}
     	sortable = false;
-    	$('#tasklist').sortable('disable');		// 禁用排序
+    	$('#taskList').sortable('disable');		// 禁用排序
     	$('#sort').removeAttr('disabled');		// 允许使用调序按钮
     });
     // 注册列表顺位调整中的事件
-   	$('#tasklist').on('sortstop', function(event, ui) {
+   	$('#taskList').on('sortstop', function(event, ui) {
    		refreshListShadow(curTaskList);
    	})
 
@@ -221,10 +222,10 @@ $(document).ready(function()
 		radioClass: 'iradio_square-blue',
 	});
     // 注册列表设置表单提交的Ajax事件
-	$('#TaskListSettingModal').on('submit', '#tasklitsetting_form', function()
+	$('#taskListSetting_modal').on('submit', '#taskListSetting_form', function()
 	{
-		var message = $("#tasklitsetting_form").serialize();
-		var $btn = $('#TaskListSettingModal_submit');
+		var message = $("#taskListSetting_form").serialize();
+		var $btn = $('#taskListSetting_modalSubmit');
 		var icon = $('#icon').find(':input').val();
 		message += "&icon=" + icon;
 
@@ -241,32 +242,32 @@ $(document).ready(function()
 	});
 	
 	// 显示确认删除按钮
-	$('#TaskListSettingModal_delete').click(function()
+	$('#taskListSetting_modalDelete').click(function()
 	{
-		$('#TaskListSettingModal_delete').hide(200);
-		$('#TaskListSettingModal_deleteCancel').show(200);
-		$('#TaskListSettingModal_deleteConfirm').show(200);
+		$('#taskListSetting_modalDelete').hide(200);
+		$('#taskListSetting_modalDeleteCancel').show(200);
+		$('#taskListSetting_modalDeleteConfirm').show(200);
 	});
 
 	// 隐藏确认删除按钮
-	$('#TaskListSettingModal').on('hidden.bs.modal', function ()
+	$('#taskListSetting_modal').on('hidden.bs.modal', function ()
 	{
-		$('#TaskListSettingModal_delete').show(200);
-		$('#TaskListSettingModal_deleteCancel').hide(200);
-		$('#TaskListSettingModal_deleteConfirm').hide(200);
+		$('#taskListSetting_modalDelete').show();
+		$('#taskListSetting_modalDeleteCancel').hide();
+		$('#taskListSetting_modalDeleteConfirm').hide();
 	});
 
-	$('#TaskListSettingModal_deleteCancel').click(function()
+	$('#taskListSetting_modalDeleteCancel').click(function()
 	{
-		$('#TaskListSettingModal_delete').show(200);
-		$('#TaskListSettingModal_deleteCancel').hide(200);
-		$('#TaskListSettingModal_deleteConfirm').hide(200);
+		$('#taskListSetting_modalDelete').show(200);
+		$('#taskListSetting_modalDeleteCancel').hide(200);
+		$('#taskListSetting_modalDeleteConfirm').hide(200);
 	});
 
 	// 注册确认删除列表的按钮事件
-	$('#TaskListSettingModal_deleteConfirm').click(function()
+	$('#taskListSetting_modalDeleteConfirm').click(function()
 	{
-		var $btn = $('#TaskListSettingModal_deleteConfirm');
+		var $btn = $('#TaskListSetting_modalDeleteConfirm');
 
 		$btn.button('loading');
 
@@ -282,7 +283,7 @@ $(document).ready(function()
 	    		$('#tasklist a:first').tab('show');
 	    	}
 
-	    	$('#TaskListSettingModal').modal('hide');
+	    	$('#taskListSetting_modal').modal('hide');
 	    	$btn.button('reset');
 	    }, 'json');	
 	});
@@ -305,7 +306,7 @@ function refreshListShadow(curTaskList)
 {
 	var increment = true;
 	var $preTarget = null;
-	$('#tasklist li').each(function(index, element) {
+	$('#taskList li').each(function(index, element) {
 		$target = $(element).find('a');
 		if($target.data('id') == curTaskList)
 		{
@@ -324,7 +325,7 @@ function refreshListShadow(curTaskList)
 	});
 }
 
-function submitNewList(message)
+function submitNewList(message, callback)
 {
 	$.post('list/create', message, function(data)
 	{
@@ -334,13 +335,13 @@ function submitNewList(message)
 				            <a href="#list_' + data.id + '" role="tab" data-toggle="tab" data-id="' + data.id + '">' +
 				            	'<i class="fa ' + data.icon + ' fa-lg-repair fa-fw align-left"></i>' +
 				             	data.name + '\
-				             	<i class="fa fa-cog fa-lg pull-right" data-toggle="modal" data-target="#TaskListSettingModal"></i>\
+				             	<i class="fa fa-cog fa-lg pull-right" data-toggle="modal" data-target="#taskListSetting_modal"></i>\
 				            </a>\
 				         </li>';
-			$(item).insertBefore('#create_list_pop');
+			$(item).insertBefore('#createList_pop');
 			item = '<div class="tab-pane fade" id="list_' + data.id + '"></div>';
-			$('#tasklist_content').append(item);
-			$('#create_list_pop').popover('hide');
+			$('#taskListContent').append(item);
+			$('#createList_pop').popover('hide');
 
 			//$('a[href="#list_' + data.id + '"]').tab('show');
 			refreshListContent(data.id);
@@ -402,12 +403,12 @@ function submitTaskListSetting(message, curTaskList, curDataSet, callback)
 	{
 		if(data.state)
 		{
-			$('#TaskListSettingModal').modal('hide');
+			$('#taskListSetting_modal').modal('hide');
 			refreshListContent(curTaskList, curDataSet);
 			$('a[href="#list_' + curTaskList + '"]').html(
 				'<i class="fa ' + data.icon + ' fa-lg fa-fw align-left"></i>' +
 				data.name + 
-				'<i class="fa fa-cog fa-lg-repair pull-right" data-toggle="modal" data-target="#TaskListSettingModal" style="display: none;"></i>'
+				'<i class="fa fa-cog fa-lg-repair pull-right" data-toggle="modal" data-target="#taskListSetting_modal" style="display: none;"></i>'
 			);
 			$('a[href="#list_' + curTaskList + '"]').parent('li').removeClass().addClass("active task-list-" + data.color); 
 			callback();

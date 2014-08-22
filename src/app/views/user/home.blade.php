@@ -30,7 +30,7 @@
 
       {{-- 选择子集 --}}
       <div class="col-md-9 column">
-        <ul class="nav nav-pills nav-justified" id="tasklist_set">
+        <ul class="nav nav-pills nav-justified" id="taskListSet">
           <li class="active">
             <a href="#" data-toggle="pill" data-id="" data-set="today">
               <span class="badge pull-right">0</span>
@@ -62,19 +62,19 @@
     <div class="row">
 
       <div class="col-md-2 col-md-offset-1 column">
-        <ul class="nav nav-tabs nav-stacked" id="tasklist" role="tablist">
+        <ul class="nav nav-tabs nav-stacked" id="taskList" role="tablist">
           {{-- 列表标题 --}}
           @foreach($taskLists as $item)
           <li class="task-list-{{{ $item->taskList->color }}}">
             <a href="#list_{{{ $item->taskList->id }}}" role="tab" data-toggle="tab" data-id="{{{ $item->taskList->id }}}">
               <i class="fa {{{ $item->taskList->icon }}} fa-lg fa-fw align-left"></i>
               {{{ $item->taskList->name }}}
-              <i class="fa fa-cog fa-lg-repair align-right" data-toggle="modal" data-target="#TaskListSettingModal"></i>
+              <i class="fa fa-cog fa-lg-repair align-right" data-toggle="modal" data-target="#taskListSetting_modal"></i>
             </a>
           </li>
           @endforeach
 
-          <li {{-- count($taskLists) == 0 ? 'class="active task-list-darkgray"' : 'class="task-list-darkgray"' --}} id="create_list_pop" >
+          <li {{-- count($taskLists) == 0 ? 'class="active task-list-darkgray"' : 'class="task-list-darkgray"' --}} id="createList_pop" >
             <a data-toggle="popover" class="popover-dismiss" title="{{{ Lang::get('task.create_list') }}}">
               <i class="fa fa-plus fa-lg"></i></span>
             </a>
@@ -84,7 +84,7 @@
 
       {{-- 列表内容 --}}
       <div class="col-md-9 column">
-        <div class="tab-content" id="tasklist_content">
+        <div class="tab-content" id="tasklistContent">
           @foreach($taskLists as $item)
           <div class="tab-pane fade" id="list_{{{ $item->id }}}">
 
@@ -95,8 +95,8 @@
     </div>
 
     {{-- 列表设置弹框 --}}
-    <div class="modal fade" id="TaskListSettingModal" tabindex="-1" role="dialog" 
-      aria-labelledby="TaskListSettingModalLabel" 
+    <div class="modal fade" id="taskListSetting_modal" tabindex="-1" role="dialog" 
+      aria-labelledby="taskListSetting_modalLabel" 
       aria-hidden="true">
 
       <div class="modal-dialog">
@@ -104,11 +104,11 @@
 
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-            <h4 class="modal-title" id="TaskListSettingModalLabel">{{{ Lang::get('task.list_option') }}}</h4>
+            <h4 class="modal-title" id="taskListSetting_modalLabel">{{{ Lang::get('task.list_option') }}}</h4>
           </div>
 
           <div class="modal-body">
-            <form role="form" method="post" id="tasklitsetting_form" class="form-horizontal">
+            <form role="form" method="post" id="taskListSetting_form" class="form-horizontal">
               <input type="hidden" id="id" name="id" value=""/>
 
               <div class="form-group">
@@ -177,12 +177,12 @@
               </div>
 
               <div class="modal-footer">
-                <button type="button" class="btn btn-danger pull-left" id="TaskListSettingModal_delete">{{{ Lang::get('site.delete') }}}</button>
-                <button type="button" class="btn btn-default pull-left" style="display: none" id="TaskListSettingModal_deleteCancel">{{{ Lang::get('site.delete_cancel') }}}</button>
-                <button type="button" class="btn btn-danger pull-left" style="display: none" id="TaskListSettingModal_deleteConfirm">{{{ Lang::get('site.delete_confirm') }}}</button>
+                <button type="button" class="btn btn-danger pull-left" id="taskListSetting_modalDelete">{{{ Lang::get('site.delete') }}}</button>
+                <button type="button" class="btn btn-default pull-left" style="display: none" id="taskListSetting_modalDeleteCancel">{{{ Lang::get('site.delete_cancel') }}}</button>
+                <button type="button" class="btn btn-danger pull-left" style="display: none" id="taskListSetting_modalDeleteConfirm">{{{ Lang::get('site.delete_confirm') }}}</button>
 
-                <button type="button" class="btn btn-default" data-dismiss="modal" id="TaskListSettingModal_cancel">{{{ Lang::get('site.cancel') }}}</button>
-                <button type="submit" class="btn btn-primary" id="TaskListSettingModal_submit" >{{{ Lang::get('site.save') }}}</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal" id="taskListSetting_modalCancel">{{{ Lang::get('site.cancel') }}}</button>
+                <button type="submit" class="btn btn-primary" id="taskListSetting_modalSubmit" >{{{ Lang::get('site.save') }}}</button>
               </div>
             </form>
           </div>
