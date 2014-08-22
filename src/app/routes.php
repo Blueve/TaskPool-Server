@@ -17,8 +17,8 @@ Route::group(array('before' => 'guest'), function()
 {
 	Route::get('/', 'HomeController@startup');
 
-	Route::post('signin', 'AccountController@signin');
-	Route::post('signup', 'AccountController@signup');
+	Route::post('signin', 'AccountController@signin_post');
+	Route::post('signup', 'AccountController@signup_post');
 });
 
 // 以下路由只允许登录的用户访问
@@ -31,7 +31,7 @@ Route::group(array('before' => 'auth'), function()
 // 以下路由允许任何访客访问
 Route::get('findpassword/{userId?}/{checkcode?}', 'AccountController@findpassword');
 Route::post('findpassword', 'AccountController@findpassword_post');
-Route::post('setnewpassword', 'AccountController@setnewpassword');
+Route::post('setnewpassword', 'AccountController@setnewpassword_post');
 
 Route::get('confirm/{userId}/{checkCode}', 'AccountController@confirm');
 Route::get('reconfirm/{userId?}/{checkCode?}', 'AccountController@reconfirm');

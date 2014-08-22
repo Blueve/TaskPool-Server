@@ -4,7 +4,7 @@
   <div class="col-md-4 col-md-offset-4 column">
     @include('layouts.pageheader')
     {{-- 登录表单 --}}
-    <form role="form" method="post" id="signin_form" action="{{{ URL::action('AccountController@signin') }}}">
+    <form role="form" method="post" id="signin_form" action="{{{ URL::action('AccountController@signin_post') }}}">
       <div class="form-group">
          <label for="userId">{{{ Lang::get('site.user_id') }}}</label>
          <input type="text" class="form-control" id="userId" name="userId" required/>
@@ -31,7 +31,7 @@
       </div>
     </form>
     {{-- 注册表单 --}}
-    <form role="form" method="post" id="signup_form" action="{{{ URL::action('AccountController@signup') }}}">
+    <form role="form" method="post" id="signup_form" action="{{{ URL::action('AccountController@signup_post') }}}">
       <div class="form-group">
         <label for="email">{{{ Lang::get('site.email') }}}</label>
         <input type="email" class="form-control" id="email" name="email"

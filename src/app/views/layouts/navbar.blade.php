@@ -19,7 +19,7 @@
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{{ Auth::user()->name }}} <span class="caret"></span></a>
           <ul class="dropdown-menu" role="menu">
             <li><a href="{{{ URL::action('UserController@home') }}}">{{{ Lang::get('site.my') }}}</a></li>
-            <li><a href="{{{ URL::action('UserController@setting') }}}">{{{ Lang::get('site.setting')}}}</a></li>
+            <li><a href="{{{ URL::action('UserController@setting_post') }}}">{{{ Lang::get('site.setting')}}}</a></li>
             <li class="divider"></li>
            <li><a href="{{{ URL::action('AccountController@signout') }}}">{{{ Lang::get('site.signout') }}}</a></li>
           </ul>
