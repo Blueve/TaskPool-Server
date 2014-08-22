@@ -312,7 +312,7 @@ function refreshListShadow(curTaskList)
 			increment = false;
 		}
 		
-		$target.css('box-shadow', (increment ? '-4px -2px 10px #eee' : '-4px 2px 10px #eee'));
+		$target.css('box-shadow', (increment ? '-4px -3px 4px #eee' : '-4px 3px 4px #eee'));
 		$target.css('border-top', (increment ? '1px solid #ddd' : '1px solid transparent'));
 		$target.css('border-bottom', (increment ? '1px solid transparent' : '1px solid #ddd'));
 
