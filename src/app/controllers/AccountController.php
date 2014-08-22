@@ -2,7 +2,7 @@
 
 class AccountController extends BaseController {
 
-	public function signin()
+	public function signin_post()
 	{
 		// 对输入进行校验
 		$signinForm = new SigninForm(Input::all());
@@ -30,7 +30,7 @@ class AccountController extends BaseController {
 		return View::make('common.notice', $this->data);
 	}
 
-	public function signup()
+	public function signup_post()
 	{
 		// 对输入进行校验
 		$signupForm = new SignupForm(Input::all());
@@ -230,7 +230,7 @@ class AccountController extends BaseController {
 		return View::make('common.notice', $this->data);
 	}
 
-	public function setnewpassword()
+	public function setnewpassword_post()
 	{
 		$setPasswordForm = new SetPasswordForm(Input::all());
 		if($setPasswordForm->isValid())
