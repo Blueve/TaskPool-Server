@@ -5,14 +5,14 @@
   <div class="container">
 
     <div class="row">
-      <div class="col-md-11 col-md-offset-1 column">
+      <div class="col-md-12 column">
         @include('layouts.pageheader')
       </div>
     </div>
 
     {{-- 列表操作 --}}
     <div class="row">
-      <div class="col-md-2 col-md-offset-1 column text-right">
+      <div class="col-md-2 column text-right">
         <div class="btn-group btn-group-lg">
           <button type="button" class="btn btn-default" id="sort" >
             <i class="fa fa-sort" data-toggle="tooltip" data-placement="top" title="{{{ Lang::get('task.change_list_order') }}}"></i>
@@ -61,7 +61,7 @@
 
     <div class="row">
 
-      <div class="col-md-2 col-md-offset-1 column">
+      <div class="col-md-2 column">
         <ul class="nav nav-tabs nav-stacked" id="taskList" role="tablist">
           {{-- 列表标题 --}}
           @foreach($taskLists as $item)
