@@ -393,6 +393,14 @@ function fillListSettingForm(curTaskList)
     		changeColorTo(data.color);
     		$('#id').val(curTaskList);
     		$('#icon').iconpicker('setIcon', data.icon);
+    		if(data.shareable)
+    		{
+    			$('#share').bootstrapSwitch('state', true, true);
+    		}
+    		else
+    		{
+    			$('#share').bootstrapSwitch('state', false, true);
+    		}
     	}
     }, 'json');
 }
@@ -410,7 +418,7 @@ function submitTaskListSetting(message, curTaskList, curDataSet, callback)
 				data.name + 
 				'<i class="fa fa-cog fa-lg-repair pull-right" data-toggle="modal" data-target="#taskListSetting_modal" style="display: none;"></i>'
 			);
-			$('a[href="#list_' + curTaskList + '"]').parent('li').removeClass().addClass("active task-list-" + data.color); 
+			$('a[href="#list_' + curTaskList + '"]').parent('li').removeClass().addClass("active task-list-" + data.color);
 			callback();
 		}
 		else

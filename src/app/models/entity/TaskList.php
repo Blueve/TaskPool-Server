@@ -50,11 +50,12 @@ class TaskList extends Eloquent {
 	{
 		if(!$listSettingForm->isValid())
 		{
-			$taskList          = TaskList::where('id', '=', $listSettingForm->id)->first();
-			$taskList->name    = $listSettingForm->name;
-			$taskList->sort_by = $listSettingForm->sortBy;
-			$taskList->color   = $listSettingForm->color;
-			$taskList->icon    = $listSettingForm->icon;
+			$taskList            = TaskList::where('id', '=', $listSettingForm->id)->first();
+			$taskList->name      = $listSettingForm->name;
+			$taskList->sort_by   = $listSettingForm->sortBy;
+			$taskList->color     = $listSettingForm->color;
+			$taskList->icon      = $listSettingForm->icon;
+			$taskList->shareable = $listSettingForm->share;
 			$taskList->version++;
 			$taskList->save();
 			return true;

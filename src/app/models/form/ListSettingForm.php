@@ -7,6 +7,7 @@ class ListSettingForm extends BaseFormModel
 	public $sortBy;
 	public $color;
 	public $icon;
+	public $share;
 
 	public function __construct($input)
 	{
@@ -17,8 +18,10 @@ class ListSettingForm extends BaseFormModel
 			'sortBy' => 'required|in: important, urgent, date, custom',
 			'color'  => 'required|in: red, orange, yellow, green, blue, indigo, purple, black, darkgray, gray',
 			'icon'   => 'required|in: '.$icons,
+			'share'  => ''
 			);
 
 		$this->init($input, $rule);
+		$this->share = isset($this->share) ? true : false;
 	}
 }

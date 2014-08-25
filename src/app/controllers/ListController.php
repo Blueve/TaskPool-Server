@@ -63,22 +63,24 @@ class ListController extends BaseController {
 	public function getListSetting($listId)
 	{
 		$response = array(
-			'state'   => false, 
-			'name'    =>'',
-			'sort_by' =>'',
-			'color'   =>'',
-			'icon'    =>'',
+			'state'     => false, 
+			'name'      =>'',
+			'sort_by'   =>'',
+			'color'     =>'',
+			'icon'      =>'',
+			'shareable' => '',
 			);
 
 		$list = TaskList::getById($listId);
 
 		if($list)
 		{
-			$response['state']   = true;
-			$response['name']    = $list->name;
-			$response['sort_by'] = $list->sort_by;
-			$response['color']   = $list->color;
-			$response['icon']    = $list->icon;
+			$response['state']     = true;
+			$response['name']      = $list->name;
+			$response['sort_by']   = $list->sort_by;
+			$response['color']     = $list->color;
+			$response['icon']      = $list->icon;
+			$response['shareable'] = $list->shareable;
 		}
 
 		return Response::json($response);
