@@ -2,12 +2,14 @@
 
 class NewListForm extends BaseFormModel
 {
-	public $name;
+	public $nameOrCode;
+	public $type;
 
 	public function __construct($input)
 	{
 		$rule = array(
-			'name' 			=> 'required',
+			'nameOrCode' 	=> 'required',
+			'type'			=> 'required',
 			);
 
 		$this->init($input, $rule);

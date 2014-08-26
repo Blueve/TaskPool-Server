@@ -7,12 +7,15 @@ $(document).ready(function()
 
 	var sortable        = false;	// 是否可排序
 
+	var curNewListType  = 'CREATE'; // 当前创建列表的选项
+
 	// 初始化列表阴影
 	refreshListShadow(curTaskList);
 
 	/* 添加新的列表
 	 * ----------------------------------------
 	 * 创建添加新列表的Popover
+	 * 创建切换创建列表类型的事件
 	 * 注册提交新列表的Ajax事件
 	 * ----------------------------------------
 	 */
@@ -20,10 +23,20 @@ $(document).ready(function()
 	var template = '\
 		<form role="form" id="newList_form">\
           <div class="form-group" width="276px">\
-            <label class="sr-only" for="name">列表名</label>\
-            <input type="text" class="form-control" id="name" name="name" placeholder="列表名" required/>\
+            <div class="input-group">\
+		      <div class="input-group-btn">\
+		        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" id="newList_button">新建<span class="caret"></span></button>\
+		        <ul class="dropdown-menu" role="menu">\
+		          <li><a href="#create" class="listOp">新建</a></li>\
+		          <li class="divider"></li>\
+		          <li><a href="#copy" class="listOp">复制</a></li>\
+		          <li><a href="#link" class="listOp">链接</a></li>\
+		        </ul>\
+		      </div>\
+              <input type="text" class="form-control" id="nameOrCode" name="nameOrCode" placeholder="列表名" required/>\
+            </div>\
           </div>\
-          <button type="submit" id="newList_submit" class="btn btn-default btn-block">创建</button>\
+          <button type="submit" id="newList_submit" class="btn btn-default btn-block">执行</button>\
         </form>\
 	';
 	$('#createList_pop').popover(
@@ -35,12 +48,37 @@ $(document).ready(function()
 	});
 	$('#createList_pop').on('shown.bs.popover', function()
 	{
+		curNewListType = 'CREATE';
+		$('#name').focus().select(); // 切换焦点
+	});
+	// 创建切换创建列表类型的事件
+	$(document).on('click', '.listOp', function(e)
+	{
+		op = $(e.target).attr('href');
+		if(op == '#create')
+		{
+			curNewListType = 'CREATE';
+			$('#name').attr('placeholder', '列表名');
+			$('#newList_button').html('新建<span class="caret"></span>');
+		}
+		else if(op == '#copy')
+		{
+			curNewListType = 'COPY';
+			$('#name').attr('placeholder', '共享码');
+			$('#newList_button').html('复制<span class="caret"></span>');
+		}
+		else if(op == '#link')
+		{
+			curNewListType = 'LINK';
+			$('#name').attr('placeholder', '共享码');
+			$('#newList_button').html('链接<span class="caret"></span>');
+		}
 		$('#name').focus().select(); // 切换焦点
 	});
 	// 注册提交新列表的Ajax事件
 	$('#taskList').on('submit', '#newList_form', function()
 	{
-		var message = $("#newList_form").serialize();
+		var message = $("#newList_form").serialize() + '&type=' + curNewListType;
 		var $btn = $('#newList_submit');
 
 		$btn.button('loading');
@@ -48,6 +86,7 @@ $(document).ready(function()
 		// 提交信息
 		submitNewList(message, function(){
 			$btn.button('reset');
+			refreshListShadow(curTaskList);
 		});
 
 		// 禁止响应表单的跳转
@@ -285,6 +324,7 @@ $(document).ready(function()
 
 	    	$('#taskListSetting_modal').modal('hide');
 	    	$btn.button('reset');
+	    	//TODO:refreshListShadow();
 	    }, 'json');	
 	});
 
@@ -335,16 +375,14 @@ function submitNewList(message, callback)
 				            <a href="#list_' + data.id + '" role="tab" data-toggle="tab" data-id="' + data.id + '">' +
 				            	'<i class="fa ' + data.icon + ' fa-lg-repair fa-fw align-left"></i>' +
 				             	data.name + '\
-				             	<i class="fa fa-cog fa-lg pull-right" data-toggle="modal" data-target="#taskListSetting_modal"></i>\
+				             	<i class="fa fa-cog fa-lg pull-right" data-toggle="modal" data-target="#taskListSetting_modal" style="display: none"></i>\
 				            </a>\
 				         </li>';
 			$(item).insertBefore('#createList_pop');
 			item = '<div class="tab-pane fade" id="list_' + data.id + '"></div>';
 			$('#taskListContent').append(item);
 			$('#createList_pop').popover('hide');
-
-			//$('a[href="#list_' + data.id + '"]').tab('show');
-			refreshListContent(data.id);
+			callback();
 		}
 		else
 		{
