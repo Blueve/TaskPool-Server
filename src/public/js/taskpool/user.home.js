@@ -417,6 +417,12 @@ function submitListOrder(userLists)
 
 function fillListSettingForm(curTaskList)
 {
+	var $el = $(document.createElement('div'));
+	
+	$el.addClass('shadow');
+	$el.html('<i class="fa fa-spinner fa-spin fa-3x"></i>');
+
+	$('body').append($el);
 	$.get('list/getListSetting/' + curTaskList, '', function(data)
     {
     	if(!data.state)
@@ -439,6 +445,7 @@ function fillListSettingForm(curTaskList)
     		{
     			$('#share').bootstrapSwitch('state', false, true);
     		}
+    		$el.remove();
     	}
     }, 'json');
 }
