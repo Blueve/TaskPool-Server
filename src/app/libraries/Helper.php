@@ -25,4 +25,11 @@ class Helper
 	{
 		return (time() - strtotime($date)) < $limit ? false : true ;
 	}
+
+	static public function EncodeListId($id)
+	{
+		$len = strlen($id);
+		$len = $len + (3 - $len % 3);
+		return base64_encode(str_pad($id, $len, '0', STR_PAD_LEFT));
+	}
 }
