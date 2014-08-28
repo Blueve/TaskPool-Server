@@ -279,7 +279,6 @@ $(document).ready(function()
 		// 禁止响应表单的跳转
 		return false;
 	});
-	
 	// 显示确认删除按钮
 	$('#taskListSetting_modalDelete').click(function()
 	{
@@ -287,7 +286,6 @@ $(document).ready(function()
 		$('#taskListSetting_modalDeleteCancel').show(200);
 		$('#taskListSetting_modalDeleteConfirm').show(200);
 	});
-
 	// 隐藏确认删除按钮
 	$('#taskListSetting_modal').on('hidden.bs.modal', function ()
 	{
@@ -295,14 +293,12 @@ $(document).ready(function()
 		$('#taskListSetting_modalDeleteCancel').hide();
 		$('#taskListSetting_modalDeleteConfirm').hide();
 	});
-
 	$('#taskListSetting_modalDeleteCancel').click(function()
 	{
 		$('#taskListSetting_modalDelete').show(200);
 		$('#taskListSetting_modalDeleteCancel').hide(200);
 		$('#taskListSetting_modalDeleteConfirm').hide(200);
 	});
-
 	// 注册确认删除列表的按钮事件
 	$('#taskListSetting_modalDeleteConfirm').click(function()
 	{
@@ -327,18 +323,26 @@ $(document).ready(function()
 	    	//TODO:refreshListShadow();
 	    }, 'json');	
 	});
-
 	// 颜色选择器
 	$('.tile i').hide();
 	$('.tile.selected i').show();
 	$('.tile').click(function(event) {
 		changeColorTo($(this).data('color'));
 	});
-
 	// 共享开关初始化
 	$('#share').bootstrapSwitch({
 		'onText':'<i class="fa fa-check"></i>',
 		'offText': '<i class="fa fa-times">',
+		'onSwitchChange': function(event, state) {
+			if(state)
+			{
+				$('#shareCode').show(400);
+			}
+			else
+			{
+				$('#shareCode').hide(400);
+			}
+		}
 	});
 });
 
@@ -437,13 +441,16 @@ function fillListSettingForm(curTaskList)
     		changeColorTo(data.color);
     		$('#id').val(curTaskList);
     		$('#icon').iconpicker('setIcon', data.icon);
+    		$('#shareCode code').text(data.shareCode);
     		if(data.shareable)
     		{
     			$('#share').bootstrapSwitch('state', true, true);
+    			$('#shareCode').show(400);
     		}
     		else
     		{
     			$('#share').bootstrapSwitch('state', false, true);
+    			$('#shareCode').hide(400);
     		}
     		$el.remove();
     	}

@@ -64,11 +64,12 @@ class ListController extends BaseController {
 	{
 		$response = array(
 			'state'     => false, 
-			'name'      =>'',
-			'sort_by'   =>'',
-			'color'     =>'',
-			'icon'      =>'',
+			'name'      => '',
+			'sort_by'   => '',
+			'color'     => '',
+			'icon'      => '',
 			'shareable' => '',
+			'shareCode' => '',
 			);
 
 		$list = TaskList::getById($listId);
@@ -81,6 +82,7 @@ class ListController extends BaseController {
 			$response['color']     = $list->color;
 			$response['icon']      = $list->icon;
 			$response['shareable'] = $list->shareable;
+			$response['shareCode'] = Helper::EncodeListId($list->id);
 		}
 
 		return Response::json($response);
