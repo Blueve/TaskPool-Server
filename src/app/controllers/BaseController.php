@@ -1,6 +1,7 @@
 <?php
 
-class BaseController extends Controller {
+class BaseController extends Controller 
+{
 
 	// 用于说明未定义的数据项
 	const UNDEFINED_ITEM = 'UNDEFINED';
@@ -26,6 +27,14 @@ class BaseController extends Controller {
 	protected function SetPageTag($tagName)
 	{
 		$this->data['pageTag'] = $tagName;
+	}
+
+	protected function NoticeResponse($pageLang, $type, $notice, $route = '/', $routeValue = array())
+	{
+		$notice = new Notice($type, $notice, $route, $routeValue);
+		$this->MergeData(Lang::get($pageLang));
+		$this->MergeData($notice->getData());
+		return View::make('common.notice', $this->data);
 	}
 
 	/**
