@@ -37,7 +37,32 @@ class TaskList extends Eloquent {
 			}
 			else if($newListForm->type == 'COPY')
 			{
-				//TODO:
+				$listId     = Helper::DecodeListId($newListForm->nameOrCode);
+				$sharedList = TaskList::find($listId);
+				if($sharedList->shareable)
+				{
+					// 创建列表
+					$list           = new TaskList();
+					$list->user_id  = $user->id;
+					$list->name     = $sharedList->name;
+					$list->sort_by  = $sharedList->sort_by;
+					$list->color    = $sharedList->color;
+					$list->icon     = $sharedList->icon;
+					$list->version  = 0;
+					$list->save();
+					// 创建用户列表
+					$userList           = new UserList();
+					$userList->user_id  = $user->id;
+					$userList->list_id  = $list->id;
+					$userList->priority = $user->userLists()->count();
+					$userList->version  = 0;
+					$userList->save();
+					//TODO: Copy Tasks
+				}
+				else
+				{
+					//TODO: Error handling
+				}
 			}
 			else if($newListForm->type == 'LINK')
 			{

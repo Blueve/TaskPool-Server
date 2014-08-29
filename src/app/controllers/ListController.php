@@ -10,18 +10,20 @@ class ListController extends BaseController {
 		$list = TaskList::createByForm($newListForm, $user);
 
 		$response = array(
-			'state' => false,
-			'id'    => 0,
-			'name'  => '',
-			'icon'  => '',
+			'state'  => false,
+			'id'     => 0,
+			'name'   => '',
+			'icon'   => '',
+			'shared' => false,
 			);
 
 		if($list)
 		{
-			$response['state'] = true;
-			$response['id'] = $list->id;
-			$response['name'] = $list->name;
-			$response['icon'] = $list->icon;
+			$response['state']  = true;
+			$response['id']     = $list->id;
+			$response['name']   = $list->name;
+			$response['icon']   = $list->icon;
+			$response['shared'] = false;
 		}
 
 		return Response::json($response);
