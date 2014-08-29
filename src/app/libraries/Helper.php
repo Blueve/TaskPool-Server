@@ -32,4 +32,9 @@ class Helper
 		$len = $len + (3 - $len % 3);
 		return base64_encode(str_pad($id, $len, '0', STR_PAD_LEFT));
 	}
+
+	static public function DecodeListId($code)
+	{
+		return intval(base64_decode($code));
+	}
 }
