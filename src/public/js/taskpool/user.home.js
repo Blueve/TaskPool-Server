@@ -20,25 +20,7 @@ $(document).ready(function()
 	 * ----------------------------------------
 	 */
 	// 创建添加新列表的Popover
-	var template = '\
-		<form role="form" id="newList_form">\
-          <div class="form-group" width="276px">\
-            <div class="input-group">\
-		      <div class="input-group-btn">\
-		        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" id="newList_button">新建<span class="caret"></span></button>\
-		        <ul class="dropdown-menu" role="menu">\
-		          <li><a href="#create" class="listOp">新建</a></li>\
-		          <li class="divider"></li>\
-		          <li><a href="#copy" class="listOp">复制</a></li>\
-		          <li><a href="#link" class="listOp">链接</a></li>\
-		        </ul>\
-		      </div>\
-              <input type="text" class="form-control" id="nameOrCode" name="nameOrCode" placeholder="列表名" required/>\
-            </div>\
-          </div>\
-          <button type="submit" id="newList_submit" class="btn btn-default btn-block">执行</button>\
-        </form>\
-	';
+	var template = $.ajax({url:js_url + '/view/newListForm.html', async:false}).responseText;
 	$('#createList_pop').popover(
 	{
 		html: true,
@@ -49,7 +31,7 @@ $(document).ready(function()
 	$('#createList_pop').on('shown.bs.popover', function()
 	{
 		curNewListType = 'CREATE';
-		$('#name').focus().select(); // 切换焦点
+		$('#nameOrCode').focus().select(); // 切换焦点
 	});
 	// 创建切换创建列表类型的事件
 	$(document).on('click', '.listOp', function(e)
@@ -58,22 +40,22 @@ $(document).ready(function()
 		if(op == '#create')
 		{
 			curNewListType = 'CREATE';
-			$('#name').attr('placeholder', '列表名');
+			$('#nameOrCode').attr('placeholder', '列表名');
 			$('#newList_button').html('新建<span class="caret"></span>');
 		}
 		else if(op == '#copy')
 		{
 			curNewListType = 'COPY';
-			$('#name').attr('placeholder', '共享码');
+			$('#nameOrCode').attr('placeholder', '共享码');
 			$('#newList_button').html('复制<span class="caret"></span>');
 		}
 		else if(op == '#link')
 		{
 			curNewListType = 'LINK';
-			$('#name').attr('placeholder', '共享码');
+			$('#nameOrCode').attr('placeholder', '共享码');
 			$('#newList_button').html('链接<span class="caret"></span>');
 		}
-		$('#name').focus().select(); // 切换焦点
+		$('#nameOrCode').focus().select(); // 切换焦点
 	});
 	// 注册提交新列表的Ajax事件
 	$('#taskList').on('submit', '#newList_form', function()
