@@ -29,7 +29,9 @@
       <hr />
       @include('layouts.footer')
     </div>
-
+    <script type="text/javascript">
+        var js_url = '{{ asset('js/taskpool') }}';
+    </script>
     <script src="{{{ asset('js/jquery-2.1.1.min.js') }}}"></script>
     <script src="{{{ asset('js/bootstrap.min.js') }}}"></script>
     <script src="{{{ asset('js/icheck.min.js') }}}"></script>
