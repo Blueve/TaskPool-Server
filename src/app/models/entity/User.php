@@ -45,12 +45,21 @@ class User extends Eloquent implements UserInterface {
 		if($validator->fails())
 		{
 			// 判定为使用用户名登陆
-			return User::retrieveByName($str);
+			$user = User::retrieveByName($str);
 		}
 		else
 		{
 			// 判定为使用邮箱登陆
-			return User::retrieveByEmail($str);
+			$user = User::retrieveByEmail($str);
+		}
+		// 检查用户是否存在，不存在则抛出异常
+		if($user)
+		{
+			return $user;
+		}
+		else
+		{
+			throw new UserNotFoundException();
 		}
 	}
 
@@ -71,6 +80,26 @@ class User extends Eloquent implements UserInterface {
 	public static function confirmUser($userId)
 	{
 		User::where('id', '=', $userId)->update(array('confirmed' => true));
+	}
+
+	public static function auth(SigninForm $signinForm)
+	{
+		// 对输入进行校验
+		$user = User::retrieveByNameOrEmail($signinForm->userId);
+
+		$credentials = array(
+			'id' => $user['id'], 
+			'password' => $signinForm->password);
+
+		// 信息校验
+		if(Auth::attempt($credentials, $signinForm->rememberMe))
+		{
+			return true;
+		}
+		else
+		{
+			throw new AuthFailedException();
+		}
 	}
 
 

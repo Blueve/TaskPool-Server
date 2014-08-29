@@ -1,33 +1,24 @@
 <?php
 
-class AccountController extends BaseController {
+class AccountController extends BaseController 
+{
 
 	public function signin_post()
 	{
-		// 对输入进行校验
-		$signinForm = new SigninForm(Input::all());
-		$user = User::retrieveByNameOrEmail($signinForm->userId);
-
-		$notice = new Notice(Notice::danger, 'signin_error');
-
-		if($user)
+		try
 		{
-			$credentials = array(
-				'id' => $user['id'], 
-				'password' => $signinForm->password);
-
-			// 用户存在
-			if(Auth::attempt($credentials, $signinForm->rememberMe))
-			{
-				// 登陆成功
-				$notice = new Notice(Notice::success, 'signin_success');
-			}
-			
+			// 验证登录表单
+			User::auth(new SigninForm(Input::all()));
+			return $this->NoticeResponse('base.signin', Notice::success, 'signin_success');
 		}
-
-		$this->MergeData(Lang::get('base.signin'));
-		$this->MergeData($notice->getData());
-		return View::make('common.notice', $this->data);
+		catch(UserNotFoundException $e)	// 找不到用户
+		{
+			return $this->NoticeResponse('base.signin', Notice::danger, 'signin_error');
+		}
+		catch(AuthFailedException $e)	// 密码错误
+		{
+			return $this->NoticeResponse('base.signin', Notice::danger, 'signin_error');
+		}
 	}
 
 	public function signup_post()
