@@ -5,8 +5,8 @@ use Illuminate\Auth\UserInterface;
 
 class User extends Eloquent implements UserInterface 
 {
-	protected $table = 'tp_users';
-
+	protected $table   = 'tp_users';
+	
 	public $timestamps = false;
 
 	//////////////////////////////////////////////////////////
@@ -33,7 +33,16 @@ class User extends Eloquent implements UserInterface
 	 */
 	public static function retrieveByName($name)
 	{
-		return User::where('name', '=', $name)->first();
+		$user = User::where('name', '=', $name)->first();
+		// 检查用户是否存在，不存在则抛出异常
+		if($user)
+		{
+			return $user;
+		}
+		else
+		{
+			throw new UserNotFoundException();
+		}
 	}
 
 	/**
@@ -44,7 +53,17 @@ class User extends Eloquent implements UserInterface
 	 */
 	public static function retrieveByEmail($email)
 	{
-		return User::where('email', '=', $email)->first();
+
+		$user =  User::where('email', '=', $email)->first();
+		// 检查用户是否存在，不存在则抛出异常
+		if($user)
+		{
+			return $user;
+		}
+		else
+		{
+			throw new UserNotFoundException();
+		}
 	}
 
 	/**
@@ -64,41 +83,53 @@ class User extends Eloquent implements UserInterface
 		if($validator->fails())
 		{
 			// 判定为使用用户名登陆
-			$user = User::retrieveByName($str);
+			return User::retrieveByName($str);
 		}
 		else
 		{
 			// 判定为使用邮箱登陆
-			$user = User::retrieveByEmail($str);
-		}
-		// 检查用户是否存在，不存在则抛出异常
-		if($user)
-		{
-			return $user;
-		}
-		else
-		{
-			throw new UserNotFoundException();
+			return User::retrieveByEmail($str);
 		}
 	}
 
 	/**
 	 * 根据注册表单创建一个新用户
+	 *
+	 * 根据表单在数据库中创建新的用户，创建完毕后向该用户注册时所
+	 * 填写的Email地址发送一封确认邮件，同时将验证信息记录到数据
+	 * 库中。
 	 * 
 	 * @param  SignupForm $signupForm 注册表单
 	 * @return User                   新注册的用户
 	 */
 	public static function newUser(SignupForm $signupForm)
 	{
+		// 校验表单
+		if($signupForm->fails()) 
+		{
+			throw new SignupFailedException();
+		}
+
+		// 在数据库创建新的用户
 		$user = new User;
 		$user->name = $signupForm->name;
 		$user->email = $signupForm->email;
-
 		list($user->psw_hash, $user->psw_salt) = Helper::HashPassword($signupForm->password);
-
 		$user->created_at = date('Y-m-d H:i:s', time());
 		$user->confirmed = false;
 		$user->save();
+
+		// 向该用户发送注册验证邮件
+		$toBeConfirmed = ToBeConfirmed::newSignupConfirm($user->id);
+		$mailData = array(
+						'userId'    => $user->id,
+						'checkCode' => $toBeConfirmed->check_code,
+					);
+		Mail::send('emails.welcome', $mailData, function($message) use($user)
+		{
+			$message->to($user->email)->subject(Lang::get('site.signup_email_subject'));
+		});
+
 		return $user;
 	}
 
@@ -136,6 +167,38 @@ class User extends Eloquent implements UserInterface
 		if(!Auth::attempt($credentials, $signinForm->rememberMe))
 		{
 			throw new AuthFailedException();
+		}
+	}
+
+	/**
+	 * 设置新密码表单处理
+	 * 
+	 * @param  SetPasswordForm $setPasswordForm 设置新密码表单
+	 * @return void
+	 */
+	public static function setNewPassword(SetPasswordForm $setPasswordForm)
+	{
+		if($setPasswordForm->isValid())
+		{
+			$user = User::find($setPasswordForm->userId);
+			if(!$user)
+			{
+				throw new UserNotFoundException();
+			}
+			$toBeConfirmed = ToBeConfirmed::retrieveFindPswConfirm(
+												$setPasswordForm->userId, 
+												$setPasswordForm->checkCode);
+			if($toBeConfirmed->isFindPswConfirmExpired())
+			{
+				ToBeConfirmed::destroy($toBeConfirmed->id);
+				throw new ToBeConfirmedExpiredException();
+			}
+			// 更新密码
+			$user->updatePassword($setPasswordForm->password);
+		}
+		else
+		{
+			throw new PasswordInvalidException();
 		}
 	}
 
@@ -192,8 +255,8 @@ class User extends Eloquent implements UserInterface
 	 * 依据list_id进行一一对照，如果存在与输入不一致的情况，则认为
 	 * 输入的数据是不合法的
 	 * 
-	 * @param  int[] $userLists 用户列表id的集合
-	 * @return bool             是否一致
+	 * @param  int[]    $userLists 用户列表id的集合
+	 * @return boolean             是否一致
 	 */
 	public function checkUserLists($userLists)
 	{
@@ -220,6 +283,36 @@ class User extends Eloquent implements UserInterface
 		return false;
 	}
 
+	/**
+	 * 找回密码表单验证
+	 *
+	 * 验证找回密码表单并向关联的邮箱发送一封包含验证码的邮件
+	 * 
+	 * @param  FindPasswordForm $findPasswordForm 找回密码表单
+	 * @return void
+	 */
+	public function findPassword(FindPasswordForm $findPasswordForm)
+	{
+		if($findpasswordForm->isValid())
+		{
+			$user = User::retrieveByEamil($findpasswordForm->email);
+			// 发送修改密码的邮件
+			$toBeConfirmed = ToBeConfirmed::newFindPasswordConfirm($user->id);
+			$mailData = array(
+							'userId' => $user->id,
+							'checkCode' => $toBeConfirmed->check_code,
+						);
+			Mail::send('emails.findpsw', $mailData, function($message) use($user)
+			{
+				$message->to($user->email)->subject(Lang::get('site.findpsw_email_subject'));
+			});
+		}
+		else
+		{
+			throw new EmailInvalidException();
+		}
+	}
+
 	//////////////////////////////////////////////////////////
 	// UserInterface实现
 	//////////////////////////////////////////////////////////
@@ -231,9 +324,9 @@ class User extends Eloquent implements UserInterface
 	public function getAuthPassword()
 	{
 		return array(
-			'psw_hash' => $this->psw_hash,
-			'psw_salt' => $this->psw_salt
-			);
+				'psw_hash' => $this->psw_hash,
+				'psw_salt' => $this->psw_salt
+				);
 	}
 
 	public function getRememberToken()
