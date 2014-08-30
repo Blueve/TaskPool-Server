@@ -25,13 +25,18 @@ Route::group(array('before' => 'guest'), function()
 Route::group(array('before' => 'auth'), function()
 {
 	Route::get('signout', 'AccountController@signout');
+});
+
+// 以下路由只允许登录且未通过验证的用户访问
+Route::group(array('before' => 'auth|unconfirmed'), function()
+{
 	Route::get('unconfirmed', 'AccountController@unconfirm');
 });
 
 // 以下路由允许任何访客访问
-Route::get('findpassword/{userId?}/{checkcode?}', 'AccountController@findpassword');
-Route::post('findpassword', 'AccountController@findpassword_post');
-Route::post('setnewpassword', 'AccountController@setnewpassword_post');
+Route::get('findpassword/{userId?}/{checkcode?}', 'AccountController@findPassword');
+Route::post('findpassword', 'AccountController@findPassword_post');
+Route::post('setnewpassword', 'AccountController@setNewPassword_post');
 
 Route::get('confirm/{userId}/{checkCode}', 'AccountController@confirm');
 Route::get('reconfirm/{userId?}/{checkCode?}', 'AccountController@reconfirm');
