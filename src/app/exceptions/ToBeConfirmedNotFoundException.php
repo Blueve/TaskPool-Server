@@ -1,0 +1,9 @@
+<?php
+
+class ToBeConfirmedNotFoundException extends Exception
+{
+	public function __construct()
+	{
+		parent::__construct('ToBeConfirmed Not Found');
+	}
+}
