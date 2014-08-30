@@ -20,7 +20,7 @@
           </div>
           <div class='col-md-6'>
             <strong>
-              <a href="{{{ URL::action('AccountController@findpassword') }}}"> {{{ Lang::get('site.forgot_psw') }}}</a>
+              <a href="{{{ URL::action('AccountController@findPassword') }}}"> {{{ Lang::get('site.forgot_psw') }}}</a>
             </strong>
           </div>
         </div>
