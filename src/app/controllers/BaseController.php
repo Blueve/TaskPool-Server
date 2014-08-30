@@ -1,6 +1,6 @@
 <?php
 
-class BaseController extends Controller 
+class BaseController extends Controller
 {
 
 	// 用于说明未定义的数据项
