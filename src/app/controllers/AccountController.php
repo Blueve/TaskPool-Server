@@ -1,8 +1,12 @@
 <?php
 
-class AccountController extends BaseController 
+class AccountController extends BaseController
 {
-
+	/**
+	 * 登录表单处理
+	 * 
+	 * @return View 提示页面
+	 */
 	public function signin_post()
 	{
 		try
@@ -21,233 +25,193 @@ class AccountController extends BaseController
 		}
 	}
 
+	/**
+	 * 注册表单处理
+	 * 
+	 * @return View 提示页面
+	 */
 	public function signup_post()
 	{
-		// 对输入进行校验
-		$signupForm = new SignupForm(Input::all());
-
-		$notice = new Notice(Notice::danger, 'signup_error');
-
-		if($signupForm->isValid())
+		try
 		{
-			// 创建用户账户
-			$user = User::newUser($signupForm);
-			// 发送确认邮件
-			$toBeConfirmed = ToBeConfirmed::newSignupConfirm($user->id);
-
-			$mailData = array(
-							'userId' => $user->id,
-							'checkCode' => $toBeConfirmed->check_code,
-						);
-			Mail::send('emails.welcome', $mailData, function($message) use($user)
-			{
-				$message->to($user->email)->subject(Lang::get('site.signup_email_subject'));
-			});
-			$notice = new Notice(Notice::success, 
-								array('title' => 'signup_success', 
-									  'data'  => array('email' => $user->email)));
+			// 添加新用户
+			$user = User::newUser(new SignupForm(Input::all()));
+			return $this->NoticeResponse('base.signin', Notice::success, 'signin_success',
+										 array('title' => 'signup_success', 
+											   'data'  => array('email' => $user->email)));
 		}
-		
-		$this->MergeData(Lang::get('base.signup'));
-		$this->MergeData($notice->getData());
-		return View::make('common.notice', $this->data);
+		catch(SignupFailedException $e)	// 输入不合法
+		{
+			return $this->NoticeResponse('base.signup', Notice::danger, 'signup_error');
+		}
 	}
 
+	/**
+	 * 退出登录
+	 * 
+	 * @return View 提示页面
+	 */
 	public function signout()
 	{
 		Auth::logout();
-		$notice = new Notice(Notice::success, 'signout_success');
-
-		$this->MergeData(Lang::get('base.signout'));
-		$this->MergeData($notice->getData());
-		return View::make('common.notice', $this->data);
+		return $this->NoticeResponse('base.signout', Notice::success, 'signout_success');
 	}
 
+	/**
+	 * 验证用户
+	 * 
+	 * @param  int    $userId    用户Id
+	 * @param  string $checkCode 验证码
+	 * @return View              提示页面
+	 */
 	public function confirm($userId, $checkCode)
 	{
-		$toBeConfirmed = ToBeConfirmed::retrieveSignupConfirm($userId, $checkCode);
-		
-		if($toBeConfirmed && !$toBeConfirmed->isSignupConfirmExpired())
+		try
 		{
-			// 修正为已验证状态
-			User::confirmUser($toBeConfirmed->user_id);
-			// 删除待验证条目
-			ToBeConfirmed::destroy($toBeConfirmed->id);
-			$notice = new Notice(Notice::success, 'confirm_success');
+			// 验证该用户
+			ToBeConfirmed::confirmUser($userId, $checkCode);
+			return $this->NoticeResponse('base.confirm', Notice::success, 'confirm_success');
 		}
-		elseif($toBeConfirmed)
+		catch(ToBeConfirmedNotFoundException $e)	// 待验证条目未找到
 		{
-			$notice = new Notice(Notice::danger, 'confirm_expired',
-								'user/reconfirm', array($userId, $checkCode));
+			return $this->NoticeResponse('base.confirm', Notice::danger, 'confirm_error');
 		}
-		else
+		catch(ToBeConfirmedExpiredException $e)		// 待验证条目已过期
 		{
-			$notice = new Notice(Notice::danger, 'confirm_error');
+			return $this->NoticeResponse('base.confirm', Notice::danger, 'confirm_expired',
+										 'user/reconfirm', array($userId, $checkCode));
 		}
-		
-		$this->MergeData(Lang::get('base.confirm'));
-		$this->MergeData($notice->getData());
-		return View::make('common.notice', $this->data);
 	}
 
+	/**
+	 * 重新用户验证
+	 * 
+	 * @param  int    $userId    用户Id
+	 * @param  string $checkCode 验证码
+	 * @return View              提示页面
+	 */
 	public function reconfirm($userId = null, $checkCode = null)
 	{
-		if($userId === null && $checkCode === null)
+		try
 		{
-			// 对于登录后需要重发的用户需要进行额外的操作
-			if(Auth::check())
-			{
-				$toBeConfirmed = ToBeConfirmed::retrieveConfirm($userId, ToBeConfirmed::signup);
-			}
+			// 重新验证用户
+			ToBeConfirmed::reconfirmUser($userId, $checkCode);
+			return $this->NoticeResponse('base.confirm', Notice::success, 'reconfirm_success');
 		}
-		else
+		catch(AuthFailedException $e)	// 参数为空时用户未登录
 		{
-			$toBeConfirmed = ToBeConfirmed::retrieveSignupConfirm($userId, $checkCode);
+			return $this->NoticeResponse('base.reconfirm', Notice::danger, 'confirm_error');
 		}
-
-		if($toBeConfirmed)
+		catch(ToBeConfirmedNotFoundException $e)	// 待验证条目未找到
 		{
-			// 重新发送邮件
-			$user = User::find($toBeConfirmed->user_id);
-			// 更新已有条目
-			$toBeConfirmed->updateSignupConfirm();
-			
-			$mailData = array(
-							'userId' => $user->id,
-							'checkCode' => $toBeConfirmed->check_code,
-						);
-
-			Mail::send('emails.welcome', $mailData, function($message) use($user)
-			{
-				$message->to($user->email)->subject(Lang::get('signup_email_subject'));
-			});
-
-			$notice = new Notice(Notice::success, 'reconfirm_success');
+			return $this->NoticeResponse('base.reconfirm', Notice::danger, 'confirm_error');
 		}
-		else
-		{
-			$notice = new Notice(Notice::danger, 'confirm_error');
-		}
-
-		$this->MergeData(Lang::get('base.reconfirm'));
-		$this->MergeData($notice->getData());
-		return View::make('common.notice', $this->data);
 	}
 
+	/**
+	 * 未通过验证页面
+	 * @param  int    $userId    用户Id
+	 * @param  string $checkCode 验证码
+	 * @return View              提示页面
+	 */
 	public function unconfirmed($userId, $checkCode)
 	{
-		$notice = new Notice(Notice::warning, 'unconfirmed', 'reconfirm');
-
-		$this->MergeData(Lang::get('base.unconfirmed'));
-		$this->MergeData($notice->getData());
-		return View::make('common.notice', $this->data);
+		return $this->NoticeResponse('base.unconfirmed', Notice::warning, 'unconfirmed', 'reconfirm');
 	}
 
-	public function findpassword($userId = null, $checkCode = null)
+	/**
+	 * 找回密码页面
+	 *
+	 * 无参数时显示提交找回密码的表单页面，有参数的时候显示设置
+	 * 新密码页面
+	 * 
+	 * @param  int    $userId    用户Id
+	 * @param  string $checkCode 验证码
+	 * @return View              普通视图/提示页面
+	 */
+	public function findPassword($userId = null, $checkCode = null)
 	{
-		$this->MergeData(Lang::get('base.findpassword'));
-
+		// 无参数时显示提交找回密码表单页面
 		if($userId === null && $checkCode === null)
 		{
+			$this->MergeData(Lang::get('base.findpassword'));
 			return View::make('user.findpassword', $this->data);
 		}
-		else
+		
+		// 有参数时显示设置新密码页面
+		try
 		{
-			$toBeConfirmed = ToBeConfirmed::retrieveFindPswConfirm($userId, $checkCode);
-			if($toBeConfirmed && !$toBeConfirmed->isFindPswConfirmExpired())
-			{
-				if($toBeConfirmed->isFindPswConfirmExpired())
-				{
-					// 删除待验证条目
-					ToBeConfirmed::destroy($toBeConfirmed->id);
-					$notice = new Notice(Notice::danger, 'findpsw_expired');
-				}
-				else
-				{
-					$this->data['userId'] = $userId;
-					$this->data['checkCode'] = $checkCode;
-					return View::make('user.setnewpassword', $this->data);
-				}
-				
-			}
-			else
-			{
-				$notice = new Notice(Notice::danger, 'findpsw_error');
-			}
+			ToBeConfirmed::findPasswordConfirm($userId, $checkCode);
+			$this->MergeData(Lang::get('base.findpassword'));
+			$this->data['userId'] = $userId;
+			$this->data['checkCode'] = $checkCode;
+			return View::make('user.setnewpassword', $this->data);
 		}
-
-		$this->MergeData(Lang::get('base.findpassword'));
-		$this->MergeData($notice->getData());
-		return View::make('common.notice', $this->data);
+		catch(ToBeConfirmedNotFoundException $e)	// 待验证条目未找到
+		{
+			return $this->NoticeResponse('base.findpassword', Notice::danger, 'findpsw_error');
+		}
+		catch(ToBeConfirmedExpiredException $e)		// 请求已过期
+		{
+			return $this->NoticeResponse('base.findpassword', Notice::danger, 'findpsw_expired');
+		}
 	}
 
-	public function findpassword_post()
+	/**
+	 * 找回密码表单处理
+	 *
+	 * 接收找回密码表单并进行处理，向丢失密码的用户的邮箱
+	 * 发送一封Email，用于找回密码
+	 * 
+	 * @return View 提示页面
+	 */
+	public function findPassword_post()
 	{
-		$findpasswordForm = new FindPasswordForm(Input::all());
-
-		if($findpasswordForm->isValid())
+		try
 		{
-			$user = User::retrieveByEamil($findpasswordForm->email);
-			if($user)
-			{
-				// 发送修改密码的邮件
-				$toBeConfirmed = ToBeConfirmed::newFindPasswordConfirm($user->id);
-				$mailData = array(
-								'userId' => $user->id,
-								'checkCode' => $toBeConfirmed->check_code,
-							);
-				Mail::send('emails.findpsw', $mailData, function($message) use($user)
-				{
-					$message->to($user->email)->subject(Lang::get('site.findpsw_email_subject'));
-				});
-				$notice = new Notice(Notice::success, 
-									array('title' => 'findpsw_success', 
-									'data'  => array('email' => $user->email)));
-			}
-			else
-			{
-				$notice = new Notice(Notice::danger, 'findpsw_miss');
-			}
-
+			User::findPassword(new FindPasswordForm(Input::all()));
+			return $this->NoticeResponse('base.findpassword', Notice::success, 
+										 array('title' => 'findpsw_success', 
+											   'data'  => array('email' => $user->email)));
 		}
-		else
+		catch(EmailInvalidException $e)	// 邮箱格式不正确
 		{
-			$notice = new Notice(Notice::danger, 'findpsw_invalid', 'findpassword');
-
+			return $this->NoticeResponse('base.findpassword', Notice::danger, 'findpsw_invalid');
 		}
-
-		$this->MergeData(Lang::get('base.findpassword'));
-		$this->MergeData($notice->getData());
-		return View::make('common.notice', $this->data);
+		catch(UserNotFoundException $e) // 用户不存在
+		{
+			return $this->NoticeResponse('base.findpassword', Notice::danger, 'findpsw_miss');
+		}
 	}
 
-	public function setnewpassword_post()
+	/**
+	 * 设置新密码表单处理
+	 *
+	 * @return View 提示页面
+	 */
+	public function setNewPassword_post()
 	{
-		$setPasswordForm = new SetPasswordForm(Input::all());
-		if($setPasswordForm->isValid())
+		try
 		{
-			$user = User::find($setPasswordForm->userId);
-			$toBeConfirmed = ToBeConfirmed::retrieveFindPswConfirm(
-				$setPasswordForm->userId, 
-				$setPasswordForm->checkCode);
-			if($user && $toBeConfirmed)
-			{
-				$user->updatePassword($setPasswordForm->password);
-				ToBeConfirmed::destroy($toBeConfirmed->id);
-				$notice = new Notice(Notice::success, 'setpsw_success');
-			}
-			else
-			{
-				$notice = new Notice(Notice::danger, 'setpsw_error');
-			}
+			// 给指定用户设定新的密码
+			User::setNewPassword(new SetPasswordForm(Input::all()));
+			return $this->NoticeResponse('base.findpassword', Notice::success, 'setpsw_success');
 		}
-		else
+		catch(UserNotFoundException $e)	// 未找到用户
 		{
-			$notice = new Notice(Notice::danger, 'setpsw_invalid');
+			return $this->NoticeResponse('base.findpassword', Notice::danger, 'setpsw_error');
 		}
-
-		$this->MergeData(Lang::get('base.findpassword'));
-		$this->MergeData($notice->getData());
-		return View::make('common.notice', $this->data);
+		catch(PasswordInvalidException $e)	// 密码格式不正确
+		{
+			return $this->NoticeResponse('base.findpassword', Notice::danger, 'setpsw_invalid');
+		}
+		catch(ToBeConfirmedNotFoundException $e)	// 未找到找回密码待验证条目
+		{
+			return $this->NoticeResponse('base.findpassword', Notice::danger, 'setpsw_error');
+		}
+		catch(ToBeConfirmedExpiredException $e)		// 找回密码待验证条目过期
+		{
+			return $this->NoticeResponse('base.findpassword', Notice::danger, 'findpsw_expired');
+		}
 	}
 }
