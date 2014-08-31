@@ -1,20 +1,41 @@
 <?php
 
-class UserController extends BaseController {
-
+class UserController extends BaseController
+{
+	/**
+	 * 用户主页
+	 *
+	 * 用户登陆后显示的
+	 * 
+	 * @return [type] [description]
+	 */
 	public function home()
 	{
+		// 读取登录用户的全部用户列表
 		$this->data['taskLists'] = Auth::user()->allLists();
+
 		$this->MergeData(Lang::get('base.home'));
 		return View::make('user.home', $this->data);
 	}
 
+	/**
+	 * 设置页面
+	 *
+	 * 提供修改密码服务
+	 * 
+	 * @return View 页面
+	 */
 	public function setting()
 	{
 		$this->MergeData(Lang::get('base.setting_edit'));
 		return View::make('user.setting', $this->data);
 	}
 
+	/**
+	 * 修改密码表单处理
+	 * 
+	 * @return View 提示页面
+	 */
 	public function setting_post()
 	{
 		$settingEditForm = new SettingEditForm(Input::all());

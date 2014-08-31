@@ -62,11 +62,6 @@ class BaseController extends Controller
 		return View::make('common.notice', $this->data);
 	}
 
-	/**
-	 * Setup the layout used by the controller.
-	 *
-	 * @return void
-	 */
 	protected function setupLayout()
 	{
 		if ( ! is_null($this->layout))
