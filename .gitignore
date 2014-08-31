@@ -42,3 +42,5 @@ src/app/config/local/database.php
 # Project files
 *.sublime-project
 *.sublime-workspace
+
+docs/api
