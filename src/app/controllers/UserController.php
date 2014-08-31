@@ -38,30 +38,18 @@ class UserController extends BaseController
 	 */
 	public function setting_post()
 	{
-		$settingEditForm = new SettingEditForm(Input::all());
-		if($settingEditForm->isValid())
+		try
 		{
-			$user = Auth::user();
-			if(Helper::CheckPassword($user->psw_hash, 
-									 $user->psw_salt, 
-									 $settingEditForm->oldPassword))
-			{
-				$user->updatePassword($SettingEditForm->password);
-				Auth::logout();
-				$notice = new Notice(Notice::success, 'changepsw_success');
-			}
-			else
-			{
-				$notice = new Notice(Notice::danger, 'changepsw_oldpsw_invalid');
-			}
+			Auth::user()->updatePassword(new SettingEditForm(Input::all()));
+			return $this->NoticeResponse('base.setting_edit', Notice::success, 'changepsw_success');
 		}
-		else
+		catch(AuthFailedException $e)
 		{
-			$notice = new Notice(Notice::danger, 'changepsw_invalid', 'user/setting');
+			return $this->NoticeResponse('base.setting_edit', Notice::danger, 'changepsw_oldpsw_invalid', 'user/setting');
 		}
-
-		$this->MergeData(Lang::get('base.setting_edit'));
-		$this->MergeData($notice->getData());
-		return View::make('common.notice', $this->data);
+		catch(PasswordInvalidException $e)
+		{
+			return $this->NoticeResponse('base.setting_edit', Notice::danger, 'changepsw_invalid', 'user/setting');
+		}
 	}
 }

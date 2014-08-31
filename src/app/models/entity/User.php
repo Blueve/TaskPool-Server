@@ -208,13 +208,34 @@ class User extends Eloquent implements UserInterface
 	/**
 	 * 更新当前用户的密码
 	 * 
-	 * @param  string $password 新密码
+	 * @param  SettingEditForm $settingEditForm 密码设置表单
 	 * @return void
 	 */
-	public function updatePassword($password)
+	public function updatePassword(SettingEditForm $settingEditForm)
 	{
-		list($user->psw_hash, $user->psw_salt) = Helper::HashPassword($password);
-		$user->save();
+		// 校验表单
+		if($settingEditForm->isValid())
+		{
+			// 检查旧密码输入是否正确
+			if(Helper::CheckPassword($this->psw_hash, 
+									 $this->psw_salt, 
+									 $settingEditForm->oldPassword))
+			{
+				// 产生新的密码Hash和Salt
+				list($user->psw_hash, $user->psw_salt) = Helper::HashPassword($password);
+				$this->save();
+				// 退出登录
+				Auth::logout();
+			}
+			else
+			{
+				throw new AuthFailedException();
+			}
+		}
+		else
+		{
+			throw new PasswordInvalidException();
+		}
 	}
 
 	/**
