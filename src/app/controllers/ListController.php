@@ -1,32 +1,38 @@
 <?php
 
-class ListController extends BaseController {
+class ListController extends BaseController
+{
 
-	// 创建TaskList
+	/**
+	 * 创建新列表表单处理
+	 * 
+	 * @return Json
+	 */
 	public function create_post()
 	{
-		$user = Auth::user();
-		$newListForm = new NewListForm(Input::all());		//对输入进行校验
-		$list = TaskList::createByForm($newListForm, $user);
-
-		$response = array(
-			'state'  => false,
-			'id'     => 0,
-			'name'   => '',
-			'icon'   => '',
-			'shared' => false,
-			);
-
-		if($list)
+		try
 		{
-			$response['state']  = true;
-			$response['id']     = $list->id;
-			$response['name']   = $list->name;
-			$response['icon']   = $list->icon;
-			$response['shared'] = false;
+			// 创建新的用户列表
+			$userList = UserList::newUserList(new NewListForm(Input::all()));
+			return Response::json(new CreateUserList(
+				true, 
+				$userList->id, 
+				$userList->taskList->name,
+				$userList->taskList->icon,
+				$userList->taskList->shareable));
 		}
-
-		return Response::json($response);
+		catch(ListInvalidException $e)	// 列表表单不合法
+		{
+			return Response::json(new CreateUserList(false));
+		}
+		catch(ListNotFoundException $e)	// 共享码错误
+		{
+			return Response::json(new CreateUserList(false));
+		}
+		catch(AuthFailedException $e)	// 越权访问
+		{
+			return Response::json(new CreateUserList(false));
+		}
 	}
 
 	// 填充Task
