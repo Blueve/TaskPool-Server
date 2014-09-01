@@ -2,7 +2,8 @@
 
 use Illuminate\Database\Eloquent\SoftDeletingTrait;
 
-class TaskList extends Eloquent {
+class TaskList extends Eloquent 
+{
 
 	use SoftDeletingTrait;
 
@@ -13,64 +14,9 @@ class TaskList extends Eloquent {
 	const date      = 'date';
 	const custom    = 'custom';
 
-	public static function createByForm(NewListForm $newListForm, User $user)
-	{
-		if($newListForm->isValid())
-		{
-			if($newListForm->type == 'CREATE')
-			{
-				// 创建列表
-				$list           = new TaskList();
-				$list->user_id  = $user->id;
-				$list->name     = $newListForm->nameOrCode;
-				$list->sort_by  = 'important';
-				$list->icon     = Config::get('iconset.list_icon_set')[0];
-				$list->version  = 0;
-				$list->save();
-				// 创建用户列表
-				$userList           = new UserList();
-				$userList->user_id  = $user->id;
-				$userList->list_id  = $list->id;
-				$userList->priority = $user->userLists()->count();
-				$userList->version  = 0;
-				$userList->save();
-			}
-			else if($newListForm->type == 'COPY')
-			{
-				$listId     = Helper::DecodeListId($newListForm->nameOrCode);
-				$sharedList = TaskList::find($listId);
-				if($sharedList->shareable)
-				{
-					// 创建列表
-					$list           = new TaskList();
-					$list->user_id  = $user->id;
-					$list->name     = $sharedList->name;
-					$list->sort_by  = $sharedList->sort_by;
-					$list->color    = $sharedList->color;
-					$list->icon     = $sharedList->icon;
-					$list->version  = 0;
-					$list->save();
-					// 创建用户列表
-					$userList           = new UserList();
-					$userList->user_id  = $user->id;
-					$userList->list_id  = $list->id;
-					$userList->priority = $user->userLists()->count();
-					$userList->version  = 0;
-					$userList->save();
-					//TODO: Copy Tasks
-				}
-				else
-				{
-					//TODO: Error handling
-				}
-			}
-			else if($newListForm->type == 'LINK')
-			{
-				//TODO:
-			}
-			return $list;
-		}
-	}
+	//////////////////////////////////////////////////////////
+	// 静态方法
+	//////////////////////////////////////////////////////////
 
 	public static function updatePriorityById($id, $priority)
 	{

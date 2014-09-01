@@ -249,15 +249,15 @@ class User extends Eloquent implements UserInterface
 	}
 
 	/**
-	 * 按照List Id 的顺序获取当前用户列表
+	 * 按照User List Id 的顺序获取当前用户列表
 	 *
-	 * 通过该方法获取的用户列表集是按照list_id升序排列的
+	 * 通过该方法获取的用户列表集是按照id升序排列的
 	 * 
 	 * @return UserList[] 用户列表集
 	 */
 	public function allListsById()
 	{
-		return $this->userLists()->orderBy('list_id', 'asc')->get();
+		return $this->userLists()->orderBy('id', 'asc')->get();
 	}
 
 	/**
@@ -273,7 +273,7 @@ class User extends Eloquent implements UserInterface
 	/**
 	 * 检查当前的用户列表是否与给定的用户列表一致
 	 *
-	 * 依据list_id进行一一对照，如果存在与输入不一致的情况，则认为
+	 * 依据user_id进行一一对照，如果存在与输入不一致的情况，则认为
 	 * 输入的数据是不合法的
 	 * 
 	 * @param  int[]    $userLists 用户列表id的集合
