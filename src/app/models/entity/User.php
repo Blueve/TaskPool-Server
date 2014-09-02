@@ -334,6 +334,32 @@ class User extends Eloquent implements UserInterface
 		}
 	}
 
+	public function reorderUserList($userLists)
+	{
+		if(Auth::check())
+		{
+			$user = Auth::user();
+		}
+		else
+		{
+			throw new AuthFailedException();
+		}
+
+		$userLists = explode(',', $userLists);
+		// 更新新的顺位
+		if($user->checkUserLists($userLists))
+		{
+			foreach ($userLists as $key => $value)
+			{
+				UserList::updatePriorityById($value, $key);
+			}
+		}
+		else
+		{
+			throw new InvalidException();
+		}
+	}
+
 	//////////////////////////////////////////////////////////
 	// UserInterface实现
 	//////////////////////////////////////////////////////////
