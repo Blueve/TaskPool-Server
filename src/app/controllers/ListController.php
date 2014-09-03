@@ -67,82 +67,79 @@ class ListController extends BaseController
 			User::reorderUserList(Input::get('userLists'));
 			return Response::json(new ReorderUserList(true));
 		}
-		catch(AuthFailedException $e)
+		catch(AuthFailedException $e)	// 用户验证失败
 		{
 			return Response::json(new ReorderUserList(false));
 		}
-		catch(InvalidException $e)
+		catch(InvalidException $e)	// 用户列表验证失败
 		{
 			return Response::json(new ReorderUserList(false));
 		}
 	}
 
-	// 获取TaskList的相关设置内容
-	public function getListSetting($listId)
+	/**
+	 * 获取任务列表的设置详情
+	 * 
+	 * @param  int $listId 列表Id
+	 * @return Json        状态反馈
+	 */
+	public function getListSetting($userListId)
 	{
-		$response = array(
-			'state'     => false, 
-			'name'      => '',
-			'sort_by'   => '',
-			'color'     => '',
-			'icon'      => '',
-			'shareable' => '',
-			'shareCode' => '',
-			);
-
-		$list = TaskList::getById($listId);
-
-		if($list)
+		try
 		{
-			$response['state']     = true;
-			$response['name']      = $list->name;
-			$response['sort_by']   = $list->sort_by;
-			$response['color']     = $list->color;
-			$response['icon']      = $list->icon;
-			$response['shareable'] = $list->shareable;
-			$response['shareCode'] = Helper::EncodeListId($list->id);
+			$list = UserList::retrieveById($userListId);
+			return Response::json(new ListSetting(true, 
+												  $list->taskList->name,
+												  $list->taskList->sort_by,
+												  $list->taskList->color,
+												  $list->taskList->icon,
+												  $list->taskList->shareable,
+												  Helper::EncodeListId($list->list_id)));
 		}
-
-		return Response::json($response);
+		catch(ListNotFoundException $e)	// 未找到对应的列表
+		{
+			return Response::json(new ListSetting(false));
+		}
 	}
 
-	// 更新TaskList设置
+	/**
+	 * 处理列表设置表单
+	 * 
+	 * @return Json 状态反馈
+	 */
 	public function updateListSetting_post()
 	{
-		$listSettingForm = new ListSettingForm(Input::all());
-
-		//Helper::VarDump($listSettingForm);
-
-		$response = array(
-			'state'   => false,
-			'name'    =>'',
-			'sort_by' =>'',
-			'color'   =>'',
-			'icon'    =>'',
-			);
-
-		if(TaskList::updateByForm($listSettingForm))
+		try
 		{
-			$response['state']   = true;
-			$response['name']    = $listSettingForm->name;
-			$response['sort_by'] = $listSettingForm->sortBy;
-			$response['color']   = $listSettingForm->color;
-			$response['icon']    = $listSettingForm->icon;
+			// 更新列表设置
+			TaskList::updateByForm(new ListSettingForm(Input::all()));
+			return Response::json(new ListSetting(true, 
+												  $listSettingForm->name,
+												  $listSettingForm->sort_by,
+												  $listSettingForm->color,
+												  $listSettingForm->icon,
+												  $listSettingForm->shareable,
+												  Helper::EncodeListId($listSettingForm->id)));
 		}
-		return Response::json($response);
+		catch(ListSettingInvalidException $e)	// 列表设置输入不合法
+		{
+			return Response::json(new ListSetting(false));
+		}
 	}
 
-	// 删除TaskList
-	public function delete_post($listId)
+	/**
+	 * 删除一个用户列表
+	 *
+	 * 当删除一个用户列表的时候需要对用户列表所对应的任务
+	 * 列表进行检查，如果删除者是列表的最初拥有者，那么就
+	 * 将任务列表以及所有对应的镜像链接的用户列表都删除
+	 * 
+	 * @param  int $userListId 用户列表Id
+	 * @return Json            状态反馈
+	 */
+	public function delete_post($userListId)
 	{
-		$response = array(
-			'state'   => false,
-			);
-
-		if(TaskList::softDeleteById($listId))
-		{
-			$response['state'] = true;
-		}
-		return Response::json($response);
+		UserList::softDeleteById($userListId);
+		return Response::json(new BaseAjaxModel(true));
 	}
 }

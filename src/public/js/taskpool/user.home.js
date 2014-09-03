@@ -1,7 +1,7 @@
 $(document).ready(function()
 {
 	// 全局状态
-	var curTaskList     = 0;		// 当前选中的列表id - 0为总概列表
+	var curUserList     = 0;		// 当前选中的列表id - 0为总概列表
 	var curDataSet      = 'today';	// 当前选中的数据集类型
 	var curTaskListHtml = ''; 		// 当前列表的Html
 
@@ -10,7 +10,7 @@ $(document).ready(function()
 	var curNewListType  = 'CREATE'; // 当前创建列表的选项
 
 	// 初始化列表阴影
-	refreshListShadow(curTaskList);
+	refreshListShadow(curUserList);
 
 	/* 添加新的列表
 	 * ----------------------------------------
@@ -68,7 +68,7 @@ $(document).ready(function()
 		// 提交信息
 		submitNewList(message, function(){
 			$btn.button('reset');
-			refreshListShadow(curTaskList);
+			refreshListShadow(curUserList);
 		});
 
 		// 禁止响应表单的跳转
@@ -95,12 +95,12 @@ $(document).ready(function()
 		refreshListContent(targetId, curDataSet);
 
 		// 更新状态
-		curTaskList = targetId;
+		curUserList = targetId;
 	});
 	// 注册列表切换完毕的样式刷新
 	$('#taskList').on('shown.bs.tab', 'a[data-toggle="tab"]', function(e)
 	{
-		refreshListShadow(curTaskList);
+		refreshListShadow(curUserList);
 	});
 	// 注册数据集切换的Ajax事件
 	$('#taskListSet').on('show.bs.tab', 'a[data-toggle="pill"]', function(e)
@@ -109,7 +109,7 @@ $(document).ready(function()
 		var targetSet = $target.data('set');
 
 		// 刷新页面
-		refreshListContent(curTaskList, targetSet);
+		refreshListContent(curUserList, targetSet);
 
 		// 更新状态
 		curDataSet   = $target.data('set');
@@ -186,7 +186,7 @@ $(document).ready(function()
     });
     // 注册列表顺位调整中的事件
    	$('#taskList').on('sortstop', function(event, ui) {
-   		refreshListShadow(curTaskList);
+   		refreshListShadow(curUserList);
    	})
 
     /* 列表设置
@@ -225,7 +225,7 @@ $(document).ready(function()
 		else
 		{
 			$(e.target).removeClass('fa-spin');
-			if($(e.relatedTarget).attr('href') !== '#list_' + curTaskList )
+			if($(e.relatedTarget).attr('href') !== '#list_' + curUserList )
 			{
 				$(e.target).hide(200);
 			}
@@ -235,7 +235,7 @@ $(document).ready(function()
     $(document).on('click', 'i.fa.fa-cog', function(e)
     {
     	$(e.target).hide(200);
-    	fillListSettingForm(curTaskList);		// Ajax 填充表单
+    	fillListSettingForm(curUserList);		// Ajax 填充表单
     });
     // 初始化列表设置弹框内容
     $('.radio-normal').iCheck({
@@ -253,7 +253,7 @@ $(document).ready(function()
 		$btn.button('loading');
 
 		// 提交信息
-		submitTaskListSetting(message, curTaskList, curDataSet, function()
+		submitTaskListSetting(message, curUserList, curDataSet, function()
 		{
 			$btn.button('reset');
 		});
@@ -288,7 +288,7 @@ $(document).ready(function()
 
 		$btn.button('loading');
 
-		$.post('list/delete/' + curTaskList, '', function(data)
+		$.post('list/delete/' + curUserList, '', function(data)
 	    {
 	    	if(!data.state)
 	    	{
@@ -296,7 +296,7 @@ $(document).ready(function()
 	    	}
 	    	else
 	    	{
-	    		$('a[href="#list_' + curTaskList + '"]').parent('li').remove();
+	    		$('a[href="#list_' + curUserList + '"]').parent('li').remove();
 	    		$('#tasklist a:first').tab('show');
 	    	}
 
@@ -328,13 +328,13 @@ $(document).ready(function()
 	});
 });
 
-function refreshListShadow(curTaskList)
+function refreshListShadow(curUserList)
 {
 	var increment = true;
 	var $preTarget = null;
 	$('#taskList li').each(function(index, element) {
 		$target = $(element).find('a');
-		if($target.data('id') == curTaskList)
+		if($target.data('id') == curUserList)
 		{
 			increment = false;
 		}
@@ -343,7 +343,7 @@ function refreshListShadow(curTaskList)
 		$target.css('border-top', (increment ? '1px solid #ddd' : '1px solid transparent'));
 		$target.css('border-bottom', (increment ? '1px solid transparent' : '1px solid #ddd'));
 
-		if($target.data('id') == curTaskList)
+		if($target.data('id') == curUserList)
 		{
 			$target.css('border-top', '1px solid #ddd');
 		}
@@ -401,7 +401,7 @@ function submitListOrder(userLists)
     }, 'json');
 }
 
-function fillListSettingForm(curTaskList)
+function fillListSettingForm(curUserList)
 {
 	var $el = $(document.createElement('div'));
 	
@@ -409,7 +409,7 @@ function fillListSettingForm(curTaskList)
 	$el.html('<i class="fa fa-spinner fa-spin fa-3x"></i>');
 
 	$('body').append($el);
-	$.get('list/getListSetting/' + curTaskList, '', function(data)
+	$.get('list/getListSetting/' + curUserList, '', function(data)
     {
     	if(!data.state)
     	{
@@ -421,7 +421,7 @@ function fillListSettingForm(curTaskList)
     		$('#' + data.sort_by).iCheck('check');
     		$('#color').val(data.color);
     		changeColorTo(data.color);
-    		$('#id').val(curTaskList);
+    		$('#id').val(curUserList);
     		$('#icon').iconpicker('setIcon', data.icon);
     		$('#shareCode code').text(data.shareCode);
     		if(data.shareable)
@@ -439,20 +439,20 @@ function fillListSettingForm(curTaskList)
     }, 'json');
 }
 
-function submitTaskListSetting(message, curTaskList, curDataSet, callback)
+function submitTaskListSetting(message, curUserList, curDataSet, callback)
 {
 	$.post('list/updateListSetting', message, function(data)
 	{
 		if(data.state)
 		{
 			$('#taskListSetting_modal').modal('hide');
-			refreshListContent(curTaskList, curDataSet);
-			$('a[href="#list_' + curTaskList + '"]').html(
+			refreshListContent(curUserList, curDataSet);
+			$('a[href="#list_' + curUserList + '"]').html(
 				'<i class="fa ' + data.icon + ' fa-lg fa-fw align-left"></i>' +
 				data.name + 
 				'<i class="fa fa-cog fa-lg-repair pull-right" data-toggle="modal" data-target="#taskListSetting_modal" style="display: none;"></i>'
 			);
-			$('a[href="#list_' + curTaskList + '"]').parent('li').removeClass().addClass("active task-list-" + data.color);
+			$('a[href="#list_' + curUserList + '"]').parent('li').removeClass().addClass("active task-list-" + data.color);
 			callback();
 		}
 		else
