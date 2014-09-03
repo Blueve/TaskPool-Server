@@ -334,6 +334,16 @@ class User extends Eloquent implements UserInterface
 		}
 	}
 
+	/**
+	 * 对用户列表进行重新排列
+	 *
+	 * 依据Ajax的输入数据，输入数据是一个以逗号进行分割的字符串，
+	 * 在校验该字符串中所包含的用户列表合法过后，就可以按照字符串
+	 * 的顺序对用户列表的顺位进行更新
+	 * 
+	 * @param  string $userLists 逗号分割的用户列表
+	 * @return void
+	 */
 	public function reorderUserList($userLists)
 	{
 		if(Auth::check())

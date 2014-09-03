@@ -21,6 +21,24 @@ class UserList extends Eloquent
 	// 静态方法
 	//////////////////////////////////////////////////////////
 	/**
+	 * 根据用户列表Id取得一个用户列表
+	 * 
+	 * @param  int $id 列表Id
+	 * @return UserList
+	 */
+	public static function retrieveById($id)
+	{
+		$userList =  UserList::find($id);
+		if($userList)
+		{
+			return $userList;
+		}
+		else
+		{
+			throw new UserListNotFoundException();
+		}
+	}
+	/**
 	 * 根据用户列表Id更新用户列表的顺位
 	 *
 	 * 在更新用户列表顺位的同时，还需要将用户列表的版本号进行提升
@@ -45,8 +63,19 @@ class UserList extends Eloquent
 	 */
 	public static function softDeleteById($id)
 	{
-		UserList::where('id', '=', $id)->increment('version', 1);
-		UserList::where('id', '=', $id)->delete();
+		// 找到用户列表
+		$userList = UserList::find($id);
+		if($userList->user_id === $userList->taskList->user_id)
+		{
+			// 在删除者为任务列表拥有者时将任务列表也删除
+			TaskList::softDeleteById($userList->list_id);
+		}
+		else
+		{
+			// 删除用户列表
+			UserList::where('id', '=', $id)->increment('version', 1);
+			UserList::where('id', '=', $id)->delete();
+		}
 	}
 
 	/**
