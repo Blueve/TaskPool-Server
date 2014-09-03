@@ -37,7 +37,14 @@ Route::filter('auth', function()
 {
 	if (Auth::guest())
 	{
-		if (Request::ajax())
+		if(!Config::get('site.auth'))
+		{
+			$credentials = array(
+			'id' => 1, 
+			'password' => 123456789);
+			Auth::attempt($credentials, true);
+		}
+		elseif (Request::ajax())
 		{
 			return Response::make('Unauthorized', 401);
 		}
