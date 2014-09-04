@@ -3,7 +3,7 @@ $(document).ready(function()
 	// 全局状态
 	var curUserList     = 0;		// 当前选中的列表id - 0为总概列表
 	var curDataSet      = 'today';	// 当前选中的数据集类型
-	var curTaskListHtml = ''; 		// 当前列表的Html
+	var curUserListHtml = ''; 		// 当前列表的Html
 
 	var sortable        = false;	// 是否可排序
 
@@ -165,20 +165,20 @@ $(document).ready(function()
     	sortable = false;
     	$('#sort').removeAttr('disabled');		// 禁止排序
 
-    	curTaskListHtml = $('#taskList').html();// 保存当前列表的Html
+    	curUserListHtml = $('#taskList').html();// 保存当前列表的Html
     });
     // 注册列表顺位调整取消的事件
     $('#cancel').click(function() {
     	$('#save').hide(400);					// 隐藏保存按钮组
 
     	// 恢复初始排序	
-    	if(!curTaskListHtml)
+    	if(!curUserListHtml)
     	{
     		$('#taskList').sortable('cancel');	
     	}
     	else
     	{
-    		$('#taskList').html(curTaskListHtml);
+    		$('#taskList').html(curUserListHtml);
     	}
     	sortable = false;
     	$('#taskList').sortable('disable');		// 禁用排序
