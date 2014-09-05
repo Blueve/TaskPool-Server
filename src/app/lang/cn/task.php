@@ -28,4 +28,6 @@ return array(
 	"shareable"			=> "共享此列表",
 
 	"share_code"        => "共享码",
+
+	"create_task"       => "快捷创建任务",
 );
