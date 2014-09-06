@@ -298,11 +298,12 @@ $(document).ready(function()
 	    	{
 	    		$('a[href="#list_' + curUserList + '"]').parent('li').remove();
 	    		$('#tasklist a:first').tab('show');
+	    		curUserList = 0;
 	    	}
 
 	    	$('#taskListSetting_modal').modal('hide');
 	    	$btn.button('reset');
-	    	//TODO:refreshListShadow();
+	    	refreshListShadow(curUserList);
 	    }, 'json');	
 	});
 	// 颜色选择器
@@ -372,6 +373,7 @@ function submitNewList(message, callback)
 		}
 		else
 		{
+			callback();
 			alert('error');
 		}
 	}, 'json');
