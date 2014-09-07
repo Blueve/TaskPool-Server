@@ -3,7 +3,7 @@
 return array(
 
 	"list_name"         => "列表名",
-	"list_option"       =>"列表设置",
+	"list_option"       => "列表设置",
 	
 	"today"             => "今日",
 	"this_week"         => "本周",
