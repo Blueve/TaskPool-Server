@@ -287,24 +287,9 @@ $(document).ready(function()
 		var $btn = $('#TaskListSetting_modalDeleteConfirm');
 
 		$btn.button('loading');
-
-		$.post('list/delete/' + curUserList, '', function(data)
-	    {
-	    	if(!data.state)
-	    	{
-	    		alert('error');
-	    	}
-	    	else
-	    	{
-	    		$('a[href="#list_' + curUserList + '"]').parent('li').remove();
-	    		$('#tasklist a:first').tab('show');
-	    		curUserList = 0;
-	    	}
-
-	    	$('#taskListSetting_modal').modal('hide');
-	    	$btn.button('reset');
-	    	refreshListShadow(curUserList);
-	    }, 'json');	
+		deleteList(curUserList, function(){
+			$btn.button('reset');
+		});
 	});
 	// 颜色选择器
 	$('.tile i').hide();
@@ -475,4 +460,24 @@ function changeColorTo(color)
 	$nowSelected.addClass('selected');
 	$nowSelected.find('i').show(200);
 	$('#color').val(color);
+}
+
+function deleteList(listId, callback)
+{
+	$.post('list/delete/' + curUserList, '', function(data)
+	{
+		if(!data.state)
+		{
+			alert('error');
+		}
+		else
+		{
+			$('a[href="#list_' + curUserList + '"]').parent('li').remove();
+			$('#tasklist a:first').tab('show');
+			curUserList = 0;
+		}
+		$('#taskListSetting_modal').modal('hide');
+		refreshListShadow(curUserList);
+		callback();
+	}, 'json');
 }
