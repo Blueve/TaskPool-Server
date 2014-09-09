@@ -1,16 +1,16 @@
+// 全局状态
+var curUserList     = 0;		// 当前选中的列表id - 0为总概列表
+var curDataSet      = 'today';	// 当前选中的数据集类型
+var curUserListHtml = ''; 		// 当前列表的Html
+
 $(document).ready(function()
 {
-	// 全局状态
-	var curUserList     = 0;		// 当前选中的列表id - 0为总概列表
-	var curDataSet      = 'today';	// 当前选中的数据集类型
-	var curUserListHtml = ''; 		// 当前列表的Html
-
 	var sortable        = false;	// 是否可排序
 
 	var curNewListType  = 'CREATE'; // 当前创建列表的选项
 
 	// 初始化列表阴影
-	refreshListShadow(curUserList);
+	refreshListShadow();
 
 	/* 添加新的列表
 	 * ----------------------------------------
@@ -68,7 +68,7 @@ $(document).ready(function()
 		// 提交信息
 		submitNewList(message, function(){
 			$btn.button('reset');
-			refreshListShadow(curUserList);
+			refreshListShadow();
 		});
 
 		// 禁止响应表单的跳转
@@ -100,7 +100,7 @@ $(document).ready(function()
 	// 注册列表切换完毕的样式刷新
 	$('#taskList').on('shown.bs.tab', 'a[data-toggle="tab"]', function(e)
 	{
-		refreshListShadow(curUserList);
+		refreshListShadow();
 	});
 	// 注册数据集切换的Ajax事件
 	$('#taskListSet').on('show.bs.tab', 'a[data-toggle="pill"]', function(e)
@@ -186,7 +186,7 @@ $(document).ready(function()
     });
     // 注册列表顺位调整中的事件
    	$('#taskList').on('sortstop', function(event, ui) {
-   		refreshListShadow(curUserList);
+   		refreshListShadow();
    	})
 
     /* 列表设置
@@ -253,7 +253,7 @@ $(document).ready(function()
 		$btn.button('loading');
 
 		// 提交信息
-		submitTaskListSetting(message, curUserList, curDataSet, function()
+		submitTaskListSetting(message, function()
 		{
 			$btn.button('reset');
 		});
@@ -298,7 +298,7 @@ $(document).ready(function()
 		changeColorTo($(this).data('color'));
 	});
 	// 共享开关初始化
-	$('#share').bootstrapSwitch({
+	$('#shareable').bootstrapSwitch({
 		'onText':'<i class="fa fa-check"></i>',
 		'offText': '<i class="fa fa-times">',
 		'onSwitchChange': function(event, state) {
@@ -314,7 +314,7 @@ $(document).ready(function()
 	});
 });
 
-function refreshListShadow(curUserList)
+function refreshListShadow()
 {
 	var increment = true;
 	var $preTarget = null;
@@ -388,7 +388,7 @@ function submitListOrder(userLists)
     }, 'json');
 }
 
-function fillListSettingForm(curUserList)
+function fillListSettingForm()
 {
 	var $el = $(document.createElement('div'));
 	
@@ -413,12 +413,12 @@ function fillListSettingForm(curUserList)
     		$('#shareCode code').text(data.shareCode);
     		if(data.shareable)
     		{
-    			$('#share').bootstrapSwitch('state', true, true);
+    			$('#shareable').bootstrapSwitch('state', true, true);
     			$('#shareCode').show(400);
     		}
     		else
     		{
-    			$('#share').bootstrapSwitch('state', false, true);
+    			$('#shareable').bootstrapSwitch('state', false, true);
     			$('#shareCode').hide(400);
     		}
     		$el.remove();
@@ -426,7 +426,7 @@ function fillListSettingForm(curUserList)
     }, 'json');
 }
 
-function submitTaskListSetting(message, curUserList, curDataSet, callback)
+function submitTaskListSetting(message, callback)
 {
 	$.post('list/updateListSetting', message, function(data)
 	{
@@ -440,12 +440,12 @@ function submitTaskListSetting(message, curUserList, curDataSet, callback)
 				'<i class="fa fa-cog fa-lg-repair pull-right" data-toggle="modal" data-target="#taskListSetting_modal" style="display: none;"></i>'
 			);
 			$('a[href="#list_' + curUserList + '"]').parent('li').removeClass().addClass("active task-list-" + data.color);
-			callback();
 		}
 		else
 		{
 			alert('error');
 		}
+		callback();
 	}, 'json');
 }
 
@@ -477,7 +477,7 @@ function deleteList(listId, callback)
 			curUserList = 0;
 		}
 		$('#taskListSetting_modal').modal('hide');
-		refreshListShadow(curUserList);
+		refreshListShadow();
 		callback();
 	}, 'json');
 }
