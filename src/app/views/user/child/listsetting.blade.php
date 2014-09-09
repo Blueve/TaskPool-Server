@@ -62,7 +62,7 @@
                 <label for="share" class="control-label">{{{ Lang::get('task.shareable') }}}</label>
               </div>
               <div class="form-group form-group-sm">
-                  <input type="checkbox" name="share" id="share" />
+                  <input type="checkbox" name="shareable" id="shareable" />
                   <span id="shareCode" style="display: none;">
                     {{{ Lang::get('task.share_code') }}}<code></code>
                   </span>
