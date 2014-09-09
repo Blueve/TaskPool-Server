@@ -112,10 +112,12 @@ class ListController extends BaseController
 		try
 		{
 			// 更新列表设置
-			TaskList::updateByForm(new ListSettingForm(Input::all()));
+			$listSettingForm = new ListSettingForm(Input::all());
+			TaskList::updateByForm($listSettingForm);
 			return Response::json(new ListSetting(true, 
+												  
 												  $listSettingForm->name,
-												  $listSettingForm->sort_by,
+												  $listSettingForm->sortBy,
 												  $listSettingForm->color,
 												  $listSettingForm->icon,
 												  $listSettingForm->shareable,

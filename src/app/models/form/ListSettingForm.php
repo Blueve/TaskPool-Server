@@ -15,13 +15,13 @@ class ListSettingForm extends BaseFormModel
 		$rule = array(
 			'id'     => 'required',
 			'name'   => 'required',
-			'sortBy' => 'required|in: important, urgent, date, custom',
-			'color'  => 'required|in: red, orange, yellow, green, blue, indigo, purple, black, darkgray, gray',
-			'icon'   => 'required|in: '.$icons,
-			'shareable'  => ''
+			'sortBy' => 'required|in:important,urgent,date,custom',
+			'color'  => 'required|in:red,orange,yellow,green,blue,indigo,purple,black,darkgray,gray',
+			'icon'   => 'required', /**@todo 需要更严格的验证in: {icon set} */
+			//'shareable'  => ''
 			);
 
 		$this->init($input, $rule);
-		$this->share = isset($this->share) ? true : false;
+		$this->shareable = isset($this->shareable) ? true : false;
 	}
 }
