@@ -474,7 +474,7 @@ function deleteList(callback)
 		{
 			$('a[href="#list_' + curUserList + '"]').parent('li').remove();
 			$('#userList a:first').tab('show');
-			curUserList = 0;
+			curUserList = $('#userList a:first').data('id');
 		}
 		$('#taskListSetting_modal').modal('hide');
 		refreshListShadow();
