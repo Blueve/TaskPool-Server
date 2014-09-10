@@ -88,7 +88,7 @@
       {{-- 列表内容 --}}
       <div class="col-md-9 column">
         <div class="tab-content" id="tasklistContent">
-          @foreach($taskLists as $item)
+          @foreach($userLists as $item)
           <div class="tab-pane fade" id="list_{{{ $item->id }}}">
 
           </div>

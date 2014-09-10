@@ -12,7 +12,7 @@ class UserController extends BaseController
 	public function home()
 	{
 		// 读取登录用户的全部用户列表
-		$this->data['taskLists'] = Auth::user()->allLists();
+		$this->data['userLists'] = Auth::user()->allLists();
 
 		$this->MergeData(Lang::get('base.home'));
 		return View::make('user.home', $this->data);
