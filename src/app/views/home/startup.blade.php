@@ -31,7 +31,7 @@
       </div>
     </form>
     {{-- 注册表单 --}}
-    <form role="form" method="post" id="signup_form" action="{{{ URL::action('AccountController@signup_post') }}}">
+    <form role="form" method="post" id="signup_form" action="{{{ URL::action('AccountController@signup_post') }}}" style="display:none;">
       <div class="form-group">
         <label for="email">{{{ Lang::get('site.email') }}}</label>
         <input type="email" class="form-control" id="email" name="email"
