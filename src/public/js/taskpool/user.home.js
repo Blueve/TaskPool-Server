@@ -58,7 +58,7 @@ $(document).ready(function()
 		$('#nameOrCode').focus().select(); // 切换焦点
 	});
 	// 注册提交新列表的Ajax事件
-	$('#taskList').on('submit', '#newList_form', function()
+	$('#userList').on('submit', '#newList_form', function()
 	{
 		var message = $("#newList_form").serialize() + '&type=' + curNewListType;
 		var $btn = $('#newList_submit');
@@ -83,7 +83,7 @@ $(document).ready(function()
 	 * ----------------------------------------
 	 */
 	// 注册列表切换的Ajax事件
-	$('#taskList').on('show.bs.tab', 'a[data-toggle="tab"]', function(e)
+	$('#userList').on('show.bs.tab', 'a[data-toggle="tab"]', function(e)
 	{
 		var $target = $(e.target);
 		var targetId = $target.data('id');
@@ -98,7 +98,7 @@ $(document).ready(function()
 		curUserList = targetId;
 	});
 	// 注册列表切换完毕的样式刷新
-	$('#taskList').on('shown.bs.tab', 'a[data-toggle="tab"]', function(e)
+	$('#userList').on('shown.bs.tab', 'a[data-toggle="tab"]', function(e)
 	{
 		refreshListShadow();
 	});
@@ -125,13 +125,13 @@ $(document).ready(function()
 	 * ----------------------------------------
 	 */
 	// 开启列表顺序可调
-    $('#taskList').sortable({
+    $('#userList').sortable({
 	    items: 'li:not(#createList_pop)',
 	    cancel: '#createList_pop',
 	    axis: 'y',
 	    stop: function(event, ui) {}
 	});
-    $('#taskList').sortable('disable');			// 默认不可调
+    $('#userList').sortable('disable');			// 默认不可调
     // 注册列表顺序调整按钮事件
     $('[data-toggle=tooltip]').tooltip();
     $('#save').hide();							// 默认隐藏保存和取消
@@ -143,16 +143,16 @@ $(document).ready(function()
     	//允许列表拖动
     	sortable = true;
     	$('.fa.fa-cog').hide();
-		$('#taskList').sortable('enable');		// 开启调序
+		$('#userList').sortable('enable');		// 开启调序
     });
     // 注册列表顺序调整保存的Ajax事件
     $('#ok').click(function() {
     	$('#save').hide(400);					// 隐藏保存菜单组
-    	$('#taskList').sortable('disable');		// 禁止列表拖动
+    	$('#userList').sortable('disable');		// 禁止列表拖动
 
     	var taskLists = new Array();
     	var i = 0;
-    	$('#taskList a').each(function()		// 获取新顺位
+    	$('#userList a').each(function()		// 获取新顺位
     	{
     		if($(this).data('id'))
     		{
@@ -165,7 +165,7 @@ $(document).ready(function()
     	sortable = false;
     	$('#sort').removeAttr('disabled');		// 禁止排序
 
-    	curUserListHtml = $('#taskList').html();// 保存当前列表的Html
+    	curUserListHtml = $('#userList').html();// 保存当前列表的Html
     });
     // 注册列表顺位调整取消的事件
     $('#cancel').click(function() {
@@ -174,18 +174,18 @@ $(document).ready(function()
     	// 恢复初始排序	
     	if(!curUserListHtml)
     	{
-    		$('#taskList').sortable('cancel');	
+    		$('#userList').sortable('cancel');	
     	}
     	else
     	{
-    		$('#taskList').html(curUserListHtml);
+    		$('#userList').html(curUserListHtml);
     	}
     	sortable = false;
-    	$('#taskList').sortable('disable');		// 禁用排序
+    	$('#userList').sortable('disable');		// 禁用排序
     	$('#sort').removeAttr('disabled');		// 允许使用调序按钮
     });
     // 注册列表顺位调整中的事件
-   	$('#taskList').on('sortstop', function(event, ui) {
+   	$('#userList').on('sortstop', function(event, ui) {
    		refreshListShadow();
    	})
 
@@ -287,7 +287,7 @@ $(document).ready(function()
 		var $btn = $('#TaskListSetting_modalDeleteConfirm');
 
 		$btn.button('loading');
-		deleteList(curUserList, function(){
+		deleteList(function(){
 			$btn.button('reset');
 		});
 	});
@@ -318,7 +318,7 @@ function refreshListShadow()
 {
 	var increment = true;
 	var $preTarget = null;
-	$('#taskList li').each(function(index, element) {
+	$('#userList li').each(function(index, element) {
 		$target = $(element).find('a');
 		if($target.data('id') == curUserList)
 		{
@@ -382,7 +382,7 @@ function submitListOrder(userLists)
     {
     	if(!data.state)
     	{
-    		$('#tasklist').sortable('cancel');
+    		$('#userlist').sortable('cancel');
     		alert('error');
     	}
     }, 'json');
@@ -462,7 +462,7 @@ function changeColorTo(color)
 	$('#color').val(color);
 }
 
-function deleteList(listId, callback)
+function deleteList(callback)
 {
 	$.post('list/delete/' + curUserList, '', function(data)
 	{
@@ -473,7 +473,7 @@ function deleteList(listId, callback)
 		else
 		{
 			$('a[href="#list_' + curUserList + '"]').parent('li').remove();
-			$('#tasklist a:first').tab('show');
+			$('#userList a:first').tab('show');
 			curUserList = 0;
 		}
 		$('#taskListSetting_modal').modal('hide');

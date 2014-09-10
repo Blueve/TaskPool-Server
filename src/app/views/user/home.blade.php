@@ -62,9 +62,9 @@
     <div class="row">
 
       <div class="col-md-2 column">
-        <ul class="nav nav-tabs nav-stacked" id="taskList" role="tablist">
+        <ul class="nav nav-tabs nav-stacked" id="userList" role="tablist">
           {{-- 列表标题 --}}
-          @foreach($taskLists as $item)
+          @foreach($userLists as $item)
           <li class="task-list-{{{ $item->taskList->color }}}">
             <a href="#list_{{{ $item->id }}}" role="tab" data-toggle="tab" data-id="{{{ $item->id }}}">
               <i class="fa {{{ $item->taskList->icon }}} fa-lg fa-fw align-left"></i>
@@ -74,7 +74,7 @@
           </li>
           @endforeach
 
-          <li {{-- count($taskLists) == 0 ? 'class="active task-list-darkgray"' : 'class="task-list-darkgray"' --}} id="createList_pop" >
+          <li {{-- count($userLists) == 0 ? 'class="active task-list-darkgray"' : 'class="task-list-darkgray"' --}} id="createList_pop" >
             <a data-toggle="popover" class="popover-dismiss" title="{{{ Lang::get('task.create_list') }}}">
               <i class="fa fa-plus fa-lg"></i></span>
             </a>
