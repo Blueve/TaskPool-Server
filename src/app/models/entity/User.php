@@ -105,7 +105,7 @@ class User extends Eloquent implements UserInterface
 	public static function newUser(SignupForm $signupForm)
 	{
 		// 校验表单
-		if($signupForm->fails()) 
+		if(!$signupForm->isValid()) 
 		{
 			throw new SignupFailedException();
 		}
