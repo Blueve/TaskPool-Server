@@ -10,7 +10,7 @@
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
         <li {{{ $pageTag === 'home' ? 'class=active' : '' }}}>
-          <a href="{{{ URL::action('HomeController@startup') }}}">{{{ Lang::get('site.home') }}}</a>
+          <a href="{{{ URL::action('HomeController@getIndex') }}}">{{{ Lang::get('site.home') }}}</a>
         </li>
       </ul>
       @if(Auth::check())

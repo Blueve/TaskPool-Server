@@ -11,11 +11,12 @@
 |
 */
 
+Route::controller('/', 'HomeController');
+
 
 // 以下路由只允许游客访问
 Route::group(array('before' => 'guest'), function()
 {
-	Route::get('/', 'HomeController@startup');
 
 	Route::post('signin', 'AccountController@signin_post');
 	Route::post('signup', 'AccountController@signup_post');

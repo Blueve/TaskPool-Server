@@ -2,6 +2,12 @@
 
 class HomeController extends BaseController
 {
+	public function __construct()
+	{
+		parent::__construct();
+		$this->beforeFilter('guest', ['only' => ['getIndex']]);
+	}
+
 	/**
 	 * 首页
 	 *
@@ -9,11 +15,11 @@ class HomeController extends BaseController
 	 * 
 	 * @return View 页面
 	 */
-	public function startup()
+	public function getIndex()
 	{
 		$this->MergeData(Lang::get('base.startup'));
 		$this->SetPageTag('home');
-		return View::make('home.startup', $this->data);
+		return View::make('home.index', $this->data);
 	}
 
 }
