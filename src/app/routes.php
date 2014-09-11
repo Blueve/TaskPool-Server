@@ -11,7 +11,7 @@
 |
 */
 Route::controller('account', 'AccountController');
-Route::controller('',        'HomeController');
+
 
 
 // 以下路由只允许通过邮箱验证的登陆的用户访问
@@ -35,3 +35,5 @@ Route::group(array('before' => 'auth|confirmed'), function()
 	// JSON
 	Route::get('list/getListSetting/{listId}', 'ListController@getListSetting');
 });
+
+Route::controller('', 'HomeController');

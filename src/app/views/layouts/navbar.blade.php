@@ -21,7 +21,7 @@
             <li><a href="{{{ URL::action('UserController@home') }}}">{{{ Lang::get('site.my') }}}</a></li>
             <li><a href="{{{ URL::action('UserController@setting_post') }}}">{{{ Lang::get('site.setting')}}}</a></li>
             <li class="divider"></li>
-           <li><a href="{{{ URL::action('AccountController@signout') }}}">{{{ Lang::get('site.signout') }}}</a></li>
+           <li><a href="{{{ URL::action('AccountController@getSignout') }}}">{{{ Lang::get('site.signout') }}}</a></li>
           </ul>
         </li>
       </ul>
