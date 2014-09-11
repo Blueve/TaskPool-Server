@@ -74,8 +74,8 @@
           </li>
           @endforeach
 
-          <li {{-- count($userLists) == 0 ? 'class="active task-list-darkgray"' : 'class="task-list-darkgray"' --}} id="createList_pop" >
-            <a data-toggle="popover" class="popover-dismiss" title="{{{ Lang::get('task.create_list') }}}">
+          <li {{-- count($userLists) == 0 ? 'class="active task-list-darkgray"' : 'class="task-list-darkgray"' --}}  >
+            <a data-toggle="popover" class="popover-dismiss" title="{{{ Lang::get('task.create_list') }}}" id="createList_pop">
               <i class="fa fa-plus fa-lg"></i></span>
             </a>
           </li>
