@@ -15,7 +15,7 @@ class BaseController extends Controller
 			'title' 		=> self::UNDEFINED_ITEM,
 			'pageTag' 		=> self::UNDEFINED_ITEM,
 			'headerTitle' 	=> self::UNDEFINED_ITEM,
-			'headerSubtext' => self::UNDEFINED_ITEM
+			'headerSubtext' => self::UNDEFINED_ITEM,
 		 );
 	}
 
