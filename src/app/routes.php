@@ -10,37 +10,9 @@
 | and give it the Closure to execute when that URI is requested.
 |
 */
+Route::controller('account', 'AccountController');
+Route::controller('',        'HomeController');
 
-Route::controller('/', 'HomeController');
-
-
-// 以下路由只允许游客访问
-Route::group(array('before' => 'guest'), function()
-{
-
-	Route::post('signin', 'AccountController@signin_post');
-	Route::post('signup', 'AccountController@signup_post');
-});
-
-// 以下路由只允许登录的用户访问
-Route::group(array('before' => 'auth'), function()
-{
-	Route::get('signout', 'AccountController@signout');
-});
-
-// 以下路由只允许登录且未通过验证的用户访问
-Route::group(array('before' => 'auth|unconfirmed'), function()
-{
-	Route::get('unconfirmed', 'AccountController@unconfirm');
-});
-
-// 以下路由允许任何访客访问
-Route::get('findpassword/{userId?}/{checkcode?}', 'AccountController@findPassword');
-Route::post('findpassword', 'AccountController@findPassword_post');
-Route::post('setnewpassword', 'AccountController@setNewPassword_post');
-
-Route::get('confirm/{userId}/{checkCode}', 'AccountController@confirm');
-Route::get('reconfirm/{userId?}/{checkCode?}', 'AccountController@reconfirm');
 
 // 以下路由只允许通过邮箱验证的登陆的用户访问
 Route::group(array('before' => 'auth|confirmed'), function()

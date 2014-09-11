@@ -2,12 +2,20 @@
 
 class AccountController extends BaseController
 {
+	public function __construct()
+	{
+		parent::__construct();
+		$this->beforeFilter('guest', ['only' => ['postSignin', 'postSignup']]);
+		$this->beforeFilter('auth', ['only' => ['getSignout']]);
+		$this->beforeFilter('auth|unconfirmed', ['only' => ['getUnconfirmed']]);
+	}
+
 	/**
 	 * 登录表单处理
 	 * 
 	 * @return View 提示页面
 	 */
-	public function signin_post()
+	public function postSignin()
 	{
 		try
 		{
@@ -30,7 +38,7 @@ class AccountController extends BaseController
 	 * 
 	 * @return View 提示页面
 	 */
-	public function signup_post()
+	public function postSignup()
 	{
 		try
 		{
@@ -51,7 +59,7 @@ class AccountController extends BaseController
 	 * 
 	 * @return View 提示页面
 	 */
-	public function signout()
+	public function getSignout()
 	{
 		Auth::logout();
 		return $this->NoticeResponse('base.signout', Notice::success, 'signout_success');
@@ -64,7 +72,7 @@ class AccountController extends BaseController
 	 * @param  string $checkCode 验证码
 	 * @return View              提示页面
 	 */
-	public function confirm($userId, $checkCode)
+	public function getConfirm($userId, $checkCode)
 	{
 		try
 		{
@@ -90,7 +98,7 @@ class AccountController extends BaseController
 	 * @param  string $checkCode 验证码
 	 * @return View              提示页面
 	 */
-	public function reconfirm($userId = null, $checkCode = null)
+	public function getReconfirm($userId = null, $checkCode = null)
 	{
 		try
 		{
@@ -114,7 +122,7 @@ class AccountController extends BaseController
 	 * @param  string $checkCode 验证码
 	 * @return View              提示页面
 	 */
-	public function unconfirmed($userId, $checkCode)
+	public function getUnconfirmed($userId, $checkCode)
 	{
 		return $this->NoticeResponse('base.unconfirmed', Notice::warning, 'unconfirmed', 'reconfirm');
 	}
@@ -129,7 +137,7 @@ class AccountController extends BaseController
 	 * @param  string $checkCode 验证码
 	 * @return View              普通视图/提示页面
 	 */
-	public function findPassword($userId = null, $checkCode = null)
+	public function getFindPassword($userId = null, $checkCode = null)
 	{
 		// 无参数时显示提交找回密码表单页面
 		if($userId === null && $checkCode === null)
@@ -165,7 +173,7 @@ class AccountController extends BaseController
 	 * 
 	 * @return View 提示页面
 	 */
-	public function findPassword_post()
+	public function postFindPassword()
 	{
 		try
 		{
@@ -189,7 +197,7 @@ class AccountController extends BaseController
 	 *
 	 * @return View 提示页面
 	 */
-	public function setNewPassword_post()
+	public function postSetNewPassword()
 	{
 		try
 		{
