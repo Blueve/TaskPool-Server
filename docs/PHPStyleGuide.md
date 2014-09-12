@@ -343,29 +343,6 @@
     }
     ```
 
-  - EntityModel中的枚举类型(与数据库ENUM对应)使用常量表示时，全部字母小写，使用`_`连接
-
-    ```php
-    class MyClass
-    {
-        const important = 'important';
-        const urgent    = 'urgent';
-        const date      = 'date';
-        const custom    = 'custom';
-    }
-    ```
-
-  - 接收POST请求的方法，在前一种命名的基础上增加`post`前缀
-    ```php
-    class MyClass
-    {
-        public function postFindPassword()
-        {
-            // ...stuff...
-        }
-    }
-    ```
-
   - 静态方法的`static`放置在方法访问权限标识符`public` `private` `protocted`的后面
     ```php
     class MyClass
@@ -374,5 +351,40 @@
         {
             // ...stuff...
         }
+    }
+    ```
+
+## MVC
+  
+  - 使用Restful的风格命名Controller
+    ```php
+    class MyController
+    {
+        public function getIndex()
+        {
+            // ...stuff...
+        }
+
+        public function postFindPassword()
+        {
+            // ...stuff...
+        }
+        
+        public function putNewItem()
+        {
+            // ...stuff...
+        }
+    }
+    ```
+
+ - EntityModel中的枚举类型(与数据库ENUM对应)使用常量表示时，全部字母小写，使用`_`连接
+
+    ```php
+    class MyEntityModel
+    {
+        const important = 'important';
+        const urgent    = 'urgent';
+        const date      = 'date';
+        const custom    = 'custom';
     }
     ```
