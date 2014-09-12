@@ -355,11 +355,11 @@
     }
     ```
 
-  - 接收POST请求的方法，在前一种命名的基础上增加`_post`后缀
+  - 接收POST请求的方法，在前一种命名的基础上增加`post`前缀
     ```php
     class MyClass
     {
-        public function findPassword_post()
+        public function postFindPassword()
         {
             // ...stuff...
         }
