@@ -13,14 +13,11 @@
 Route::controller('account', 'AccountController');
 
 
-
 // 以下路由只允许通过邮箱验证的登陆的用户访问
 Route::group(array('before' => 'auth|confirmed'), function()
 {
-	Route::get('user', 'UserController@home');
+	Route::controller('user', 'UserController');
 
-	Route::get('user/setting', 'UserController@setting');
-	Route::post('user/setting', 'UserController@setting_post');
 
 	// JSON
 	Route::post('list/create', 'ListController@create_post');

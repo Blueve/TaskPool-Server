@@ -7,9 +7,9 @@ class UserController extends BaseController
 	 *
 	 * 用户登陆后显示的
 	 * 
-	 * @return [type] [description]
+	 * @return Response
 	 */
-	public function home()
+	public function getIndex()
 	{
 		// 读取登录用户的全部用户列表
 		$this->data['userLists'] = Auth::user()->allLists();
@@ -23,9 +23,9 @@ class UserController extends BaseController
 	 *
 	 * 提供修改密码服务
 	 * 
-	 * @return View 页面
+	 * @return Response
 	 */
-	public function setting()
+	public function getSetting()
 	{
 		$this->MergeData(Lang::get('base.setting_edit'));
 		return View::make('user.setting', $this->data);
@@ -34,9 +34,9 @@ class UserController extends BaseController
 	/**
 	 * 修改密码表单处理
 	 * 
-	 * @return View 提示页面
+	 * @return Response 提示页面
 	 */
-	public function setting_post()
+	public function postSetting()
 	{
 		try
 		{

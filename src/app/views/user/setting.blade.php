@@ -4,7 +4,7 @@
   <div class="col-md-4 col-md-offset-4 column">
     @include('layouts.pageheader')
     {{-- 编辑个人信息 --}}
-    <form role="form" method="post" id="setting_form" action="{{{ URL::action('UserController@setting_post') }}}">
+    <form role="form" method="post" id="setting_form" action="{{{ URL::action('UserController@postSetting') }}}">
       <div class="form-group">
          <label for="oldPassword">{{{ Lang::get('site.old_password') }}}</label><input type="password" class="form-control" id="oldPassword" name="oldPassword" />
       </div>
