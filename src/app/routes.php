@@ -17,20 +17,7 @@ Route::controller('account', 'AccountController');
 Route::group(array('before' => 'auth|confirmed'), function()
 {
 	Route::controller('user', 'UserController');
-
-
-	// JSON
-	Route::post('list/create', 'ListController@create_post');
-	// HTML
-	Route::post('list/content', 'ListController@content_post');
-	// JSON
-	Route::post('list/reorder', 'ListController@reorder_post');
-	// JSON
-	Route::post('list/updateListSetting', 'ListController@updateListSetting_post');
-	// JSON
-	Route::post('list/delete/{listId}', 'ListController@delete_post');
-	// JSON
-	Route::get('list/getListSetting/{listId}', 'ListController@getListSetting');
+	Route::controller('list', 'ListController');
 });
 
 Route::controller('', 'HomeController');

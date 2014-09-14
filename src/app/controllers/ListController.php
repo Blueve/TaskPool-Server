@@ -8,7 +8,7 @@ class ListController extends BaseController
 	 * 
 	 * @return Json 状态反馈&新列表基本信息
 	 */
-	public function create_post()
+	public function postCreate()
 	{
 		try
 		{
@@ -43,7 +43,7 @@ class ListController extends BaseController
 	 * @todo 尚未完成，目前仅为测试用
 	 * @return View 页面片段
 	 */
-	public function content_post()
+	public function postContent()
 	{
 		$response = array(
 			'state' => true, 
@@ -60,7 +60,7 @@ class ListController extends BaseController
 	 * 
 	 * @return Json 状态反馈
 	 */
-	public function reorder_post()
+	public function postReorder()
 	{
 		try
 		{
@@ -107,7 +107,7 @@ class ListController extends BaseController
 	 * 
 	 * @return Json 状态反馈
 	 */
-	public function updateListSetting_post()
+	public function postListSetting()
 	{
 		try
 		{
@@ -139,7 +139,7 @@ class ListController extends BaseController
 	 * @param  int $userListId 用户列表Id
 	 * @return Json            状态反馈
 	 */
-	public function delete_post($userListId)
+	public function postDelete($userListId)
 	{
 		UserList::softDeleteById($userListId);
 		return Response::json(new BaseAjaxModel(true));
