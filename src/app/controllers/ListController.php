@@ -83,7 +83,7 @@ class ListController extends BaseController
 	 * @param  int $listId 列表Id
 	 * @return Json        状态反馈
 	 */
-	public function getListSetting($userListId)
+	public function getSetting($userListId)
 	{
 		try
 		{
@@ -107,7 +107,7 @@ class ListController extends BaseController
 	 * 
 	 * @return Json 状态反馈
 	 */
-	public function postListSetting()
+	public function postSetting()
 	{
 		try
 		{

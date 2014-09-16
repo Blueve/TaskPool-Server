@@ -345,9 +345,9 @@ function submitNewList(message, callback)
 		{
 			var item = '<li class="task-list-darkgray">\
 				            <a href="#list_' + data.id + '" role="tab" data-toggle="tab" data-id="' + data.id + '">' +
-				            	'<i class="fa ' + data.icon + ' fa-lg-repair fa-fw align-left"></i>' +
+				            	'<i class="fa ' + data.icon + ' fa-lg fa-fw align-left"></i>' +
 				             	data.name + '\
-				             	<i class="fa fa-cog fa-lg pull-right" data-toggle="modal" data-target="#taskListSetting_modal" style="display: none"></i>\
+				             	<i class="fa fa-cog fa-lg-repair align-right" data-toggle="modal" data-target="#taskListSetting_modal" style="display: none"></i>\
 				            </a>\
 				         </li>';
 			$(item).insertBefore('#createList_pop');
@@ -396,7 +396,7 @@ function fillListSettingForm()
 	$el.html('<i class="fa fa-spinner fa-spin fa-3x"></i>');
 
 	$('body').append($el);
-	$.get('list/getListSetting/' + curUserList, '', function(data)
+	$.get('list/setting/' + curUserList, '', function(data)
     {
     	if(!data.state)
     	{
@@ -428,7 +428,7 @@ function fillListSettingForm()
 
 function submitTaskListSetting(message, callback)
 {
-	$.post('list/updateListSetting', message, function(data)
+	$.post('list/setting', message, function(data)
 	{
 		if(data.state)
 		{
