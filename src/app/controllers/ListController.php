@@ -6,7 +6,7 @@ class ListController extends BaseController
 	/**
 	 * 创建新列表表单处理
 	 * 
-	 * @return Json 状态反馈&新列表基本信息
+	 * @return Response Json状态反馈&新列表基本信息
 	 */
 	public function postCreate()
 	{
@@ -41,7 +41,7 @@ class ListController extends BaseController
 	 * 产生对应列表&数据集的列表内容
 	 *
 	 * @todo 尚未完成，目前仅为测试用
-	 * @return View 页面片段
+	 * @return Response 页面片段
 	 */
 	public function postContent()
 	{
@@ -58,7 +58,7 @@ class ListController extends BaseController
 	 * 用户应当只能对自己的列表顺位进行调整，如果输入的内容不
 	 * 合法，应该抛出错误的状态
 	 * 
-	 * @return Json 状态反馈
+	 * @return Response 状态反馈
 	 */
 	public function postReorder()
 	{
@@ -81,7 +81,7 @@ class ListController extends BaseController
 	 * 获取任务列表的设置详情
 	 * 
 	 * @param  int $listId 列表Id
-	 * @return Json        状态反馈
+	 * @return Response    状态反馈
 	 */
 	public function getSetting($userListId)
 	{
@@ -105,7 +105,7 @@ class ListController extends BaseController
 	/**
 	 * 处理列表设置表单
 	 * 
-	 * @return Json 状态反馈
+	 * @return Response Json状态反馈
 	 */
 	public function postSetting()
 	{
@@ -137,7 +137,7 @@ class ListController extends BaseController
 	 * 将任务列表以及所有对应的镜像链接的用户列表都删除
 	 * 
 	 * @param  int $userListId 用户列表Id
-	 * @return Json            状态反馈
+	 * @return Response        Json状态反馈
 	 */
 	public function postDelete($userListId)
 	{
