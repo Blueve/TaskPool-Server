@@ -67,3 +67,41 @@
 ## 变量
 
 ## 函数
+  
+  - 不要在非函数区块中定义函数
+
+    ```javascript
+    // bad
+    if(something)
+    {
+        function foo()
+        {
+            // ...stuff...
+        }
+    }
+
+    // good
+    if(something)
+    {
+        bar = function foo()
+        {
+            // ...stuff...
+        };
+    }
+    ```
+  
+  - 不要使用`arguments`作为函数的参数名
+
+    ```javascript
+    // bad
+    function foo(user, arguments)
+    {
+        // ...stuff...
+    }
+
+    // good
+    function foo(user, args)
+    {
+        // ...stuff...
+    }
+    ```
