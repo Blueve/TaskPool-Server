@@ -1,5 +1,9 @@
 @extends('layouts.base')
 
+@section('title')
+{{ Lang::get('base.startup.title')}} @parent
+@stop
+
 @section('content')
   <div class="col-md-4 col-md-offset-4 column">
     @include('layouts.pageheader')
