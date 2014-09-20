@@ -1,7 +1,7 @@
 @extends('layouts.base')
 
 @section('title')
-{{ Lang::get('base.startup.title')}} @parent
+{{ Lang::get('base.home.title')}} @parent
 @stop
 
 @section('content')
