@@ -1,5 +1,9 @@
 @extends('layouts.base')
 
+@section('title')
+{{ $title }} @parent
+@stop
+
 @section('content')
   
   <div class="col-md-6 col-md-offset-4 column">
