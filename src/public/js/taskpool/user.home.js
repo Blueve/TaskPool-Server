@@ -312,6 +312,23 @@ $(document).ready(function()
 			}
 		}
 	});
+
+	/* 创建任务
+	 * ----------------------------------------
+	 * 创建任务表单初始化
+	 * ----------------------------------------
+	 */
+	// 创建任务表单初始化
+	$('#newTaskAdvance_form').hide();
+	$('#createTaskMore_button').click(function(){
+		$('#newTask_form').hide(200);
+		$('#newTaskAdvance_form').show(200);
+	});
+	$('#createTaskLess_button').click(function(){
+		$('#newTaskAdvance_form').hide(200);
+		$('#newTask_form').show(200);
+	});
+	
 });
 
 function refreshListShadow()

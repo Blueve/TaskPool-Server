@@ -1,7 +1,10 @@
 @extends('layouts.base')
 
-@section('content')
+@section('title')
+{{ Lang::get('base.home.title')}} @parent
+@stop
 
+@section('content')
   <div class="container">
 
     <div class="row">
