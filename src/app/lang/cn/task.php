@@ -30,4 +30,7 @@ return array(
 	"share_code"        => "共享码",
 
 	"create_task"       => "快捷创建任务",
+
+	"create_task_more"  => "显示更多选项",
+	"create_task_less"  => "恢复快捷创建选项",
 );
