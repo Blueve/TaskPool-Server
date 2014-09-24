@@ -169,7 +169,7 @@ body { padding-top: 60px; }
 	border-left-width: 2px;
 }
 
-
+/* 颜色选择器样式 */
 .tile {
 	width: 30px;
 	height: 30px;
@@ -238,6 +238,31 @@ body { padding-top: 60px; }
 .align-right {
 	float: right;
 	line-height: 1.2em;
+}
+
+/* 任务级别选择器样式 */
+.tile.tile-type {
+	width: 120px;
+	height: 65px;
+	margin: 1px;
+
+	line-height: 100px;
+}
+
+.tile.i-u {
+	background-color: #f40;
+}
+
+.tile.i-nu {
+	background-color: #f60;
+}
+
+.tile.ni-u {
+	background-color: #f90;
+}
+
+.tile.ni-nu {
+	background-color: #fc3;
 }
 
 /* 修复fa-spin在fa-lg下的问题 */
