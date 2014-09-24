@@ -87,7 +87,7 @@
 
       {{-- 新建任务 --}}
       @include('user.child.createtask')
-
+      <div class="col-md-9 column"><hr /></div>
       {{-- 列表内容 --}}
       <div class="col-md-9 column">
         <div class="tab-content" id="tasklistContent">
@@ -108,10 +108,12 @@
 @section('css')
   <link href="{{{ asset('css/bootstrap-iconpicker.min.css') }}}" rel="stylesheet">
   <link href="{{{ asset('css/bootstrap-switch.min.css') }}}" rel="stylesheet">
+  <link href="{{{ asset('css/datepicker.css') }}}" rel="stylesheet">
 @stop
 
 @section('javascript')
   <script src="{{{ asset('js/bootstrap-iconpicker.js') }}}"></script>
   <script src="{{{ asset('js/bootstrap-switch.min.js') }}}"></script>
+  <script src="{{{ asset('js/bootstrap-datepicker.js') }}}"></script>
   <script src="{{{ asset('js/taskpool/user.home.js') }}}"></script>
 @stop
