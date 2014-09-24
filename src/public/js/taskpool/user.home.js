@@ -292,9 +292,9 @@ $(document).ready(function()
 		});
 	});
 	// 颜色选择器
-	$('.tile i').hide();
-	$('.tile.selected i').show();
-	$('.tile').click(function(event) {
+	$('#taskListSetting_form .tile i').hide();
+	$('#taskListSetting_form .tile.selected i').show();
+	$('#taskListSetting_form .tile').click(function(event) {
 		changeColorTo($(this).data('color'));
 	});
 	// 共享开关初始化
@@ -321,14 +321,22 @@ $(document).ready(function()
 	// 创建任务表单初始化
 	$('#newTaskAdvance_form').hide();
 	$('#createTaskMore_button').click(function(){
-		$('#newTask_form').hide(200);
+		$('#newTask_form').hide(10);
 		$('#newTaskAdvance_form').show(200);
 	});
 	$('#createTaskLess_button').click(function(){
 		$('#newTaskAdvance_form').hide(200);
 		$('#newTask_form').show(200);
 	});
-	
+	$("#start").datepicker().on('changeDate', function(e)
+	{
+		$("#start").datepicker('hide');
+	});
+
+	$("#end").datepicker().on('changeDate', function(e)
+	{
+		$("#end").datepicker('hide');
+	});
 });
 
 function refreshListShadow()
