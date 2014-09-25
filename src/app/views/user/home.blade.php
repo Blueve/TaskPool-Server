@@ -108,7 +108,7 @@
 @section('css')
   <link href="{{{ asset('css/bootstrap-iconpicker.min.css') }}}" rel="stylesheet">
   <link href="{{{ asset('css/bootstrap-switch.min.css') }}}" rel="stylesheet">
-  <link href="{{{ asset('css/datepicker.css') }}}" rel="stylesheet">
+  <link href="{{{ asset('css/datepicker3.css') }}}" rel="stylesheet">
 @stop
 
 @section('javascript')

@@ -328,15 +328,7 @@ $(document).ready(function()
 		$('#newTaskAdvance_form').hide(200);
 		$('#newTask_form').show(200);
 	});
-	$("#start").datepicker().on('changeDate', function(e)
-	{
-		$("#start").datepicker('hide');
-	});
-
-	$("#end").datepicker().on('changeDate', function(e)
-	{
-		$("#end").datepicker('hide');
-	});
+	$(".input-group.date").datepicker({ autoclose: true, todayHighlight: true });
 });
 
 function refreshListShadow()

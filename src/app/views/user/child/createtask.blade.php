@@ -45,10 +45,16 @@
 
       <div class="col-sm-4">
         <label for="start">{{{ Lang::get('task.start') }}}</label>
-        <input type="text" class="form-control" id="start" name="start">
+        <div class="input-group date">
+          <input type="text" class="form-control" id="start" name="start" readonly>
+          <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+        </div>
 
         <label for="end">{{{ Lang::get('task.end') }}}</label>
-        <input type="text" class="form-control" id="end" name="end">
+        <div class="input-group date">
+          <input type="text" class="form-control" id="end" name="end" readonly>
+          <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+        </div>
       </div>
       
     </div>
