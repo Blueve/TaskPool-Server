@@ -328,7 +328,11 @@ $(document).ready(function()
 		$('#newTaskAdvance_form').hide(200);
 		$('#newTask_form').show(200);
 	});
-	$(".input-group.date").datepicker({ autoclose: true, todayHighlight: true });
+	$(".input-group.date").datepicker({
+		autoclose: true,
+		todayHighlight: true,
+		format: 'yyyy-mm-dd DD'
+	});
 });
 
 function refreshListShadow()
