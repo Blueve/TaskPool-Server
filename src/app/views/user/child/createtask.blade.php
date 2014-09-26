@@ -5,7 +5,10 @@
       <label class="sr-only" for="taskName">{{{ Lang::get('task.create_task_quick') }}}</label>
       <input type="text" class="form-control" id="taskName" name="taskName" placeholder="{{{ Lang::get('task.create_task') }}}">
     </div>
-    <button type="submit" class="btn btn-primary">{{{ Lang::get('site.create') }}}</button>
+    <button type="submit" class="btn btn-primary">
+      <i class="fa fa-plus"></i>
+      {{{ Lang::get('site.create') }}}
+    </button>
     <button type="button" class="btn btn-default" id="createTaskMore_button" >
         <i class="fa fa-arrow-down" data-toggle="tooltip" data-placement="top" title="{{{ Lang::get('task.create_task_more') }}}"></i>
     </button>
@@ -28,11 +31,11 @@
         <div class="tile tile-type i-nu" 
           data-toggle="tooltip" 
           title="{{{ Lang::get('task.i_nu') }}}"
-          data-placement="top"></div>
+          data-placement="top"><i class="fa fa-exclamation fa-2x"></i></div>
         <div class="tile tile-type i-u"
           data-toggle="tooltip" 
           title="{{{ Lang::get('task.i_u') }}}"
-          data-placement="top"></div>
+          data-placement="top"><i class="fa fa-exclamation fa-2x"></i><i class="fa fa-bolt fa-2x"></i></div>
         <div class="tile tile-type ni-nu"
           data-toggle="tooltip" 
           title="{{{ Lang::get('task.ni_nu') }}}"
@@ -40,7 +43,7 @@
         <div class="tile tile-type ni-u"
           data-toggle="tooltip" 
           title="{{{ Lang::get('task.ni_u') }}}"
-          data-placement="bottom"></div>
+          data-placement="bottom"><i class="fa fa-bolt fa-2x"></i></div>
       </div>
 
       <div class="col-sm-4">
@@ -60,7 +63,10 @@
     </div>
     <div class="form-group">
       <div class="col-sm-2">
-        <button type="submit" class="btn btn-primary">{{{ Lang::get('site.create') }}}</button>
+        <button type="submit" class="btn btn-primary">
+          <i class="fa fa-plus"></i>
+          {{{ Lang::get('site.create') }}}
+        </button>
         <button type="button" class="btn btn-default" id="createTaskLess_button">
             <i class="fa fa-arrow-up" data-toggle="tooltip" data-placement="top" title="{{{ Lang::get('task.create_task_less') }}}"></i>
         </button>
