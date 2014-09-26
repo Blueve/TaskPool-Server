@@ -10,17 +10,23 @@
     {{-- 登录表单 --}}
     <form role="form" method="post" id="signin_form" action="{{{ URL::action('AccountController@postSignin') }}}">
       <div class="form-group">
-         <label for="userId">{{{ Lang::get('site.user_id') }}}</label>
-         <input type="text" class="form-control" id="userId" name="userId" required/>
+        <label for="userId">{{{ Lang::get('site.user_id') }}}</label>
+        <div class="input-group">
+          <span class="input-group-addon"><i class="fa fa-envelope-o fa-fw"></i></span>
+          <input type="text" class="form-control" id="userId" name="userId" tabindex="1" required/>
+        </div>
       </div>
       <div class="form-group">
-         <label for="password">{{{ Lang::get('site.password') }}}</label>
-         <input type="password" class="form-control" id="password" name="password" minlength="8" required/>
+        <label for="password">{{{ Lang::get('site.password') }}}</label>
+        <div class="input-group">
+          <span class="input-group-addon"><i class="fa fa-key fa-fw"></i></span>
+          <input type="password" class="form-control" id="password" name="password" minlength="8" tabindex="2" required/>
+        </div>
       </div>
       <div class="form-group">
         <div class="row">
           <div class='col-md-6'>
-            <label><input type="checkbox" class="checkbox-normal" id="rememberMe" name="rememberMe" value="0"/> {{{ Lang::get('site.remember_me') }}}</label>
+            <label><input type="checkbox" class="checkbox-normal" id="rememberMe" name="rememberMe" value="0" tabindex="3"/> {{{ Lang::get('site.remember_me') }}}</label>
           </div>
           <div class='col-md-6'>
             <strong>
