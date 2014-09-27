@@ -39,7 +39,7 @@
         <div class="tile tile-type ni-nu"
           data-toggle="tooltip" 
           title="{{{ Lang::get('task.ni_nu') }}}"
-          data-placement="bottom"></div>
+          data-placement="bottom"><i class="fa fa-ellipsis-h fa-2x"></i></div>
         <div class="tile tile-type ni-u"
           data-toggle="tooltip" 
           title="{{{ Lang::get('task.ni_u') }}}"
