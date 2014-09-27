@@ -19,7 +19,7 @@
   <form class="form-horizontal" role="form" id="newTaskAdvance_form">
     <div class="form-group">
       <div class="col-sm-12">
-        <input type="text" class="form-control" id="taskName" name="taskName" placeholder="{{{ Lang::get('task.create_task') }}}">
+        <input type="text" class="form-control" id="taskNameA" name="taskName" placeholder="{{{ Lang::get('task.create_task') }}}">
       </div>
     </div>
     <div class="form-group">

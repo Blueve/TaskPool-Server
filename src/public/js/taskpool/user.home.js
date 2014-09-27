@@ -323,6 +323,7 @@ $(document).ready(function()
 	$('#createTaskMore_button').click(function(){
 		$('#newTask_form').hide(10);
 		$('#newTaskAdvance_form').show(200);
+		$('#taskNameA').val($('#taskName').val());
 	});
 	$('#createTaskLess_button').click(function(){
 		$('#newTaskAdvance_form').hide(200);
