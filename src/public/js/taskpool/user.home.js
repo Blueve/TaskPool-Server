@@ -112,7 +112,7 @@ $(document).ready(function()
 		refreshListContent(curUserList, targetSet);
 
 		// 更新状态
-		curDataSet   = $target.data('set');
+		curDataSet = $target.data('set');
 	});
 
 	/* 调整列表顺序
@@ -395,6 +395,26 @@ function refreshListContent(listId, dataSet)
 		{
 			$(this).data('id', listId);
 		});
+
+		switch(dataSet)
+		{
+			case 'today':
+				var startDate = new Date();
+				$('start').val(startDate.getDate());
+				break;
+
+			case 'week':
+				$('start').val();
+				break;
+
+			case 'month':
+				$('start').val();
+				break;
+
+			case 'pending':
+				$('start').val();
+				break;
+		}
 	});
 }
 
