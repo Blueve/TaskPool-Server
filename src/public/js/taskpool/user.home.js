@@ -332,7 +332,7 @@ $(document).ready(function()
 	$(".input-group.date").datepicker({
 		autoclose: true,
 		todayHighlight: true,
-		format: 'yyyy-mm-dd DD'
+		format: 'yyyy-mm-dd'
 	});
 });
 
