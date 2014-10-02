@@ -109,3 +109,17 @@
     ```
 
 ## JQuery
+    
+    ```javascript
+    // bad
+    function foo(user, arguments)
+    {
+        // ...stuff...
+    }
+
+    // good
+    function foo(user, args)
+    {
+        // ...stuff...
+    }
+    ```
