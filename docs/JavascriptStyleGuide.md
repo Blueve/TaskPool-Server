@@ -109,17 +109,19 @@
     ```
 
 ## JQuery
+
+  - 在同一代码段中选择相同容器的时候，应该将其缓存，避免多次进行选择
     
     ```javascript
     // bad
-    function foo(user, arguments)
-    {
-        // ...stuff...
-    }
+    $('#someone').hide();
+    $('#someone').show();
 
     // good
     function foo(user, args)
     {
-        // ...stuff...
+        $someone = $('someone');
+        $someone.hide();
+        $someone.show();
     }
     ```
