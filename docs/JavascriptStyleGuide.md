@@ -125,3 +125,6 @@
         $someone.show();
     }
     ```
+
+    ```javascript
+    ```
