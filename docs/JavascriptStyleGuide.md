@@ -126,5 +126,12 @@
     }
     ```
 
+  - 使用$前缀标识选择器选择的结果对象
+
     ```javascript
+    // bad
+    button = $('#button');
+
+    // good
+    $button = #('#button');
     ```
