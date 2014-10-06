@@ -133,5 +133,5 @@
     button = $('#button');
 
     // good
-    $button = #('#button');
+    $button = $('#button');
     ```
