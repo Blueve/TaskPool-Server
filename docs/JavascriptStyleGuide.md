@@ -110,6 +110,16 @@
 
 ## JQuery
 
+  - 使用$前缀标识选择器选择的结果对象
+
+    ```javascript
+    // bad
+    button = $('#button');
+
+    // good
+    $button = $('#button');
+    ```
+
   - 在同一代码段中选择相同容器的时候，应该将其缓存，避免多次进行选择
     
     ```javascript
@@ -124,14 +134,4 @@
         $someone.hide();
         $someone.show();
     }
-    ```
-
-  - 使用$前缀标识选择器选择的结果对象
-
-    ```javascript
-    // bad
-    button = $('#button');
-
-    // good
-    $button = $('#button');
     ```
